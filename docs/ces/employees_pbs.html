@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional &amp; Business Services Employees - NewCo Charts</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <main>
+    <header class="page-header">
+      <h1>Professional &amp; Business Services Employees</h1>
+      <div class="controls" id="chart-controls"></div>
+    </header>
+    <div class="chart-grid" id="chart-grid"></div>
+  </main>
+  <script src="../js/nav.js"></script>
+  <script src="../js/controls.js"></script>
+  <script src="../js/lazyload.js"></script>
+  <script src="../js/charts.js"></script>
+  <script>
+    NewCoCharts.init({
+      dataUrl: '../data/ces/employees_pbs.json',
+      defaultMode: 'raw',
+      defaultHorizon: 0,
+      modes: [
+        { key: 'raw', label: 'Raw Data' },
+        { key: 'yoy', label: 'YoY % Change' },
+        { key: 'pop', label: 'MoM Change' },
+        { key: 'pop3', label: 'Trailing 3M Change' }
+      ]
+    });
+  </script>
+</body>
+</html>

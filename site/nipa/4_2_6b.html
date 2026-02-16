@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exports and imports of goods (real) - NewCo Charts</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <main>
+    <header class="page-header">
+      <h1>Exports and imports of goods (real)</h1>
+      <div class="controls" id="chart-controls"></div>
+    </header>
+    <div class="chart-grid" id="chart-grid"></div>
+  </main>
+  <script src="../js/nav.js"></script>
+  <script src="../js/controls.js"></script>
+  <script src="../js/lazyload.js"></script>
+  <script src="../js/charts.js"></script>
+  <script>
+    NewCoCharts.init({
+      dataUrl: '../../data/json/nipa/4_2_6b.json',
+      defaultMode: 'yoy',
+      defaultHorizon: 24
+    });
+  </script>
+</body>
+</html>
