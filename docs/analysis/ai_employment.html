@@ -52,6 +52,7 @@
   <script src="../js/controls.js"></script>
   <script src="../js/lazyload.js"></script>
   <script src="../js/charts.js"></script>
+  <script src="../js/chat.js"></script>
   <script>
     NewCoCharts.init({
       dataUrl: '../data/analysis/ai_employment.json',
@@ -65,6 +66,9 @@
         { key: 'pop3', label: 'Trailing 3M Change' },
         { key: 'pct', label: '% of Total' }
       ]
+    });
+    NewCoChat.init({
+      workerUrl: 'https://ndmacrocharts-chat.andreadrechsler18.workers.dev'
     });
   </script>
 </body>
