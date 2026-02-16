@@ -36,6 +36,11 @@ const SITE_MAP = [
   },
   { label: "Unemployment by Industry", href: "unemployment/index.html" },
   { label: "Industrial Production", href: "industrial_production/index.html" },
+  {
+    label: "Analysis", children: [
+      { label: "AI Impact on Prof. Services", href: "analysis/ai_employment.html" },
+    ]
+  },
 ];
 
 (function() {
