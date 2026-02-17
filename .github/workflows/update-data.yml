@@ -2,9 +2,14 @@ name: Update Economic Data
 
 on:
   schedule:
-    # Run daily at 3:00 PM UTC (10:00 AM ET) - covers most govt data releases
-    - cron: '0 15 * * *'
-  workflow_dispatch:  # Allow manual trigger
+    # Run daily at 3:00 PM UTC (10:00 AM ET) - after most morning data releases
+    - cron: '0 15 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      force_full:
+        description: 'Run full pipeline (ignore calendar)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -25,19 +30,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
-      - name: Run data pipeline
+      - name: Run scheduled update
         continue-on-error: true
         env:
           BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
           BEA_API_KEY: ${{ secrets.BEA_API_KEY }}
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-        run: python scripts/fetch_all.py
+        run: |
+          if [ "${{ inputs.force_full }}" = "true" ]; then
+            echo "Force full pipeline requested"
+            python scripts/fetch_all.py
+          else
+            python scripts/run_scheduled.py
+          fi
 
       - name: Copy updated data to docs
-        run: |
-          # Sync all JSON data to docs/data for GitHub Pages
-          rsync -av --delete data/json/ docs/data/
+        run: rsync -av --delete data/json/ docs/data/
 
       - name: Check for changes
         id: changes
@@ -52,3 +61,51 @@ jobs:
           git add data/json/ docs/data/
           git commit -m "Auto-update economic data $(date -u +%Y-%m-%d)"
           git push
+
+  # Refresh the release calendar monthly (1st of each month at 6 AM UTC)
+  refresh-calendar:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    needs: update
+
+    steps:
+      - name: Check if first weekday of month
+        id: check
+        run: |
+          DAY=$(date -u +%d)
+          if [ "$DAY" -le "3" ]; then
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            echo "run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout repository
+        if: steps.check.outputs.run == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Set up Python
+        if: steps.check.outputs.run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        if: steps.check.outputs.run == 'true'
+        run: pip install -r scripts/requirements.txt
+
+      - name: Refresh release calendar
+        if: steps.check.outputs.run == 'true'
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python scripts/fetch_calendar.py
+
+      - name: Commit calendar
+        if: steps.check.outputs.run == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add config/release_calendar.json
+          git diff --cached --quiet || git commit -m "Refresh release calendar $(date -u +%Y-%m)"
+          git push || true
