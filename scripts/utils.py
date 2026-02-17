@@ -12,9 +12,18 @@ JSON_DIR = os.path.join(DATA_DIR, 'json')
 
 
 def load_api_keys():
+    """Load API keys from config file, falling back to environment variables."""
     path = os.path.join(CONFIG_DIR, 'api_keys.json')
-    with open(path) as f:
-        return json.load(f)
+    if os.path.exists(path):
+        with open(path) as f:
+            return json.load(f)
+    # Fall back to environment variables (for GitHub Actions)
+    return {
+        'bls': os.environ.get('BLS_API_KEY', ''),
+        'bea': os.environ.get('BEA_API_KEY', ''),
+        'census': os.environ.get('CENSUS_API_KEY', ''),
+        'fred': os.environ.get('FRED_API_KEY', ''),
+    }
 
 
 def write_json(data, output_path):
