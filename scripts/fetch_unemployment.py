@@ -6,10 +6,12 @@ Uses the BLS Public Data API v2.
 import os
 import sys
 import json
+import time
+import requests
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from utils import load_api_keys, write_json, retry_request, period_to_date
+from utils import load_api_keys, write_json, period_to_date, HEADERS
 
 BLS_API_URL = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
 
@@ -52,14 +54,10 @@ def run():
             "registrationkey": api_key
         }
 
-        resp = retry_request(
-            BLS_API_URL,
-            params=None,
-            headers={"Content-Type": "application/json"}
-        )
-        # Use POST for BLS API v2
-        import requests
-        resp = requests.post(BLS_API_URL, json=payload, timeout=120)
+        # BLS API v2 requires POST
+        resp = requests.post(BLS_API_URL, json=payload,
+                             headers={**HEADERS, "Content-Type": "application/json"},
+                             timeout=120)
         resp.raise_for_status()
         result = resp.json()
 
@@ -82,6 +80,7 @@ def run():
                 all_data[sid].append({"date": date, "value": value})
 
         print(f"  Fetched {start_year}-{end_year}")
+        time.sleep(2)
 
     series_list = []
     for i, (sid, name) in enumerate(SERIES):
