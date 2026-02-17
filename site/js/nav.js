@@ -41,6 +41,7 @@ const SITE_MAP = [
       { label: "AI Impact on Prof. Services", href: "analysis/ai_employment.html" },
     ]
   },
+  { label: "Release Calendar", href: "calendar/index.html" },
 ];
 
 (function() {

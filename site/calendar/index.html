@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Calendar - NewCo Charts</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .calendar-intro {
+      padding: 20px 24px 0;
+      color: var(--color-text-light);
+      font-size: 0.92rem;
+      max-width: 900px;
+    }
+    .calendar-intro .last-updated {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Next upcoming releases banner */
+    .upcoming-banner {
+      margin: 16px 24px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary-light));
+      border-radius: 10px;
+      color: #fff;
+    }
+    .upcoming-banner h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .upcoming-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .upcoming-item {
+      background: rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .upcoming-item .up-date {
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .upcoming-item .up-source {
+      font-size: 0.78rem;
+      opacity: 0.8;
+    }
+
+    /* View toggle */
+    .cal-controls {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Month grid view */
+    .month-grid {
+      padding: 0 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .month-block {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-light);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .month-header {
+      padding: 10px 16px;
+      background: var(--color-bg);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-primary-dark);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .month-body {
+      padding: 0;
+    }
+    .release-row {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--color-border-light);
+      font-size: 0.88rem;
+      gap: 12px;
+      transition: background 0.15s;
+    }
+    .release-row:last-child { border-bottom: none; }
+    .release-row:hover { background: var(--color-bg); }
+    .release-row.past { opacity: 0.45; }
+    .release-row.today {
+      background: #e8f5e9;
+      font-weight: 600;
+    }
+    .release-date {
+      min-width: 100px;
+      font-weight: 500;
+      color: var(--color-text);
+      font-variant-numeric: tabular-nums;
+    }
+    .release-day {
+      min-width: 36px;
+      color: var(--color-text-muted);
+      font-size: 0.82rem;
+    }
+    .release-sources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      flex: 1;
+    }
+    .source-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .source-badge.bls        { background: #e3f2fd; color: #1565c0; }
+    .source-badge.bea        { background: #fce4ec; color: #c62828; }
+    .source-badge.census_m3  { background: #e8f5e9; color: #2e7d32; }
+    .source-badge.census_construction { background: #fff3e0; color: #e65100; }
+    .source-badge.census_wholesale    { background: #f3e5f5; color: #6a1b9a; }
+    .source-badge.census_qss         { background: #e0f2f1; color: #00695c; }
+    .source-badge.fred_ip    { background: #fff8e1; color: #f57f17; }
+
+    /* Table view */
+    .cal-table-wrap {
+      padding: 0 24px 24px;
+      overflow-x: auto;
+    }
+    .cal-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.85rem;
+    }
+    .cal-table th {
+      padding: 10px 12px;
+      background: var(--color-bg);
+      color: var(--color-primary-dark);
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 2px solid var(--color-border);
+      white-space: nowrap;
+    }
+    .cal-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--color-border-light);
+      font-variant-numeric: tabular-nums;
+    }
+    .cal-table tr:last-child td { border-bottom: none; }
+    .cal-table tr:hover td { background: var(--color-bg); }
+    .cal-table .past td { opacity: 0.45; }
+    .cal-table .today td { background: #e8f5e9; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      .upcoming-items { flex-direction: column; }
+      .release-row { flex-wrap: wrap; }
+      .release-date { min-width: 80px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <main>
+    <div class="page-header">
+      <h1>Data Release Calendar</h1>
+    </div>
+
+    <div class="calendar-intro">
+      <p>Scheduled release dates for all economic data sources tracked by NewCo Charts. Data is automatically fetched on each release day.</p>
+      <p class="last-updated" id="cal-updated"></p>
+    </div>
+
+    <div id="upcoming-banner" class="upcoming-banner" style="display:none">
+      <h3>Next Upcoming Releases</h3>
+      <div id="upcoming-items" class="upcoming-items"></div>
+    </div>
+
+    <div class="cal-controls">
+      <div class="control-group">
+        <span class="control-label">View:</span>
+        <div class="btn-group" id="view-toggle">
+          <button class="active" data-view="timeline">Timeline</button>
+          <button data-view="table">By Source</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Show:</span>
+        <div class="btn-group" id="filter-toggle">
+          <button class="active" data-filter="upcoming">Upcoming</button>
+          <button data-filter="all">All</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="timeline-view" class="month-grid"></div>
+    <div id="table-view" class="cal-table-wrap" style="display:none"></div>
+  </main>
+
+  <script src="../js/nav.js"></script>
+  <script>
+    const SOURCE_LABELS = {
+      bls: 'BLS Employment',
+      bea: 'BEA NIPA / GDP',
+      census_m3: 'Census M3',
+      census_construction: 'Census Construction',
+      census_wholesale: 'Census Wholesale',
+      census_qss: 'Census QSS',
+      fred_ip: 'FRED Ind. Production',
+    };
+
+    const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const MONTHS = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+
+    let calendarData = null;
+    let currentView = 'timeline';
+    let currentFilter = 'upcoming';
+
+    function today() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function formatDate(dateStr) {
+      const [y, m, d] = dateStr.split('-');
+      return `${MONTHS[+m - 1]} ${+d}, ${y}`;
+    }
+
+    function dayOfWeek(dateStr) {
+      return DAYS[new Date(dateStr + 'T12:00:00').getDay()];
+    }
+
+    function getAllDates(schedules) {
+      // Build a map: date -> [source keys]
+      const map = {};
+      for (const [key, dates] of Object.entries(schedules)) {
+        for (const d of dates) {
+          if (!map[d]) map[d] = [];
+          map[d].push(key);
+        }
+      }
+      return Object.entries(map)
+        .map(([date, sources]) => ({ date, sources }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    function renderUpcoming(allDates) {
+      const t = today();
+      const upcoming = allDates.filter(d => d.date >= t).slice(0, 6);
+      if (!upcoming.length) return;
+
+      document.getElementById('upcoming-banner').style.display = '';
+      const container = document.getElementById('upcoming-items');
+      container.innerHTML = upcoming.map(item => `
+        <div class="upcoming-item">
+          <span class="up-date">${formatDate(item.date)} (${dayOfWeek(item.date)})</span>
+          <span class="up-source">${item.sources.map(s => SOURCE_LABELS[s] || s).join(', ')}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderTimeline(allDates) {
+      const t = today();
+      const filtered = currentFilter === 'upcoming'
+        ? allDates.filter(d => d.date >= t)
+        : allDates;
+
+      // Group by month
+      const months = {};
+      for (const item of filtered) {
+        const key = item.date.slice(0, 7); // YYYY-MM
+        if (!months[key]) months[key] = [];
+        months[key].push(item);
+      }
+
+      const container = document.getElementById('timeline-view');
+      if (!Object.keys(months).length) {
+        container.innerHTML = '<p style="padding:24px;color:var(--color-text-muted)">No releases to show.</p>';
+        return;
+      }
+
+      container.innerHTML = Object.entries(months).map(([monthKey, items]) => {
+        const [y, m] = monthKey.split('-');
+        const monthName = `${MONTHS[+m - 1]} ${y}`;
+        const rows = items.map(item => {
+          let cls = '';
+          if (item.date === t) cls = 'today';
+          else if (item.date < t) cls = 'past';
+          return `
+            <div class="release-row ${cls}">
+              <span class="release-date">${formatDate(item.date)}</span>
+              <span class="release-day">${dayOfWeek(item.date)}</span>
+              <div class="release-sources">
+                ${item.sources.map(s => `<span class="source-badge ${s}">${SOURCE_LABELS[s] || s}</span>`).join('')}
+              </div>
+            </div>`;
+        }).join('');
+
+        return `
+          <div class="month-block">
+            <div class="month-header">${monthName}</div>
+            <div class="month-body">${rows}</div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderTable(schedules) {
+      const t = today();
+      const sources = Object.keys(schedules);
+
+      let html = '<table class="cal-table"><thead><tr><th>Source</th><th>Release Date</th><th>Day</th><th>Status</th></tr></thead><tbody>';
+
+      for (const key of sources) {
+        const dates = currentFilter === 'upcoming'
+          ? schedules[key].filter(d => d >= t)
+          : schedules[key];
+
+        for (let i = 0; i < dates.length; i++) {
+          const d = dates[i];
+          let cls = '';
+          let status = '';
+          if (d === t) { cls = 'today'; status = 'Today'; }
+          else if (d < t) { cls = 'past'; status = 'Released'; }
+          else { status = 'Upcoming'; }
+
+          html += `<tr class="${cls}">`;
+          if (i === 0) {
+            html += `<td rowspan="${dates.length}" style="font-weight:600;vertical-align:top"><span class="source-badge ${key}">${SOURCE_LABELS[key] || key}</span></td>`;
+          }
+          html += `<td>${formatDate(d)}</td><td>${dayOfWeek(d)}</td><td>${status}</td></tr>`;
+        }
+      }
+
+      html += '</tbody></table>';
+      document.getElementById('table-view').innerHTML = html;
+    }
+
+    function render() {
+      if (!calendarData) return;
+      const schedules = calendarData.schedules;
+      const allDates = getAllDates(schedules);
+
+      renderUpcoming(allDates);
+
+      if (currentView === 'timeline') {
+        document.getElementById('timeline-view').style.display = '';
+        document.getElementById('table-view').style.display = 'none';
+        renderTimeline(allDates);
+      } else {
+        document.getElementById('timeline-view').style.display = 'none';
+        document.getElementById('table-view').style.display = '';
+        renderTable(schedules);
+      }
+    }
+
+    // Controls
+    document.getElementById('view-toggle').addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      document.querySelectorAll('#view-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentView = btn.dataset.view;
+      render();
+    });
+
+    document.getElementById('filter-toggle').addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      document.querySelectorAll('#filter-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      render();
+    });
+
+    // Load data
+    fetch('../../data/json/calendar/release_calendar.json')
+      .then(r => r.json())
+      .then(data => {
+        calendarData = data;
+        if (data.last_updated) {
+          const d = new Date(data.last_updated);
+          document.getElementById('cal-updated').textContent =
+            'Calendar last updated: ' + d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        render();
+      })
+      .catch(err => {
+        document.getElementById('timeline-view').innerHTML =
+          '<p style="padding:24px;color:#c0392b">Error loading release calendar data.</p>';
+        console.error('Failed to load calendar:', err);
+      });
+  </script>
+</body>
+</html>

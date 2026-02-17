@@ -13,7 +13,7 @@ import json
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from utils import JSON_DIR
+from utils import JSON_DIR, CONFIG_DIR
 
 # Import QSS label mappings from fix_qss_labels
 from fix_qss_labels_data import QSS_CATEGORIES, QSS_DTYPES
@@ -187,6 +187,22 @@ def process_analysis():
     print(f"  {len(analysis)} series")
 
 
+def copy_calendar():
+    """Copy release calendar to data/json so the website can access it."""
+    print("Copying release calendar to data/json...")
+    src = os.path.join(CONFIG_DIR, 'release_calendar.json')
+    if not os.path.exists(src):
+        print("  WARNING: release_calendar.json not found, skipping")
+        return
+    dst_dir = os.path.join(JSON_DIR, 'calendar')
+    os.makedirs(dst_dir, exist_ok=True)
+    dst = os.path.join(dst_dir, 'release_calendar.json')
+    import shutil
+    shutil.copy2(src, dst)
+    size_kb = os.path.getsize(dst) / 1024
+    print(f"  Wrote calendar/release_calendar.json ({size_kb:.0f} KB)")
+
+
 def run():
     print("=" * 40)
     print("Post-processing derived data...")
@@ -195,6 +211,7 @@ def run():
     process_wholesale()
     process_ces_pbs()
     process_analysis()
+    copy_calendar()
     print("Post-processing complete.")
 
 
