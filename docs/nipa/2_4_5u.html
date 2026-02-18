@@ -24,7 +24,12 @@
     NewCoCharts.init({
       dataUrl: '../data/nipa/2_4_5u.json',
       defaultMode: 'yoy',
-      defaultHorizon: 24
+      defaultHorizon: 24,
+      categories: [
+        { key: 'durable', label: 'Durable Goods', range: ['U20405_3', 'U20405_71'], totalId: 'U20405_3' },
+        { key: 'nondurable', label: 'Nondurable Goods', range: ['U20405_72', 'U20405_149'], totalId: 'U20405_72' },
+        { key: 'services', label: 'Services', range: ['U20405_150', 'U20405_341'], totalId: 'U20405_150' }
+      ]
     });
   </script>
 </body>

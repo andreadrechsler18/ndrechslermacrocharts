@@ -1,16 +1,22 @@
-/* NewCo Charts - Controls (Raw/YoY Toggle + Time Horizon) */
+/* NewCo Charts - Controls (Raw/YoY Toggle + Time Horizon + Category) */
 
 window.NewCoControls = {
   mode: 'yoy',
   horizon: 24,
 
   init(container, options) {
+    this.container = container;
     this.mode = options.mode || 'yoy';
     this.horizon = options.horizon || 24;
-    this.modes = options.modes || [
+    this.baseModes = options.modes || [
       { key: 'raw', label: 'Raw Data' },
       { key: 'yoy', label: 'YoY % Change' }
     ];
+    this.modes = [...this.baseModes];
+
+    // Category support (e.g. Durable Goods / Nondurable Goods / Services)
+    this.categories = options.categories || null;
+    this.activeCategory = null;
 
     // Read from URL hash if present
     this.readHash();
@@ -18,6 +24,22 @@ window.NewCoControls = {
     const modeButtons = this.modes.map(m =>
       '<button data-mode="' + m.key + '" class="' + (this.mode === m.key ? 'active' : '') + '">' + m.label + '</button>'
     ).join('');
+
+    // Optional category buttons
+    let categoryHtml = '';
+    if (this.categories) {
+      const catButtons = this.categories.map(c =>
+        '<button data-category="' + c.key + '">' + c.label + '</button>'
+      ).join('');
+      categoryHtml =
+        '<div class="control-group">' +
+          '<span class="control-label">Category:</span>' +
+          '<div class="btn-group" id="category-toggle">' +
+            '<button data-category="" class="active">All</button>' +
+            catButtons +
+          '</div>' +
+        '</div>';
+    }
 
     // Optional filter buttons
     this.filters = options.filters || null;
@@ -38,6 +60,7 @@ window.NewCoControls = {
     }
 
     container.innerHTML =
+      categoryHtml +
       '<div class="control-group">' +
         '<span class="control-label">View:</span>' +
         '<div class="btn-group" id="mode-toggle">' + modeButtons + '</div>' +
@@ -54,7 +77,7 @@ window.NewCoControls = {
         '</div>' +
       '</div>';
 
-    // Mode toggle
+    // Mode toggle (uses event delegation so dynamic button updates work)
     container.querySelector('#mode-toggle').addEventListener('click', (e) => {
       const btn = e.target.closest('button');
       if (!btn) return;
@@ -78,6 +101,23 @@ window.NewCoControls = {
       document.dispatchEvent(new CustomEvent('horizonchange', { detail: newHorizon }));
     });
 
+    // Category toggle
+    const catToggle = container.querySelector('#category-toggle');
+    if (catToggle) {
+      catToggle.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const catKey = btn.dataset.category || null;
+        const currentKey = this.activeCategory ? this.activeCategory.key : null;
+        if (catKey === currentKey) return;
+
+        this.activeCategory = catKey ? this.categories.find(c => c.key === catKey) : null;
+        this.updateButtons(catToggle, 'category', btn.dataset.category);
+        this.updateModeButtons();
+        document.dispatchEvent(new CustomEvent('categorychange', { detail: this.activeCategory }));
+      });
+    }
+
     // Filter toggle
     const filterToggle = container.querySelector('#filter-toggle');
     if (filterToggle) {
@@ -90,6 +130,26 @@ window.NewCoControls = {
         this.updateButtons(filterToggle, 'filter', btn.dataset.filter);
         document.dispatchEvent(new CustomEvent('filterchange', { detail: newFilter }));
       });
+    }
+  },
+
+  updateModeButtons() {
+    const modes = [...this.baseModes];
+    if (this.activeCategory) {
+      modes.push({ key: 'share', label: 'Share of ' + this.activeCategory.label });
+    } else if (this.mode === 'share') {
+      // Switching back to All — share mode no longer available
+      this.mode = 'yoy';
+      this.updateHash();
+      document.dispatchEvent(new CustomEvent('modechange', { detail: this.mode }));
+    }
+    this.modes = modes;
+
+    const modeToggle = this.container.querySelector('#mode-toggle');
+    if (modeToggle) {
+      modeToggle.innerHTML = modes.map(m =>
+        '<button data-mode="' + m.key + '" class="' + (this.mode === m.key ? 'active' : '') + '">' + m.label + '</button>'
+      ).join('');
     }
   },
 

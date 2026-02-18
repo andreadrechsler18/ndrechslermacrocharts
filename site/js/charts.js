@@ -13,6 +13,9 @@ window.NewCoCharts = {
     this.totalSeriesIndex = options.totalSeriesIndex != null ? options.totalSeriesIndex : null;
     this.modes = options.modes || null;
     this.filters = options.filters || null;
+    this.categories = options.categories || null;
+    this.activeCategory = null;
+    this.categoryTotalIndex = null;
 
     // Show loading state
     const grid = document.getElementById('chart-grid');
@@ -28,6 +31,10 @@ window.NewCoCharts = {
       return;
     }
 
+    // Build series ID to array index map (for category total lookups)
+    this.seriesIdMap = {};
+    this.data.series.forEach((s, i) => { this.seriesIdMap[s.id] = i; });
+
     // Update page title from data
     const pageTitle = document.querySelector('.page-header h1');
     if (pageTitle && this.data.metadata.title) {
@@ -40,6 +47,7 @@ window.NewCoCharts = {
       const controlOpts = { mode: this.mode, horizon: this.horizon };
       if (this.modes) controlOpts.modes = this.modes;
       if (this.filters) controlOpts.filters = this.filters;
+      if (this.categories) controlOpts.categories = this.categories;
       NewCoControls.init(controlsEl, controlOpts);
       this.mode = NewCoControls.mode;
       this.horizon = NewCoControls.horizon;
@@ -81,6 +89,10 @@ window.NewCoCharts = {
     document.addEventListener('filterchange', (e) => {
       this.applyFilter(e.detail);
     });
+
+    document.addEventListener('categorychange', (e) => {
+      this.applyCategory(e.detail);
+    });
   },
 
   waitForPlotly() {
@@ -117,7 +129,25 @@ window.NewCoCharts = {
     const rawValues = series.data.map(d => d.value);
     let dates, values, yLabel;
 
-    if (this.mode === 'pct' && this.totalSeriesIndex != null) {
+    if (this.mode === 'share' && this.categoryTotalIndex != null) {
+      // Compute % share of category total
+      const totalSeries = this.data.series[this.categoryTotalIndex];
+      const totalMap = {};
+      totalSeries.data.forEach(d => { totalMap[d.date] = d.value; });
+
+      dates = [];
+      values = [];
+      for (let i = 0; i < rawDates.length; i++) {
+        const totalVal = totalMap[rawDates[i]];
+        dates.push(rawDates[i]);
+        if (rawValues[i] == null || totalVal == null || totalVal === 0) {
+          values.push(null);
+        } else {
+          values.push((rawValues[i] / totalVal) * 100);
+        }
+      }
+      yLabel = '% Share';
+    } else if (this.mode === 'pct' && this.totalSeriesIndex != null) {
       // Compute % of total
       const totalSeries = this.data.series[this.totalSeriesIndex];
       const totalMap = {};
@@ -229,7 +259,7 @@ window.NewCoCharts = {
       v == null ? '#ccc' : (v >= 0 ? '#4a90d9' : '#e74c3c')
     );
 
-    const isLine = (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'spread');
+    const isLine = (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'spread' || this.mode === 'share');
 
     return {
       trace: isLine ? {
@@ -286,6 +316,40 @@ window.NewCoCharts = {
         NewCoLazyLoad.observe(el);
       }
     });
+  },
+
+  applyCategory(category) {
+    this.activeCategory = category;
+
+    if (!category) {
+      // Show all charts
+      this.categoryTotalIndex = null;
+      this.chartElements.forEach(card => { card.style.display = ''; });
+    } else {
+      // Set the category total series for share calculations
+      this.categoryTotalIndex = this.seriesIdMap[category.totalId] ?? null;
+
+      // Parse ID range boundaries
+      const startNum = parseInt(category.range[0].split('_').pop(), 10);
+      const endNum = parseInt(category.range[1].split('_').pop(), 10);
+
+      this.chartElements.forEach(card => {
+        const sid = card.dataset.seriesId;
+        const num = parseInt(sid.split('_').pop(), 10);
+        card.style.display = (num >= startNum && num <= endNum) ? '' : 'none';
+      });
+    }
+
+    // Re-observe visible cards so lazy loading picks them up
+    this.chartElements.forEach(el => {
+      if (el.style.display !== 'none') {
+        NewCoLazyLoad.observe(el);
+      }
+    });
+
+    // If we left share mode (switched to All), controls.js handles the mode reset
+    // Just re-render all visible charts with current settings
+    this.reRenderVisible();
   },
 
   reRenderVisible() {
