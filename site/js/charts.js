@@ -329,6 +329,11 @@ window.NewCoCharts = {
         NewCoLazyLoad.observe(el);
       }
     });
+
+    // Defer re-rendering until browser has completed layout of newly visible cards
+    requestAnimationFrame(() => {
+      this.reRenderVisible();
+    });
   },
 
   applyCategory(category) {
