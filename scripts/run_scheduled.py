@@ -2,15 +2,22 @@
 Calendar-aware data pipeline runner.
 
 Reads config/release_calendar.json and only runs fetchers for
-datasets that have a release today. Always runs post_process
-if any fetcher ran.
+datasets that have a release today AND whose release time has passed.
+Each source is fetched ~5 minutes after its official release time.
+
+Release times (all Eastern Time):
+  BLS (Employment)      - 8:30 AM ET
+  BEA (NIPA/GDP)        - 8:30 AM ET
+  FRED (Ind. Production) - 9:15 AM ET
+  Census (M3, Constr.)  - 10:00 AM ET
 """
 
 import os
 import sys
 import json
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 
 sys.path.insert(0, os.path.dirname(__file__))
 from utils import CONFIG_DIR
@@ -25,31 +32,58 @@ import fetch_fred
 import fetch_unemployment
 import post_process
 
-# Map calendar keys to fetcher functions
+ET = ZoneInfo("America/New_York")
+
+# Map calendar keys to (release_hour, release_minute, fetchers)
+# Release times are in Eastern Time (handles EST/EDT automatically)
 FETCHER_MAP = {
-    "bls": [
-        ("CES Employment Data", fetch_ces.run),
-        ("Unemployment by Industry", fetch_unemployment.run),
-    ],
-    "bea": [
-        ("NIPA Tables", fetch_nipa.run),
-    ],
-    "census_m3": [
-        ("M3 Survey", fetch_m3.run),
-    ],
-    "census_construction": [
-        ("Construction Spending", fetch_construction.run),
-    ],
-    "census_wholesale": [
-        ("Monthly Wholesale Trade", fetch_wholesale.run),
-    ],
-    "census_qss": [
-        ("Quarterly Services Survey", fetch_qss.run),
-    ],
-    "fred_ip": [
-        ("Industrial Production", fetch_fred.run),
-    ],
+    "bls": {
+        "release_time": (8, 30),
+        "fetchers": [
+            ("CES Employment Data", fetch_ces.run),
+            ("Unemployment by Industry", fetch_unemployment.run),
+        ],
+    },
+    "bea": {
+        "release_time": (8, 30),
+        "fetchers": [
+            ("NIPA Tables", fetch_nipa.run),
+        ],
+    },
+    "census_m3": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("M3 Survey", fetch_m3.run),
+        ],
+    },
+    "census_construction": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("Construction Spending", fetch_construction.run),
+        ],
+    },
+    "census_wholesale": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("Monthly Wholesale Trade", fetch_wholesale.run),
+        ],
+    },
+    "census_qss": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("Quarterly Services Survey", fetch_qss.run),
+        ],
+    },
+    "fred_ip": {
+        "release_time": (9, 15),
+        "fetchers": [
+            ("Industrial Production", fetch_fred.run),
+        ],
+    },
 }
+
+# Minutes to wait after release time before fetching
+FETCH_DELAY_MINUTES = 5
 
 
 def load_calendar():
@@ -61,18 +95,31 @@ def load_calendar():
         return json.load(f)
 
 
-def get_todays_fetchers(calendar):
-    """Return list of (name, func) for datasets releasing today."""
-    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+def get_ready_fetchers(calendar):
+    """Return fetchers for datasets releasing today whose release time has passed."""
+    now_et = datetime.now(ET)
+    today = now_et.strftime('%Y-%m-%d')
+    current_time = (now_et.hour, now_et.minute)
     schedules = calendar.get("schedules", {})
     fetchers = []
+    skipped = []
 
     for cal_key, dates in schedules.items():
-        if today in dates:
-            if cal_key in FETCHER_MAP:
-                fetchers.extend(FETCHER_MAP[cal_key])
+        if today in dates and cal_key in FETCHER_MAP:
+            entry = FETCHER_MAP[cal_key]
+            rh, rm = entry["release_time"]
+            fetch_after = (rh, rm + FETCH_DELAY_MINUTES)
+            # Handle minute overflow
+            if fetch_after[1] >= 60:
+                fetch_after = (fetch_after[0] + 1, fetch_after[1] - 60)
 
-    return fetchers, today
+            if current_time >= fetch_after:
+                fetchers.extend(entry["fetchers"])
+            else:
+                for name, _ in entry["fetchers"]:
+                    skipped.append((name, f"{rh}:{rm:02d} AM ET"))
+
+    return fetchers, skipped, today
 
 
 def run():
@@ -82,26 +129,36 @@ def run():
         import fetch_all
         return fetch_all.run()
 
-    fetchers, today = get_todays_fetchers(calendar)
+    fetchers, skipped, today = get_ready_fetchers(calendar)
+    now_et = datetime.now(ET)
 
     print("=" * 60)
     print(f"NewCo Charts - Scheduled Update ({today})")
+    print(f"  Current time: {now_et.strftime('%I:%M %p %Z')}")
     print("=" * 60)
 
+    if skipped:
+        print(f"\nWaiting on {len(skipped)} source(s) (not yet released):")
+        for name, release_time in skipped:
+            print(f"  - {name} (releases at {release_time})")
+
     if not fetchers:
-        print(f"\nNo data releases scheduled for {today}. Nothing to do.")
-        # Show next upcoming releases
-        schedules = calendar.get("schedules", {})
-        upcoming = []
-        for key, dates in schedules.items():
-            future = [d for d in dates if d > today]
-            if future:
-                upcoming.append((future[0], key))
-        upcoming.sort()
-        if upcoming:
-            print("\nNext upcoming releases:")
-            for date, key in upcoming[:5]:
-                print(f"  {date}: {key}")
+        if not skipped:
+            print(f"\nNo data releases scheduled for {today}. Nothing to do.")
+            # Show next upcoming releases
+            schedules = calendar.get("schedules", {})
+            upcoming = []
+            for key, dates in schedules.items():
+                future = [d for d in dates if d > today]
+                if future:
+                    upcoming.append((future[0], key))
+            upcoming.sort()
+            if upcoming:
+                print("\nNext upcoming releases:")
+                for date, key in upcoming[:5]:
+                    print(f"  {date}: {key}")
+        else:
+            print("\nNo sources ready yet. Will run on next scheduled trigger.")
         return True
 
     print(f"\n{len(fetchers)} fetcher(s) to run today:")

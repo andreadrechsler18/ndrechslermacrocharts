@@ -2,8 +2,19 @@ name: Update Economic Data
 
 on:
   schedule:
-    # Run daily at 3:00 PM UTC (10:00 AM ET) - after most morning data releases
-    - cron: '0 15 * * 1-5'
+    # Run 5 min after each release time. Two entries per slot (EST + EDT)
+    # so the correct one fires year-round. The Python script checks ET time
+    # and skips sources whose release hasn't happened yet.
+    #
+    # BLS/BEA release at 8:30 AM ET → fetch at 8:35 AM ET
+    - cron: '35 12 * * 1-5'   # 8:35 AM EDT (Mar-Nov)
+    - cron: '35 13 * * 1-5'   # 8:35 AM EST (Nov-Mar)
+    # FRED IP releases at 9:15 AM ET → fetch at 9:20 AM ET
+    - cron: '20 13 * * 1-5'   # 9:20 AM EDT (Mar-Nov)
+    - cron: '20 14 * * 1-5'   # 9:20 AM EST (Nov-Mar)
+    # Census releases at 10:00 AM ET → fetch at 10:05 AM ET
+    - cron: '5 14 * * 1-5'    # 10:05 AM EDT (Mar-Nov)
+    - cron: '5 15 * * 1-5'    # 10:05 AM EST (Nov-Mar)
   workflow_dispatch:
     inputs:
       force_full:
