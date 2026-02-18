@@ -347,13 +347,16 @@ window.NewCoCharts = {
       }
     });
 
-    // If we left share mode (switched to All), controls.js handles the mode reset
-    // Just re-render all visible charts with current settings
-    this.reRenderVisible();
+    // Defer re-rendering until browser has completed layout of newly visible cards
+    requestAnimationFrame(() => {
+      this.reRenderVisible();
+    });
   },
 
   reRenderVisible() {
     this.rendered.forEach(index => {
+      const card = this.chartElements[index];
+      if (card && card.style.display === 'none') return;
       this.renderChart(index);
     });
   },
