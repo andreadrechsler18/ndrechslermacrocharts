@@ -171,7 +171,7 @@ def fetch_table(api_key, table_config):
                 parts = time_period.split("Q")
                 if len(parts) == 2:
                     try:
-                        month = (int(parts[1]) - 1) * 3 + 1
+                        month = int(parts[1]) * 3  # end-of-quarter: Mar, Jun, Sep, Dec
                         date_str = f"{int(parts[0])}-{month:02d}-01"
                     except ValueError:
                         pass
