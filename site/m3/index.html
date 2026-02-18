@@ -24,7 +24,15 @@
     NewCoCharts.init({
       dataUrl: '../../data/json/m3/m3.json',
       defaultMode: 'yoy',
-      defaultHorizon: 24
+      defaultHorizon: 24,
+      filterType: 'suffix',
+      excludePatterns: ['_MPC', '_IS'],
+      filters: [
+        { key: '_VS', label: 'Shipments' },
+        { key: '_NO', label: 'Orders' },
+        { key: '_UO', label: 'Unfilled Orders' },
+        { key: '_TI,_FI,_MI,_WI', label: 'Inventories' }
+      ]
     });
   </script>
 </body>

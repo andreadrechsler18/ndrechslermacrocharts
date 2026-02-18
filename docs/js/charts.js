@@ -13,6 +13,8 @@ window.NewCoCharts = {
     this.totalSeriesIndex = options.totalSeriesIndex != null ? options.totalSeriesIndex : null;
     this.modes = options.modes || null;
     this.filters = options.filters || null;
+    this.filterType = options.filterType || 'prefix';
+    this.excludePatterns = options.excludePatterns || null;
     this.categories = options.categories || null;
     this.activeCategory = null;
     this.categoryTotalIndex = null;
@@ -58,6 +60,12 @@ window.NewCoCharts = {
     this.chartElements = [];
 
     this.data.series.forEach((series, i) => {
+      // Skip permanently excluded series
+      if (this.excludePatterns && this.excludePatterns.some(pat => series.id.includes(pat))) {
+        this.chartElements.push(null);
+        return;
+      }
+
       const card = document.createElement('div');
       card.className = 'chart-card';
       card.dataset.seriesIndex = i;
@@ -73,7 +81,7 @@ window.NewCoCharts = {
 
     // Initialize lazy loading
     NewCoLazyLoad.init((idx) => this.renderChart(idx));
-    this.chartElements.forEach(el => NewCoLazyLoad.observe(el));
+    this.chartElements.forEach(el => { if (el) NewCoLazyLoad.observe(el); });
 
     // Listen for control changes
     document.addEventListener('modechange', (e) => {
@@ -301,18 +309,23 @@ window.NewCoCharts = {
     };
   },
 
-  applyFilter(prefix) {
+  applyFilter(filterKey) {
     this.chartElements.forEach(card => {
-      if (!prefix) {
+      if (!card) return;
+      if (!filterKey) {
         card.style.display = '';
+      } else if (this.filterType === 'suffix') {
+        const sid = card.dataset.seriesId;
+        const suffixes = filterKey.split(',');
+        card.style.display = sid && suffixes.some(s => sid.endsWith(s)) ? '' : 'none';
       } else {
         const sid = card.dataset.seriesId;
-        card.style.display = sid && sid.startsWith(prefix) ? '' : 'none';
+        card.style.display = sid && sid.startsWith(filterKey) ? '' : 'none';
       }
     });
     // Re-observe visible cards so lazy loading picks them up
     this.chartElements.forEach(el => {
-      if (el.style.display !== 'none') {
+      if (el && el.style.display !== 'none') {
         NewCoLazyLoad.observe(el);
       }
     });
@@ -324,7 +337,7 @@ window.NewCoCharts = {
     if (!category) {
       // Show all charts
       this.categoryTotalIndex = null;
-      this.chartElements.forEach(card => { card.style.display = ''; });
+      this.chartElements.forEach(card => { if (card) card.style.display = ''; });
     } else {
       // Set the category total series for share calculations
       this.categoryTotalIndex = this.seriesIdMap[category.totalId] ?? null;
@@ -334,6 +347,7 @@ window.NewCoCharts = {
       const endNum = parseInt(category.range[1].split('_').pop(), 10);
 
       this.chartElements.forEach(card => {
+        if (!card) return;
         const sid = card.dataset.seriesId;
         const num = parseInt(sid.split('_').pop(), 10);
         card.style.display = (num >= startNum && num <= endNum) ? '' : 'none';
@@ -342,7 +356,7 @@ window.NewCoCharts = {
 
     // Re-observe visible cards so lazy loading picks them up
     this.chartElements.forEach(el => {
-      if (el.style.display !== 'none') {
+      if (el && el.style.display !== 'none') {
         NewCoLazyLoad.observe(el);
       }
     });
