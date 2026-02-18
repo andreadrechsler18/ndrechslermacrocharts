@@ -12,6 +12,7 @@ const SITE_MAP = [
       { label: "3BU - Inventory-Sales Ratio", href: "nipa/3bu.html" },
       { label: "4.2.5B - Net Exports", href: "nipa/4_2_5b.html" },
       { label: "4.2.6B - Real Imports", href: "nipa/4_2_6b.html" },
+      { label: "5.3.5 - Nonresidential Investment", href: "nipa/5_3_5.html" },
       { label: "5.5.5U - Equipment Spending", href: "nipa/5_5_5u.html" },
       { label: "5.7.5BU1 - Private Inventories", href: "nipa/5_7_5bu1.html" },
     ]

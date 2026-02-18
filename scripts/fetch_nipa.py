@@ -96,6 +96,15 @@ NIPA_TABLES = [
         "title": "Change in private inventories",
         "unit": "Millions of dollars"
     },
+    {
+        "key": "5_3_5",
+        "dataset": "NIPA",
+        "table": "T50305",
+        "frequency": "Q",
+        "title": "Private fixed investment by type (nonresidential)",
+        "unit": "Millions of dollars",
+        "skip_lines": ["1", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
+    },
 ]
 
 
@@ -186,8 +195,11 @@ def fetch_table(api_key, table_config):
         series_map[series_key]["data"].append({"date": date_str, "value": value})
 
     # Build output
+    skip = set(table_config.get("skip_lines", []))
     series_list = []
     for i, (key, info) in enumerate(sorted(series_map.items(), key=lambda x: int(x[1]["line_num"]) if x[1]["line_num"].isdigit() else 9999)):
+        if info["line_num"] in skip:
+            continue
         info["data"].sort(key=lambda d: d["date"])
         if len(info["data"]) < 2:
             continue
