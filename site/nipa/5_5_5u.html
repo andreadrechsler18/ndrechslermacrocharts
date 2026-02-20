@@ -26,10 +26,12 @@
       defaultMode: 'yoy',
       defaultHorizon: 24,
       totalSeriesIndex: 0,
+      excludeFromTotalIndex: 3,
       modes: [
         { key: 'raw', label: 'Raw Data' },
         { key: 'yoy', label: 'YoY % Change' },
-        { key: 'pct', label: '% of Total' }
+        { key: 'pct', label: '% of Total' },
+        { key: 'pct_ex', label: '% of Total ex. Computers' }
       ]
     });
   </script>

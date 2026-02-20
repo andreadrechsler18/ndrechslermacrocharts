@@ -16,6 +16,7 @@ window.NewCoCharts = {
     this.filterType = options.filterType || 'prefix';
     this.excludePatterns = options.excludePatterns || null;
     this.chartType = options.chartType || null; // 'bar' or 'line' to override default
+    this.excludeFromTotalIndex = options.excludeFromTotalIndex != null ? options.excludeFromTotalIndex : null;
     this.categories = options.categories || null;
     this.activeCategory = null;
     this.categoryTotalIndex = null;
@@ -174,6 +175,28 @@ window.NewCoCharts = {
         }
       }
       yLabel = '% of Total';
+    } else if (this.mode === 'pct_ex' && this.totalSeriesIndex != null && this.excludeFromTotalIndex != null) {
+      // Compute % of (total minus excluded series)
+      const totalSeries = this.data.series[this.totalSeriesIndex];
+      const excludeSeries = this.data.series[this.excludeFromTotalIndex];
+      const totalMap = {};
+      totalSeries.data.forEach(d => { totalMap[d.date] = d.value; });
+      const excludeMap = {};
+      excludeSeries.data.forEach(d => { excludeMap[d.date] = d.value; });
+
+      dates = [];
+      values = [];
+      for (let i = 0; i < rawDates.length; i++) {
+        const totalVal = totalMap[rawDates[i]];
+        const excludeVal = excludeMap[rawDates[i]];
+        dates.push(rawDates[i]);
+        if (rawValues[i] == null || totalVal == null || excludeVal == null || (totalVal - excludeVal) === 0) {
+          values.push(null);
+        } else {
+          values.push((rawValues[i] / (totalVal - excludeVal)) * 100);
+        }
+      }
+      yLabel = '% of Total ex. Excluded';
     } else if (this.mode === 'spread' && this.totalSeriesIndex != null) {
       // Compute spread vs aggregate (series value minus total value)
       const totalSeries = this.data.series[this.totalSeriesIndex];
@@ -270,7 +293,7 @@ window.NewCoCharts = {
 
     const isLine = this.chartType === 'bar' ? false :
       this.chartType === 'line' ? true :
-      (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'spread' || this.mode === 'share');
+      (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'pct_ex' || this.mode === 'spread' || this.mode === 'share');
 
     return {
       trace: isLine ? {
