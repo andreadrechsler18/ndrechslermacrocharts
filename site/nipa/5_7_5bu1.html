@@ -24,7 +24,11 @@
     NewCoCharts.init({
       dataUrl: '../../data/json/nipa/5_7_5bu1.json',
       defaultMode: 'raw',
-      defaultHorizon: 24
+      defaultHorizon: 24,
+      chartType: 'bar',
+      modes: [
+        { key: 'raw', label: 'Raw Data' }
+      ]
     });
   </script>
 </body>

@@ -15,6 +15,7 @@ window.NewCoCharts = {
     this.filters = options.filters || null;
     this.filterType = options.filterType || 'prefix';
     this.excludePatterns = options.excludePatterns || null;
+    this.chartType = options.chartType || null; // 'bar' or 'line' to override default
     this.categories = options.categories || null;
     this.activeCategory = null;
     this.categoryTotalIndex = null;
@@ -267,7 +268,9 @@ window.NewCoCharts = {
       v == null ? '#ccc' : (v >= 0 ? '#4a90d9' : '#e74c3c')
     );
 
-    const isLine = (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'spread' || this.mode === 'share');
+    const isLine = this.chartType === 'bar' ? false :
+      this.chartType === 'line' ? true :
+      (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'spread' || this.mode === 'share');
 
     return {
       trace: isLine ? {
