@@ -85,9 +85,13 @@ window.NewCoCharts = {
     NewCoLazyLoad.init((idx) => this.renderChart(idx));
     this.chartElements.forEach(el => { if (el) NewCoLazyLoad.observe(el); });
 
+    // Apply initial mode visibility
+    this.applyModeVisibility();
+
     // Listen for control changes
     document.addEventListener('modechange', (e) => {
       this.mode = e.detail;
+      this.applyModeVisibility();
       this.reRenderVisible();
     });
 
@@ -333,6 +337,18 @@ window.NewCoCharts = {
         font: { family: 'Segoe UI, Roboto, sans-serif' }
       }
     };
+  },
+
+  applyModeVisibility() {
+    // Hide denominator series in percentage modes
+    if (this.totalSeriesIndex != null) {
+      const totalCard = this.chartElements[this.totalSeriesIndex];
+      if (totalCard) totalCard.style.display = (this.mode === 'pct' || this.mode === 'pct_ex') ? 'none' : '';
+    }
+    if (this.excludeFromTotalIndex != null) {
+      const exCard = this.chartElements[this.excludeFromTotalIndex];
+      if (exCard) exCard.style.display = (this.mode === 'pct_ex') ? 'none' : '';
+    }
   },
 
   applyFilter(filterKey) {
