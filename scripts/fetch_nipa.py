@@ -105,6 +105,14 @@ NIPA_TABLES = [
         "unit": "Millions of dollars",
         "skip_lines": ["1", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
     },
+    {
+        "key": "3_3",
+        "dataset": "NIPA",
+        "table": "T30300",
+        "frequency": "Q",
+        "title": "State and local government current receipts and expenditures",
+        "unit": "Millions of dollars"
+    },
 ]
 
 

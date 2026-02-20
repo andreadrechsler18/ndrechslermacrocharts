@@ -9,6 +9,7 @@ const SITE_MAP = [
       { label: "2.4.5U - Nominal Spending", href: "nipa/2_4_5u.html" },
       { label: "2.4.6U - Real Spending", href: "nipa/2_4_6u.html" },
       { label: "2BU - Mfg & Trade Sales", href: "nipa/2bu.html" },
+      { label: "3.3 - State & Local Govt", href: "nipa/3_3.html" },
       { label: "3BU - Inventory-Sales Ratio", href: "nipa/3bu.html" },
       { label: "4.2.5B - Net Exports", href: "nipa/4_2_5b.html" },
       { label: "4.2.6B - Real Imports", href: "nipa/4_2_6b.html" },
