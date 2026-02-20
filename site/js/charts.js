@@ -35,6 +35,22 @@ window.NewCoCharts = {
       return;
     }
 
+    // Generate computed series (e.g. subtract one series from another)
+    if (options.computedSeries) {
+      options.computedSeries.forEach(cs => {
+        const a = this.data.series[cs.sources[0]];
+        const b = this.data.series[cs.sources[1]];
+        if (!a || !b) return;
+        const bMap = {};
+        b.data.forEach(d => { bMap[d.date] = d.value; });
+        const data = a.data.map(d => ({
+          date: d.date,
+          value: (d.value != null && bMap[d.date] != null) ? d.value - bMap[d.date] : null
+        }));
+        this.data.series.push({ id: cs.id, name: cs.name, data: data });
+      });
+    }
+
     // Build series ID to array index map (for category total lookups)
     this.seriesIdMap = {};
     this.data.series.forEach((s, i) => { this.seriesIdMap[s.id] = i; });
