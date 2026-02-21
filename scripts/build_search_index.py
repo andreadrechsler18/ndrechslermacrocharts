@@ -285,6 +285,7 @@ def run():
                     "sectionLabel": page_info["sectionLabel"],
                     "page": page_info["page"],
                     "pageLabel": page_info["pageLabel"],
+                    "dataFile": data_file,
                 }
                 if naics:
                     entry["naics"] = naics
