@@ -1,0 +1,3370 @@
+{
+  "00000000": {
+    "naics": "-",
+    "name": "Total nonfarm"
+  },
+  "05000000": {
+    "naics": "-",
+    "name": "Total private"
+  },
+  "06000000": {
+    "naics": "-",
+    "name": "Goods-producing"
+  },
+  "07000000": {
+    "naics": "-",
+    "name": "Service-providing"
+  },
+  "08000000": {
+    "naics": "-",
+    "name": "Private service-providing"
+  },
+  "10000000": {
+    "naics": "-",
+    "name": "Mining and logging"
+  },
+  "10113300": {
+    "naics": "1133",
+    "name": "Logging"
+  },
+  "10210000": {
+    "naics": "21",
+    "name": "Mining, quarrying, and oil and gas extraction"
+  },
+  "10211000": {
+    "naics": "211",
+    "name": "Oil and gas extraction"
+  },
+  "10212000": {
+    "naics": "212",
+    "name": "Mining (except oil and gas)"
+  },
+  "10212100": {
+    "naics": "2121",
+    "name": "Coal mining"
+  },
+  "10212114": {
+    "naics": "212114",
+    "name": "Surface coal mining"
+  },
+  "10212115": {
+    "naics": "212115",
+    "name": "Underground coal mining"
+  },
+  "10212200": {
+    "naics": "2122",
+    "name": "Metal ore mining"
+  },
+  "10212220": {
+    "naics": "21222",
+    "name": "Gold ore and silver ore mining"
+  },
+  "10212290": {
+    "naics": "21221,3,9",
+    "name": "Iron ore, copper, nickel, lead, zinc, and other metal ore mining"
+  },
+  "10212300": {
+    "naics": "2123",
+    "name": "Nonmetallic mineral mining and quarrying"
+  },
+  "10212310": {
+    "naics": "21231",
+    "name": "Stone mining and quarrying"
+  },
+  "10212312": {
+    "naics": "212312",
+    "name": "Crushed and broken limestone mining and quarrying"
+  },
+  "10212319": {
+    "naics": "212311,3,9",
+    "name": "Dimension stone, crushed and broken granite, and other crushed and broken stone mining and quarrying"
+  },
+  "10212320": {
+    "naics": "21232",
+    "name": "Sand, gravel, clay, and ceramic and refractory minerals mining and quarrying"
+  },
+  "10212321": {
+    "naics": "212321",
+    "name": "Construction sand and gravel mining"
+  },
+  "10212390": {
+    "naics": "21239",
+    "name": "Other nonmetallic mineral mining and quarrying"
+  },
+  "10213000": {
+    "naics": "213",
+    "name": "Support activities for mining"
+  },
+  "10213111": {
+    "naics": "213111",
+    "name": "Drilling oil and gas wells"
+  },
+  "10213112": {
+    "naics": "213112",
+    "name": "Support activities for oil and gas operations"
+  },
+  "10213115": {
+    "naics": "213113,4,5",
+    "name": "Support activities for coal, metal, and nonmetallic minerals mining"
+  },
+  "20000000": {
+    "naics": "23",
+    "name": "Construction"
+  },
+  "20236000": {
+    "naics": "236",
+    "name": "Construction of buildings"
+  },
+  "20236100": {
+    "naics": "2361",
+    "name": "Residential building construction"
+  },
+  "20236115": {
+    "naics": "236115",
+    "name": "New single-family housing construction (except for-sale builders)"
+  },
+  "20236116": {
+    "naics": "236116",
+    "name": "New multifamily housing construction (except for-sale builders)"
+  },
+  "20236117": {
+    "naics": "236117",
+    "name": "New housing for-sale builders"
+  },
+  "20236118": {
+    "naics": "236118",
+    "name": "Residential remodelers"
+  },
+  "20236200": {
+    "naics": "2362",
+    "name": "Nonresidential building construction"
+  },
+  "20236210": {
+    "naics": "23621",
+    "name": "Industrial building construction"
+  },
+  "20236220": {
+    "naics": "23622",
+    "name": "Commercial and institutional building construction"
+  },
+  "20237000": {
+    "naics": "237",
+    "name": "Heavy and civil engineering construction"
+  },
+  "20237100": {
+    "naics": "2371",
+    "name": "Utility system construction"
+  },
+  "20237110": {
+    "naics": "23711",
+    "name": "Water and sewer line and related structures construction"
+  },
+  "20237120": {
+    "naics": "23712",
+    "name": "Oil and gas pipeline and related structures construction"
+  },
+  "20237130": {
+    "naics": "23713",
+    "name": "Power and communication line and related structures construction"
+  },
+  "20237200": {
+    "naics": "2372",
+    "name": "Land subdivision"
+  },
+  "20237300": {
+    "naics": "2373",
+    "name": "Highway, street, and bridge construction"
+  },
+  "20237900": {
+    "naics": "2379",
+    "name": "Other heavy and civil engineering construction"
+  },
+  "20238000": {
+    "naics": "238",
+    "name": "Specialty trade contractors"
+  },
+  "20238001": {
+    "naics": "part 238",
+    "name": "Residential specialty trade contractors"
+  },
+  "20238002": {
+    "naics": "part 238",
+    "name": "Nonresidential specialty trade contractors"
+  },
+  "20238100": {
+    "naics": "2381",
+    "name": "Foundation, structure, and building exterior contractors"
+  },
+  "20238110": {
+    "naics": "23811",
+    "name": "Poured concrete foundation and structure contractors"
+  },
+  "20238120": {
+    "naics": "23812",
+    "name": "Structural steel and precast concrete contractors"
+  },
+  "20238130": {
+    "naics": "23813",
+    "name": "Framing contractors"
+  },
+  "20238140": {
+    "naics": "23814",
+    "name": "Masonry contractors"
+  },
+  "20238150": {
+    "naics": "23815",
+    "name": "Glass and glazing contractors"
+  },
+  "20238160": {
+    "naics": "23816",
+    "name": "Roofing contractors"
+  },
+  "20238170": {
+    "naics": "23817",
+    "name": "Siding contractors"
+  },
+  "20238190": {
+    "naics": "23819",
+    "name": "Other foundation, structure, and building exterior contractors"
+  },
+  "20238200": {
+    "naics": "2382",
+    "name": "Building equipment contractors"
+  },
+  "20238210": {
+    "naics": "23821",
+    "name": "Electrical contractors and other wiring installation contractors"
+  },
+  "20238220": {
+    "naics": "23822",
+    "name": "Plumbing, heating, and air-conditioning contractors"
+  },
+  "20238290": {
+    "naics": "23829",
+    "name": "Other building equipment contractors"
+  },
+  "20238300": {
+    "naics": "2383",
+    "name": "Building finishing contractors"
+  },
+  "20238310": {
+    "naics": "23831",
+    "name": "Drywall and insulation contractors"
+  },
+  "20238320": {
+    "naics": "23832",
+    "name": "Painting and wall covering contractors"
+  },
+  "20238330": {
+    "naics": "23833",
+    "name": "Flooring contractors"
+  },
+  "20238340": {
+    "naics": "23834",
+    "name": "Tile and terrazzo contractors"
+  },
+  "20238350": {
+    "naics": "23835",
+    "name": "Finish carpentry contractors"
+  },
+  "20238390": {
+    "naics": "23839",
+    "name": "Other building finishing contractors"
+  },
+  "20238900": {
+    "naics": "2389",
+    "name": "Other specialty trade contractors"
+  },
+  "20238910": {
+    "naics": "23891",
+    "name": "Site preparation contractors"
+  },
+  "20238990": {
+    "naics": "23899",
+    "name": "All other specialty trade contractors"
+  },
+  "30000000": {
+    "naics": "-",
+    "name": "Manufacturing"
+  },
+  "31000000": {
+    "naics": "-",
+    "name": "Durable goods"
+  },
+  "31321000": {
+    "naics": "321",
+    "name": "Wood product manufacturing"
+  },
+  "31321100": {
+    "naics": "3211",
+    "name": "Sawmills and wood preservation"
+  },
+  "31321200": {
+    "naics": "3212",
+    "name": "Veneer, plywood, and engineered wood product manufacturing"
+  },
+  "31321900": {
+    "naics": "3219",
+    "name": "Other wood product manufacturing"
+  },
+  "31321910": {
+    "naics": "32191",
+    "name": "Millwork"
+  },
+  "31321911": {
+    "naics": "321911",
+    "name": "Wood window and door manufacturing"
+  },
+  "31321918": {
+    "naics": "321912,8",
+    "name": "Cut stock, resawing lumber, planing, and other millwork (including flooring)"
+  },
+  "31321920": {
+    "naics": "32192",
+    "name": "Wood container and pallet manufacturing"
+  },
+  "31321990": {
+    "naics": "32199",
+    "name": "All other wood product manufacturing"
+  },
+  "31327000": {
+    "naics": "327",
+    "name": "Nonmetallic mineral product manufacturing"
+  },
+  "31327100": {
+    "naics": "3271",
+    "name": "Clay product and refractory manufacturing"
+  },
+  "31327200": {
+    "naics": "3272",
+    "name": "Glass and glass product manufacturing"
+  },
+  "31327300": {
+    "naics": "3273",
+    "name": "Cement and concrete product manufacturing"
+  },
+  "31327320": {
+    "naics": "32732",
+    "name": "Ready-mix concrete manufacturing"
+  },
+  "31327390": {
+    "naics": "32731,3,9",
+    "name": "Cement and concrete pipe, brick, block, and other concrete product manufacturing"
+  },
+  "31327900": {
+    "naics": "3274,9",
+    "name": "Lime, gypsum, and other nonmetallic mineral product manufacturing"
+  },
+  "31331000": {
+    "naics": "331",
+    "name": "Primary metal manufacturing"
+  },
+  "31331100": {
+    "naics": "3311",
+    "name": "Iron and steel mills and ferroalloy manufacturing"
+  },
+  "31331200": {
+    "naics": "3312",
+    "name": "Steel product manufacturing from purchased steel"
+  },
+  "31331400": {
+    "naics": "3313,4",
+    "name": "Alumina, aluminum, and other nonferrous metal production and processing"
+  },
+  "31331500": {
+    "naics": "3315",
+    "name": "Foundries"
+  },
+  "31331510": {
+    "naics": "33151",
+    "name": "Ferrous metal foundries"
+  },
+  "31331520": {
+    "naics": "33152",
+    "name": "Nonferrous metal foundries"
+  },
+  "31332000": {
+    "naics": "332",
+    "name": "Fabricated metal product manufacturing"
+  },
+  "31332100": {
+    "naics": "3321",
+    "name": "Forging and stamping"
+  },
+  "31332300": {
+    "naics": "3323",
+    "name": "Architectural and structural metals manufacturing"
+  },
+  "31332310": {
+    "naics": "33231",
+    "name": "Plate work and fabricated structural product manufacturing"
+  },
+  "31332312": {
+    "naics": "332312",
+    "name": "Fabricated structural metal manufacturing"
+  },
+  "31332313": {
+    "naics": "332311,3",
+    "name": "Plate work and prefabricated metal building and component manufacturing"
+  },
+  "31332320": {
+    "naics": "33232",
+    "name": "Ornamental and architectural metal products manufacturing"
+  },
+  "31332321": {
+    "naics": "332321",
+    "name": "Metal window and door manufacturing"
+  },
+  "31332322": {
+    "naics": "332322",
+    "name": "Sheet metal work manufacturing"
+  },
+  "31332323": {
+    "naics": "332323",
+    "name": "Ornamental and architectural metal work manufacturing"
+  },
+  "31332400": {
+    "naics": "3324",
+    "name": "Boiler, tank, and shipping container manufacturing"
+  },
+  "31332600": {
+    "naics": "3325,6",
+    "name": "Hardware, spring, and wire product manufacturing"
+  },
+  "31332700": {
+    "naics": "3327",
+    "name": "Machine shops; turned product; and screw, nut, and bolt manufacturing"
+  },
+  "31332710": {
+    "naics": "33271",
+    "name": "Machine shops"
+  },
+  "31332720": {
+    "naics": "33272",
+    "name": "Turned product and screw, nut, and bolt manufacturing"
+  },
+  "31332800": {
+    "naics": "3328",
+    "name": "Coating, engraving, heat treating, and allied activities"
+  },
+  "31332812": {
+    "naics": "332811,2",
+    "name": "Metal heat treating, coating, engraving (except jewelry and silverware), and allied services to manufacturers"
+  },
+  "31332813": {
+    "naics": "332813",
+    "name": "Electroplating, plating, polishing, anodizing, and coloring"
+  },
+  "31332900": {
+    "naics": "3329",
+    "name": "Cutlery, handtool, and other fabricated metal product manufacturing"
+  },
+  "31332910": {
+    "naics": "33291",
+    "name": "Metal valve manufacturing"
+  },
+  "31332990": {
+    "naics": "33299",
+    "name": "Cutlery, handtool, and all other fabricated metal product manufacturing"
+  },
+  "31332994": {
+    "naics": "332992,3,4",
+    "name": "Small arms, ammunition, and other ordnance and ordnance accessories manufacturing"
+  },
+  "31332999": {
+    "naics": "332200;991,9",
+    "name": "Cutlery, handtool, ball and roller bearing, fabricated pipe, pipe fitting, and all other fabricated metal product manufacturing"
+  },
+  "31333000": {
+    "naics": "333",
+    "name": "Machinery manufacturing"
+  },
+  "31333100": {
+    "naics": "3331",
+    "name": "Agriculture, construction, and mining machinery manufacturing"
+  },
+  "31333110": {
+    "naics": "33311",
+    "name": "Agricultural implement manufacturing"
+  },
+  "31333120": {
+    "naics": "33312",
+    "name": "Construction machinery manufacturing"
+  },
+  "31333130": {
+    "naics": "33313",
+    "name": "Mining and oil and gas field machinery manufacturing"
+  },
+  "31333200": {
+    "naics": "3332",
+    "name": "Industrial machinery manufacturing"
+  },
+  "31333248": {
+    "naics": "333248",
+    "name": "All other industrial machinery manufacturing"
+  },
+  "31333300": {
+    "naics": "3333",
+    "name": "Commercial and service industry machinery manufacturing"
+  },
+  "31333400": {
+    "naics": "3334",
+    "name": "Ventilation, heating, air-conditioning, and commercial refrigeration equipment manufacturing"
+  },
+  "31333415": {
+    "naics": "333415",
+    "name": "Air-conditioning and warm air heating equipment and commercial and industrial refrigeration equipment manufacturing"
+  },
+  "31333500": {
+    "naics": "3335",
+    "name": "Metalworking machinery manufacturing"
+  },
+  "31333514": {
+    "naics": "333514",
+    "name": "Special die and tool, die set, jig, and fixture manufacturing"
+  },
+  "31333517": {
+    "naics": "333517",
+    "name": "Machine tool manufacturing"
+  },
+  "31333519": {
+    "naics": "333511,5,9",
+    "name": "Industrial mold, cutting tool and machine tool accessory, rolling mill, and other metalworking machinery manufacturing"
+  },
+  "31333600": {
+    "naics": "3336",
+    "name": "Engine, turbine, and power transmission equipment manufacturing"
+  },
+  "31333900": {
+    "naics": "3339",
+    "name": "Other general purpose machinery manufacturing"
+  },
+  "31333910": {
+    "naics": "33391",
+    "name": "Pump and compressor manufacturing"
+  },
+  "31333920": {
+    "naics": "33392",
+    "name": "Material handling equipment manufacturing"
+  },
+  "31333990": {
+    "naics": "33399",
+    "name": "All other general purpose machinery manufacturing"
+  },
+  "31334000": {
+    "naics": "334",
+    "name": "Computer and electronic product manufacturing"
+  },
+  "31334100": {
+    "naics": "3341",
+    "name": "Computer and peripheral equipment manufacturing"
+  },
+  "31334111": {
+    "naics": "334111",
+    "name": "Electronic computer manufacturing"
+  },
+  "31334118": {
+    "naics": "334112,8",
+    "name": "Computer storage device, terminal, and other peripheral equipment manufacturing"
+  },
+  "31334200": {
+    "naics": "3342",
+    "name": "Communications equipment manufacturing"
+  },
+  "31334220": {
+    "naics": "33422",
+    "name": "Radio and television broadcasting and wireless communications equipment manufacturing"
+  },
+  "31334400": {
+    "naics": "3344",
+    "name": "Semiconductor and other electronic component manufacturing"
+  },
+  "31334413": {
+    "naics": "334413",
+    "name": "Semiconductor and related device manufacturing"
+  },
+  "31334418": {
+    "naics": "334412,8",
+    "name": "Bare printed circuit board and printed electronic circuit assembly manufacturing"
+  },
+  "31334419": {
+    "naics": "334416,7,9",
+    "name": "Capacitor, resistor, coil, transformer, other inductor, electronic connector, and other electronic component manufacturing"
+  },
+  "31334500": {
+    "naics": "3345",
+    "name": "Navigational, measuring, electromedical, and control instruments manufacturing"
+  },
+  "31334510": {
+    "naics": "334510",
+    "name": "Electromedical and electrotherapeutic apparatus manufacturing"
+  },
+  "31334511": {
+    "naics": "334511",
+    "name": "Search, detection, navigation, guidance, aeronautical, and nautical system and instrument manufacturing"
+  },
+  "31334513": {
+    "naics": "334513",
+    "name": "Instruments and related products manufacturing for measuring, displaying, and controlling industrial process variables"
+  },
+  "31334515": {
+    "naics": "334515",
+    "name": "Instrument manufacturing for measuring and testing electricity and electrical signals"
+  },
+  "31334519": {
+    "naics": "334512,4,6-9",
+    "name": "Miscellaneous electronic instruments manufacturing"
+  },
+  "31334600": {
+    "naics": "3343,6",
+    "name": "Manufacturing and reproducing magnetic and optical media and audio and video equipment manufacturing"
+  },
+  "31335000": {
+    "naics": "335",
+    "name": "Electrical equipment, appliance, and component manufacturing"
+  },
+  "31335100": {
+    "naics": "3351",
+    "name": "Electric lighting equipment manufacturing"
+  },
+  "31335200": {
+    "naics": "3352",
+    "name": "Household appliance manufacturing"
+  },
+  "31335300": {
+    "naics": "3353",
+    "name": "Electrical equipment manufacturing"
+  },
+  "31335311": {
+    "naics": "335311",
+    "name": "Power, distribution, and specialty transformer manufacturing"
+  },
+  "31335314": {
+    "naics": "335312,3,4",
+    "name": "Motor, generator, switchgear and switchboard apparatus, and relay and industrial control manufacturing"
+  },
+  "31335900": {
+    "naics": "3359",
+    "name": "Other electrical equipment and component manufacturing"
+  },
+  "31335910": {
+    "naics": "33591",
+    "name": "Battery manufacturing"
+  },
+  "31335990": {
+    "naics": "33592,3,9",
+    "name": "Wiring device, communication and energy wire and cable, and all other electrical equipment and component manufacturing"
+  },
+  "31336000": {
+    "naics": "336",
+    "name": "Transportation equipment manufacturing"
+  },
+  "31336001": {
+    "naics": "3361,2,3",
+    "name": "Motor vehicles and parts"
+  },
+  "31336100": {
+    "naics": "3361",
+    "name": "Motor vehicle manufacturing"
+  },
+  "31336200": {
+    "naics": "3362",
+    "name": "Motor vehicle body and trailer manufacturing"
+  },
+  "31336300": {
+    "naics": "3363",
+    "name": "Motor vehicle parts manufacturing"
+  },
+  "31336310": {
+    "naics": "33631",
+    "name": "Motor vehicle gasoline engine and engine parts manufacturing"
+  },
+  "31336320": {
+    "naics": "33632",
+    "name": "Motor vehicle electrical and electronic equipment manufacturing"
+  },
+  "31336350": {
+    "naics": "33635",
+    "name": "Motor vehicle transmission and power train parts manufacturing"
+  },
+  "31336370": {
+    "naics": "33637",
+    "name": "Motor vehicle metal stamping"
+  },
+  "31336390": {
+    "naics": "33633,4,6,9",
+    "name": "Motor vehicle steering and suspension components, except spring; brake system, seating, interior trim, and other motor vehicle parts manufacturing"
+  },
+  "31336400": {
+    "naics": "3364",
+    "name": "Aerospace product and parts manufacturing"
+  },
+  "31336411": {
+    "naics": "336411",
+    "name": "Aircraft manufacturing"
+  },
+  "31336412": {
+    "naics": "336412",
+    "name": "Aircraft engine and engine parts manufacturing"
+  },
+  "31336413": {
+    "naics": "336413",
+    "name": "Other aircraft parts and auxiliary equipment manufacturing"
+  },
+  "31336419": {
+    "naics": "336414,5,9",
+    "name": "Guided missile; space vehicle; and guided missile and space vehicle propulsion unit, parts, and auxiliary equipment manufacturing"
+  },
+  "31336600": {
+    "naics": "3366",
+    "name": "Ship and boat building"
+  },
+  "31336611": {
+    "naics": "336611",
+    "name": "Ship building and repairing"
+  },
+  "31336612": {
+    "naics": "336612",
+    "name": "Boat building"
+  },
+  "31336900": {
+    "naics": "3365,9",
+    "name": "Railroad rolling stock and other transportation equipment manufacturing"
+  },
+  "31337000": {
+    "naics": "337",
+    "name": "Furniture and related product manufacturing"
+  },
+  "31337100": {
+    "naics": "3371",
+    "name": "Household and institutional furniture and kitchen cabinet manufacturing"
+  },
+  "31337110": {
+    "naics": "33711",
+    "name": "Wood kitchen cabinet and countertop manufacturing"
+  },
+  "31337120": {
+    "naics": "33712",
+    "name": "Household and institutional furniture manufacturing"
+  },
+  "31337121": {
+    "naics": "337121",
+    "name": "Upholstered household furniture manufacturing"
+  },
+  "31337127": {
+    "naics": "337122,6,7",
+    "name": "Nonupholstered household furniture and institutional furniture manufacturing"
+  },
+  "31337200": {
+    "naics": "3372",
+    "name": "Office furniture (including fixtures) and other furniture related product manufacturing"
+  },
+  "31337214": {
+    "naics": "337211,2,4",
+    "name": "Office furniture and custom architectural woodwork and millwork manufacturing"
+  },
+  "31337215": {
+    "naics": "337215",
+    "name": "Showcase, partition, shelving, locker, and other furniture related product manufacturing"
+  },
+  "31339000": {
+    "naics": "339",
+    "name": "Miscellaneous manufacturing"
+  },
+  "31339100": {
+    "naics": "3391",
+    "name": "Medical equipment and supplies manufacturing"
+  },
+  "31339112": {
+    "naics": "339112",
+    "name": "Surgical and medical instrument manufacturing"
+  },
+  "31339113": {
+    "naics": "339113",
+    "name": "Surgical appliance and supplies manufacturing"
+  },
+  "31339116": {
+    "naics": "339116",
+    "name": "Dental laboratories"
+  },
+  "31339900": {
+    "naics": "3399",
+    "name": "Other miscellaneous manufacturing"
+  },
+  "31339920": {
+    "naics": "33991,2",
+    "name": "Jewelry, silverware, and sporting and athletic goods manufacturing"
+  },
+  "31339950": {
+    "naics": "33995",
+    "name": "Sign manufacturing"
+  },
+  "31339990": {
+    "naics": "33993,4,9",
+    "name": "Doll, toy, game, office supplies (except paper), and all other miscellaneous manufacturing"
+  },
+  "32000000": {
+    "naics": "-",
+    "name": "Nondurable goods"
+  },
+  "32311000": {
+    "naics": "311",
+    "name": "Food manufacturing"
+  },
+  "32311100": {
+    "naics": "3111",
+    "name": "Animal food manufacturing"
+  },
+  "32311200": {
+    "naics": "3112",
+    "name": "Grain and oilseed milling"
+  },
+  "32311300": {
+    "naics": "3113",
+    "name": "Sugar and confectionery product manufacturing"
+  },
+  "32311350": {
+    "naics": "31135",
+    "name": "Chocolate and confectionery manufacturing"
+  },
+  "32311400": {
+    "naics": "3114",
+    "name": "Fruit and vegetable preserving and specialty food manufacturing"
+  },
+  "32311410": {
+    "naics": "31141",
+    "name": "Frozen food manufacturing"
+  },
+  "32311411": {
+    "naics": "311411",
+    "name": "Frozen fruit, juice, and vegetable manufacturing"
+  },
+  "32311412": {
+    "naics": "311412",
+    "name": "Frozen specialty food manufacturing"
+  },
+  "32311420": {
+    "naics": "31142",
+    "name": "Fruit and vegetable canning, pickling, and drying"
+  },
+  "32311500": {
+    "naics": "3115",
+    "name": "Dairy product manufacturing"
+  },
+  "32311511": {
+    "naics": "311511",
+    "name": "Fluid milk manufacturing"
+  },
+  "32311600": {
+    "naics": "3116",
+    "name": "Animal slaughtering and processing"
+  },
+  "32311611": {
+    "naics": "311611",
+    "name": "Animal, except poultry, slaughtering"
+  },
+  "32311613": {
+    "naics": "311612,3",
+    "name": "Meat processed from carcasses, rendering, and meat byproduct processing"
+  },
+  "32311615": {
+    "naics": "311615",
+    "name": "Poultry processing"
+  },
+  "32311700": {
+    "naics": "3117",
+    "name": "Seafood product preparation and packaging"
+  },
+  "32311800": {
+    "naics": "3118",
+    "name": "Bakeries and tortilla manufacturing"
+  },
+  "32311810": {
+    "naics": "31181",
+    "name": "Bread and bakery product manufacturing"
+  },
+  "32311811": {
+    "naics": "311811",
+    "name": "Retail bakeries"
+  },
+  "32311813": {
+    "naics": "311812,3",
+    "name": "Commercial bakeries and frozen cakes, pies, and other pastries manufacturing"
+  },
+  "32311830": {
+    "naics": "31182,3",
+    "name": "Cookie, cracker, pasta, and tortilla manufacturing"
+  },
+  "32311900": {
+    "naics": "3119",
+    "name": "Other food manufacturing"
+  },
+  "32311910": {
+    "naics": "31191",
+    "name": "Snack food manufacturing"
+  },
+  "32311990": {
+    "naics": "31192,3,4,9",
+    "name": "Coffee, tea, flavoring syrup and concentrate, seasoning, dressing, and other food manufacturing"
+  },
+  "32313000": {
+    "naics": "313",
+    "name": "Textile mills"
+  },
+  "32313200": {
+    "naics": "3132",
+    "name": "Fabric mills"
+  },
+  "32314000": {
+    "naics": "314",
+    "name": "Textile product mills"
+  },
+  "32314100": {
+    "naics": "3141",
+    "name": "Textile furnishings mills"
+  },
+  "32314900": {
+    "naics": "3149",
+    "name": "Other textile product mills"
+  },
+  "32315000": {
+    "naics": "315",
+    "name": "Apparel manufacturing"
+  },
+  "32315250": {
+    "naics": "31525",
+    "name": "Cut and sew apparel manufacturing (except contractors)"
+  },
+  "32322000": {
+    "naics": "322",
+    "name": "Paper manufacturing"
+  },
+  "32322100": {
+    "naics": "3221",
+    "name": "Pulp, paper, and paperboard mills"
+  },
+  "32322200": {
+    "naics": "3222",
+    "name": "Converted paper product manufacturing"
+  },
+  "32322210": {
+    "naics": "32221",
+    "name": "Paperboard container manufacturing"
+  },
+  "32322220": {
+    "naics": "32222",
+    "name": "Paper bag and coated and treated paper manufacturing"
+  },
+  "32322290": {
+    "naics": "32223,9",
+    "name": "Stationery and other converted paper products"
+  },
+  "32323000": {
+    "naics": "323",
+    "name": "Printing and related support activities"
+  },
+  "32323113": {
+    "naics": "323113",
+    "name": "Commercial screen printing"
+  },
+  "32323117": {
+    "naics": "323111,17,20",
+    "name": "Commercial and book printing (except screen) and support activities for printing"
+  },
+  "32324000": {
+    "naics": "324",
+    "name": "Petroleum and coal products manufacturing"
+  },
+  "32324110": {
+    "naics": "32411",
+    "name": "Petroleum refineries"
+  },
+  "32324190": {
+    "naics": "32412,9",
+    "name": "Asphalt paving, roofing, saturated materials, and other petroleum and coal products manufacturing"
+  },
+  "32325000": {
+    "naics": "325",
+    "name": "Chemical manufacturing"
+  },
+  "32325100": {
+    "naics": "3251",
+    "name": "Basic chemical manufacturing"
+  },
+  "32325180": {
+    "naics": "32511,2,3,8",
+    "name": "Petrochemical, industrial gas, synthetic dye, pigment, and other basic inorganic chemical manufacturing"
+  },
+  "32325190": {
+    "naics": "32519",
+    "name": "Other basic organic chemical manufacturing"
+  },
+  "32325200": {
+    "naics": "3252",
+    "name": "Resin, synthetic rubber, and artificial and synthetic fibers and filaments manufacturing"
+  },
+  "32325211": {
+    "naics": "325211",
+    "name": "Plastics material and resin manufacturing"
+  },
+  "32325300": {
+    "naics": "3253",
+    "name": "Pesticide, fertilizer, and other agricultural chemical manufacturing"
+  },
+  "32325400": {
+    "naics": "3254",
+    "name": "Pharmaceutical and medicine manufacturing"
+  },
+  "32325412": {
+    "naics": "325412",
+    "name": "Pharmaceutical preparation manufacturing"
+  },
+  "32325414": {
+    "naics": "325411,3,4",
+    "name": "Medicinal, botanical, in-vitro diagnostic substance, and biological product manufacturing"
+  },
+  "32325500": {
+    "naics": "3255",
+    "name": "Paint, coating, and adhesive manufacturing"
+  },
+  "32325600": {
+    "naics": "3256",
+    "name": "Soap, cleaning compound, and toilet preparation manufacturing"
+  },
+  "32325610": {
+    "naics": "32561",
+    "name": "Soap and cleaning compound manufacturing"
+  },
+  "32325620": {
+    "naics": "32562",
+    "name": "Toilet preparation manufacturing"
+  },
+  "32325900": {
+    "naics": "3259",
+    "name": "Other chemical product and preparation manufacturing"
+  },
+  "32326000": {
+    "naics": "326",
+    "name": "Plastics and rubber products manufacturing"
+  },
+  "32326100": {
+    "naics": "3261",
+    "name": "Plastics product manufacturing"
+  },
+  "32326110": {
+    "naics": "32611",
+    "name": "Plastics packaging materials and unlaminated film and sheet manufacturing"
+  },
+  "32326120": {
+    "naics": "32612",
+    "name": "Plastics pipe, pipe fitting, and unlaminated profile shape manufacturing"
+  },
+  "32326150": {
+    "naics": "32614,5",
+    "name": "Polystyrene, urethane, and other foam product manufacturing"
+  },
+  "32326160": {
+    "naics": "32613,6",
+    "name": "Laminated plastics plate, sheet (except packaging), shape, and plastics bottle manufacturing"
+  },
+  "32326190": {
+    "naics": "32619",
+    "name": "Other plastics product manufacturing"
+  },
+  "32326200": {
+    "naics": "3262",
+    "name": "Rubber product manufacturing"
+  },
+  "32326210": {
+    "naics": "32621",
+    "name": "Tire manufacturing"
+  },
+  "32326290": {
+    "naics": "32622,9",
+    "name": "Rubber and plastics hoses, belting, and other rubber product manufacturing"
+  },
+  "32329000": {
+    "naics": "312,6",
+    "name": "Beverage, tobacco, and leather and allied product manufacturing"
+  },
+  "32329100": {
+    "naics": "3121",
+    "name": "Beverage manufacturing"
+  },
+  "32329110": {
+    "naics": "31211",
+    "name": "Soft drinks and ice"
+  },
+  "32329111": {
+    "naics": "312111",
+    "name": "Soft drinks"
+  },
+  "32329140": {
+    "naics": "31212,3,4",
+    "name": "Breweries, wineries, and distilleries"
+  },
+  "32329900": {
+    "naics": "3122,60",
+    "name": "Other miscellaneous nondurable goods manufacturing"
+  },
+  "40000000": {
+    "naics": "-",
+    "name": "Trade, transportation, and utilities"
+  },
+  "41420000": {
+    "naics": "42",
+    "name": "Wholesale trade"
+  },
+  "41423000": {
+    "naics": "423",
+    "name": "Merchant wholesalers, durable goods"
+  },
+  "41423100": {
+    "naics": "4231",
+    "name": "Motor vehicle and motor vehicle parts and supplies merchant wholesalers"
+  },
+  "41423110": {
+    "naics": "42311",
+    "name": "Automobile and other motor vehicle merchant wholesalers"
+  },
+  "41423120": {
+    "naics": "42312",
+    "name": "Motor vehicle supplies and new parts merchant wholesalers"
+  },
+  "41423200": {
+    "naics": "4232",
+    "name": "Furniture and home furnishing merchant wholesalers"
+  },
+  "41423210": {
+    "naics": "42321",
+    "name": "Furniture merchant wholesalers"
+  },
+  "41423220": {
+    "naics": "42322",
+    "name": "Home furnishing merchant wholesalers"
+  },
+  "41423300": {
+    "naics": "4233",
+    "name": "Lumber and other construction materials merchant wholesalers"
+  },
+  "41423310": {
+    "naics": "42331",
+    "name": "Lumber, plywood, millwork, and wood panel merchant wholesalers"
+  },
+  "41423320": {
+    "naics": "42332",
+    "name": "Brick, stone, and related construction material merchant wholesalers"
+  },
+  "41423390": {
+    "naics": "42333,9",
+    "name": "Roofing, siding, insulation, and other construction material merchant wholesalers"
+  },
+  "41423400": {
+    "naics": "4234",
+    "name": "Professional and commercial equipment and supplies merchant wholesalers"
+  },
+  "41423420": {
+    "naics": "42342",
+    "name": "Office equipment merchant wholesalers"
+  },
+  "41423430": {
+    "naics": "42343",
+    "name": "Computer and computer peripheral equipment and software merchant wholesalers"
+  },
+  "41423450": {
+    "naics": "42345",
+    "name": "Medical, dental, and hospital equipment and supplies merchant wholesalers"
+  },
+  "41423490": {
+    "naics": "42341,4,6,9",
+    "name": "Ophthalmic goods and photographic, commercial, and professional equipment and supplies merchant wholesalers"
+  },
+  "41423500": {
+    "naics": "4235",
+    "name": "Metal and mineral (except petroleum) merchant wholesalers"
+  },
+  "41423600": {
+    "naics": "4236",
+    "name": "Household appliances and electrical and electronic goods merchant wholesalers"
+  },
+  "41423610": {
+    "naics": "42361",
+    "name": "Electrical apparatus and equipment, wiring supplies, and related equipment merchant wholesalers"
+  },
+  "41423690": {
+    "naics": "42362,9",
+    "name": "Household appliances, electric housewares, consumer electronics, and other electronic parts and equipment merchant wholesalers"
+  },
+  "41423700": {
+    "naics": "4237",
+    "name": "Hardware, and plumbing and heating equipment and supplies merchant wholesalers"
+  },
+  "41423710": {
+    "naics": "42371",
+    "name": "Hardware merchant wholesalers"
+  },
+  "41423720": {
+    "naics": "42372",
+    "name": "Plumbing, heating, and hydronics equipment and supplies merchant wholesalers"
+  },
+  "41423740": {
+    "naics": "42373,4",
+    "name": "Warm air heating, air-conditioning, and refrigeration equipment and supplies merchant wholesalers"
+  },
+  "41423800": {
+    "naics": "4238",
+    "name": "Machinery, equipment, and supplies merchant wholesalers"
+  },
+  "41423810": {
+    "naics": "42381",
+    "name": "Construction and mining (except oil well) machinery and equipment merchant wholesalers"
+  },
+  "41423820": {
+    "naics": "42382",
+    "name": "Farm and garden machinery and equipment merchant wholesalers"
+  },
+  "41423830": {
+    "naics": "42383",
+    "name": "Industrial machinery and equipment merchant wholesalers"
+  },
+  "41423840": {
+    "naics": "42384",
+    "name": "Industrial supplies merchant wholesalers"
+  },
+  "41423850": {
+    "naics": "42385",
+    "name": "Service establishment equipment and supplies merchant wholesalers"
+  },
+  "41423860": {
+    "naics": "42386",
+    "name": "Transportation equipment and supplies (except motor vehicle) merchant wholesalers"
+  },
+  "41423900": {
+    "naics": "4239",
+    "name": "Miscellaneous durable goods merchant wholesalers"
+  },
+  "41423910": {
+    "naics": "42391",
+    "name": "Sporting and recreational goods and supplies merchant wholesalers"
+  },
+  "41423930": {
+    "naics": "42393",
+    "name": "Recyclable material merchant wholesalers"
+  },
+  "41423940": {
+    "naics": "42394",
+    "name": "Jewelry, watch, precious stone, and precious metal merchant wholesalers"
+  },
+  "41423990": {
+    "naics": "42392,9",
+    "name": "Toy and hobby goods and supplies and other miscellaneous durable goods merchant wholesalers"
+  },
+  "41424000": {
+    "naics": "424",
+    "name": "Merchant wholesalers, nondurable goods"
+  },
+  "41424100": {
+    "naics": "4241",
+    "name": "Paper and paper product merchant wholesalers"
+  },
+  "41424120": {
+    "naics": "42411,2",
+    "name": "Printing and writing paper, stationery, and office supplies merchant wholesalers"
+  },
+  "41424130": {
+    "naics": "42413",
+    "name": "Industrial and personal service paper merchant wholesalers"
+  },
+  "41424200": {
+    "naics": "4242",
+    "name": "Drugs and druggists' sundries merchant wholesalers"
+  },
+  "41424300": {
+    "naics": "4243",
+    "name": "Apparel, piece goods, and notions merchant wholesalers"
+  },
+  "41424340": {
+    "naics": "42431,4",
+    "name": "Footwear, piece goods, notions, and other dry goods merchant wholesalers"
+  },
+  "41424350": {
+    "naics": "42435",
+    "name": "Clothing and clothing accessories merchant wholesalers"
+  },
+  "41424400": {
+    "naics": "4244",
+    "name": "Grocery and related product merchant wholesalers"
+  },
+  "41424410": {
+    "naics": "42441",
+    "name": "General line grocery merchant wholesalers"
+  },
+  "41424420": {
+    "naics": "42442",
+    "name": "Packaged frozen food merchant wholesalers"
+  },
+  "41424450": {
+    "naics": "42445",
+    "name": "Confectionery merchant wholesalers"
+  },
+  "41424470": {
+    "naics": "42443,4,6,7",
+    "name": "Dairy product (except dried or canned), poultry product, fish, seafood, meat, and meat product merchant wholesalers"
+  },
+  "41424480": {
+    "naics": "42448",
+    "name": "Fresh fruit and vegetable merchant wholesalers"
+  },
+  "41424490": {
+    "naics": "42449",
+    "name": "Other grocery and related products merchant wholesalers"
+  },
+  "41424500": {
+    "naics": "4245",
+    "name": "Farm product raw material merchant wholesalers"
+  },
+  "41424510": {
+    "naics": "42451",
+    "name": "Grain and field bean merchant wholesalers"
+  },
+  "41424600": {
+    "naics": "4246",
+    "name": "Chemical and allied products merchant wholesalers"
+  },
+  "41424700": {
+    "naics": "4247",
+    "name": "Petroleum and petroleum products merchant wholesalers"
+  },
+  "41424800": {
+    "naics": "4248",
+    "name": "Beer, wine, and distilled alcoholic beverage merchant wholesalers"
+  },
+  "41424810": {
+    "naics": "42481",
+    "name": "Beer and ale merchant wholesalers"
+  },
+  "41424820": {
+    "naics": "42482",
+    "name": "Wine and distilled alcoholic beverage merchant wholesalers"
+  },
+  "41424900": {
+    "naics": "4249",
+    "name": "Miscellaneous nondurable goods merchant wholesalers"
+  },
+  "41424910": {
+    "naics": "42491",
+    "name": "Farm supplies merchant wholesalers"
+  },
+  "41424930": {
+    "naics": "42493",
+    "name": "Flower, nursery stock, and florists' supplies merchant wholesalers"
+  },
+  "41424990": {
+    "naics": "42492,4,5,9",
+    "name": "All other nondurable goods merchant wholesalers"
+  },
+  "41425000": {
+    "naics": "425",
+    "name": "Wholesale trade agents and brokers"
+  },
+  "42000000": {
+    "naics": "-",
+    "name": "Retail trade"
+  },
+  "42441000": {
+    "naics": "441",
+    "name": "Motor vehicle and parts dealers"
+  },
+  "42441100": {
+    "naics": "4411",
+    "name": "Automobile dealers"
+  },
+  "42441110": {
+    "naics": "44111",
+    "name": "New car dealers"
+  },
+  "42441120": {
+    "naics": "44112",
+    "name": "Used car dealers"
+  },
+  "42441200": {
+    "naics": "4412",
+    "name": "Other motor vehicle dealers"
+  },
+  "42441210": {
+    "naics": "44121",
+    "name": "Recreational vehicle dealers"
+  },
+  "42441220": {
+    "naics": "44122",
+    "name": "Motorcycle, boat, and other motor vehicle dealers"
+  },
+  "42441300": {
+    "naics": "4413",
+    "name": "Automotive parts, accessories, and tire retailers"
+  },
+  "42441330": {
+    "naics": "44133",
+    "name": "Automotive parts and accessories retailers"
+  },
+  "42441340": {
+    "naics": "44134",
+    "name": "Tire dealers"
+  },
+  "42444000": {
+    "naics": "444",
+    "name": "Building material and garden equipment and supplies dealers"
+  },
+  "42444100": {
+    "naics": "4441",
+    "name": "Building material and supplies dealers"
+  },
+  "42444140": {
+    "naics": "44414",
+    "name": "Hardware retailers"
+  },
+  "42444180": {
+    "naics": "44411,2,8",
+    "name": "Home centers, paint, wallpaper, and other building material dealers"
+  },
+  "42444200": {
+    "naics": "4442",
+    "name": "Lawn and garden equipment and supplies retailers"
+  },
+  "42444230": {
+    "naics": "44423",
+    "name": "Outdoor power equipment retailers"
+  },
+  "42444240": {
+    "naics": "44424",
+    "name": "Nursery, garden center, and farm supply retailers"
+  },
+  "42445000": {
+    "naics": "445",
+    "name": "Food and beverage retailers"
+  },
+  "42445100": {
+    "naics": "4451",
+    "name": "Grocery and convenience retailers"
+  },
+  "42445110": {
+    "naics": "44511",
+    "name": "Supermarkets and other grocery retailers (except convenience retailers)"
+  },
+  "42445130": {
+    "naics": "44513",
+    "name": "Convenience retailers and vending machine operators"
+  },
+  "42445131": {
+    "naics": "445131",
+    "name": "Convenience retailers"
+  },
+  "42445132": {
+    "naics": "445132",
+    "name": "Vending machine operators"
+  },
+  "42445200": {
+    "naics": "4452",
+    "name": "Specialty food retailers"
+  },
+  "42445230": {
+    "naics": "44523",
+    "name": "Fruit and vegetable retailers"
+  },
+  "42445250": {
+    "naics": "44524,5",
+    "name": "Meat, fish, and seafood retailers"
+  },
+  "42445290": {
+    "naics": "44529",
+    "name": "Other specialty food retailers"
+  },
+  "42445292": {
+    "naics": "445291,2",
+    "name": "Baked goods, confectionery, and nut retailers"
+  },
+  "42445298": {
+    "naics": "445298",
+    "name": "All other specialty food retailers"
+  },
+  "42445300": {
+    "naics": "4453",
+    "name": "Beer, wine, and liquor retailers"
+  },
+  "42449000": {
+    "naics": "449",
+    "name": "Furniture, home furnishings, electronics, and appliance retailers"
+  },
+  "42449100": {
+    "naics": "4491",
+    "name": "Furniture and home furnishings retailers"
+  },
+  "42449110": {
+    "naics": "44911",
+    "name": "Furniture retailers"
+  },
+  "42449120": {
+    "naics": "44912",
+    "name": "Home furnishings retailers"
+  },
+  "42449121": {
+    "naics": "449121",
+    "name": "Floor covering retailers"
+  },
+  "42449129": {
+    "naics": "449122,9",
+    "name": "Window treatment and all other home furnishings retailers"
+  },
+  "42449200": {
+    "naics": "4492",
+    "name": "Electronics and appliance retailers"
+  },
+  "42455000": {
+    "naics": "455",
+    "name": "General merchandise retailers"
+  },
+  "42455100": {
+    "naics": "4551",
+    "name": "Department stores"
+  },
+  "42455200": {
+    "naics": "4552",
+    "name": "Warehouse clubs, supercenters, and other general merchandise retailers"
+  },
+  "42456000": {
+    "naics": "456",
+    "name": "Health and personal care retailers"
+  },
+  "42456110": {
+    "naics": "45611",
+    "name": "Pharmacies and drug retailers"
+  },
+  "42456120": {
+    "naics": "45612",
+    "name": "Cosmetics, beauty supplies, and perfume retailers"
+  },
+  "42456130": {
+    "naics": "45613",
+    "name": "Optical goods retailers"
+  },
+  "42456190": {
+    "naics": "45619",
+    "name": "Other health and personal care retailers"
+  },
+  "42456191": {
+    "naics": "456191",
+    "name": "Food (health) supplement retailers"
+  },
+  "42456199": {
+    "naics": "456199",
+    "name": "All other health and personal care retailers"
+  },
+  "42457000": {
+    "naics": "457",
+    "name": "Gasoline stations and fuel dealers"
+  },
+  "42457100": {
+    "naics": "4571",
+    "name": "Gasoline stations"
+  },
+  "42457110": {
+    "naics": "45711",
+    "name": "Gasoline stations with convenience stores"
+  },
+  "42457120": {
+    "naics": "45712",
+    "name": "Other gasoline stations"
+  },
+  "42457200": {
+    "naics": "4572",
+    "name": "Fuel dealers"
+  },
+  "42458000": {
+    "naics": "458",
+    "name": "Clothing, clothing accessories, shoe, and jewelry retailers"
+  },
+  "42458100": {
+    "naics": "4581",
+    "name": "Clothing and clothing accessories retailers"
+  },
+  "42458200": {
+    "naics": "4582",
+    "name": "Shoe retailers"
+  },
+  "42458300": {
+    "naics": "4583",
+    "name": "Jewelry, luggage, and leather goods retailers"
+  },
+  "42459000": {
+    "naics": "459",
+    "name": "Sporting goods, hobby, musical instrument, book, and miscellaneous retailers"
+  },
+  "42459100": {
+    "naics": "4591",
+    "name": "Sporting goods, hobby, and musical instrument retailers"
+  },
+  "42459110": {
+    "naics": "45911",
+    "name": "Sporting goods retailers"
+  },
+  "42459120": {
+    "naics": "45912",
+    "name": "Hobby, toy, and game retailers"
+  },
+  "42459130": {
+    "naics": "45913",
+    "name": "Sewing, needlework, and piece goods retailers"
+  },
+  "42459140": {
+    "naics": "45914",
+    "name": "Musical instrument and supplies retailers"
+  },
+  "42459200": {
+    "naics": "4592",
+    "name": "Book retailers and news dealers"
+  },
+  "42459300": {
+    "naics": "4593",
+    "name": "Florists"
+  },
+  "42459400": {
+    "naics": "4594",
+    "name": "Office supplies, stationery, and gift retailers"
+  },
+  "42459410": {
+    "naics": "45941",
+    "name": "Office supplies and stationery retailers"
+  },
+  "42459420": {
+    "naics": "45942",
+    "name": "Gift, novelty, and souvenir retailers"
+  },
+  "42459500": {
+    "naics": "4595",
+    "name": "Used merchandise retailers"
+  },
+  "42459900": {
+    "naics": "4599",
+    "name": "Other miscellaneous retailers"
+  },
+  "42459910": {
+    "naics": "45991",
+    "name": "Pet and pet supplies retailers"
+  },
+  "42459920": {
+    "naics": "45992",
+    "name": "Art dealers"
+  },
+  "42459990": {
+    "naics": "45993,9",
+    "name": "Manufactured (mobile) home dealers and all other miscellaneous retailers"
+  },
+  "42459991": {
+    "naics": "459991",
+    "name": "Tobacco, electronic cigarette, and other smoking supplies retailers"
+  },
+  "43000000": {
+    "naics": "-",
+    "name": "Transportation and warehousing"
+  },
+  "43481000": {
+    "naics": "481",
+    "name": "Air transportation"
+  },
+  "43481100": {
+    "naics": "4811",
+    "name": "Scheduled air transportation"
+  },
+  "43481200": {
+    "naics": "4812",
+    "name": "Nonscheduled air transportation"
+  },
+  "43482000": {
+    "naics": "482",
+    "name": "Rail transportation"
+  },
+  "43483000": {
+    "naics": "483",
+    "name": "Water transportation"
+  },
+  "43484000": {
+    "naics": "484",
+    "name": "Truck transportation"
+  },
+  "43484100": {
+    "naics": "4841",
+    "name": "General freight trucking"
+  },
+  "43484110": {
+    "naics": "48411",
+    "name": "General freight trucking, local"
+  },
+  "43484120": {
+    "naics": "48412",
+    "name": "General freight trucking, long-distance"
+  },
+  "43484121": {
+    "naics": "484121",
+    "name": "General freight trucking, long-distance, truckload"
+  },
+  "43484122": {
+    "naics": "484122",
+    "name": "General freight trucking, long-distance, less than truckload"
+  },
+  "43484200": {
+    "naics": "4842",
+    "name": "Specialized freight trucking"
+  },
+  "43484210": {
+    "naics": "48421",
+    "name": "Used household and office goods moving"
+  },
+  "43484220": {
+    "naics": "48422",
+    "name": "Specialized freight (except used goods) trucking, local"
+  },
+  "43484230": {
+    "naics": "48423",
+    "name": "Specialized freight (except used goods) trucking, long-distance"
+  },
+  "43485000": {
+    "naics": "485",
+    "name": "Transit and ground passenger transportation"
+  },
+  "43485300": {
+    "naics": "4853",
+    "name": "Taxi and limousine service"
+  },
+  "43485400": {
+    "naics": "4854",
+    "name": "School and employee bus transportation"
+  },
+  "43485500": {
+    "naics": "4851,2,5",
+    "name": "Urban transit systems and interurban, rural, and charter bus transportation"
+  },
+  "43485900": {
+    "naics": "4859",
+    "name": "Other transit and ground passenger transportation"
+  },
+  "43486000": {
+    "naics": "486",
+    "name": "Pipeline transportation"
+  },
+  "43487000": {
+    "naics": "487",
+    "name": "Scenic and sightseeing transportation"
+  },
+  "43488000": {
+    "naics": "488",
+    "name": "Support activities for transportation"
+  },
+  "43488100": {
+    "naics": "4881",
+    "name": "Support activities for air transportation"
+  },
+  "43488300": {
+    "naics": "4883",
+    "name": "Support activities for water transportation"
+  },
+  "43488320": {
+    "naics": "48832",
+    "name": "Marine cargo handling"
+  },
+  "43488400": {
+    "naics": "4884",
+    "name": "Support activities for road transportation"
+  },
+  "43488500": {
+    "naics": "4885",
+    "name": "Freight transportation arrangement"
+  },
+  "43488900": {
+    "naics": "4882,9",
+    "name": "Other support activities for transportation, including rail"
+  },
+  "43492000": {
+    "naics": "492",
+    "name": "Couriers and messengers"
+  },
+  "43492100": {
+    "naics": "4921",
+    "name": "Couriers and express delivery services"
+  },
+  "43492200": {
+    "naics": "49111,221",
+    "name": "Local messengers and delivery and private postal service"
+  },
+  "43493000": {
+    "naics": "493",
+    "name": "Warehousing and storage"
+  },
+  "43493110": {
+    "naics": "49311",
+    "name": "General warehousing and storage"
+  },
+  "43493120": {
+    "naics": "49312",
+    "name": "Refrigerated warehousing and storage"
+  },
+  "43493190": {
+    "naics": "49313,9",
+    "name": "Other warehousing and storage, including farm product"
+  },
+  "44220000": {
+    "naics": "22",
+    "name": "Utilities"
+  },
+  "44221100": {
+    "naics": "2211",
+    "name": "Electric power generation, transmission and distribution"
+  },
+  "44221110": {
+    "naics": "22111",
+    "name": "Electric power generation"
+  },
+  "44221112": {
+    "naics": "221112",
+    "name": "Fossil fuel electric power generation"
+  },
+  "44221118": {
+    "naics": "221111,3-8",
+    "name": "Hydroelectric and nuclear, solar, wind, geothermal, biomass, and other electric power generation"
+  },
+  "44221120": {
+    "naics": "22112",
+    "name": "Electric power transmission, control, and distribution"
+  },
+  "44221121": {
+    "naics": "221121",
+    "name": "Electric bulk power transmission and control"
+  },
+  "44221122": {
+    "naics": "221122",
+    "name": "Electric power distribution"
+  },
+  "44221200": {
+    "naics": "2212",
+    "name": "Natural gas distribution"
+  },
+  "44221300": {
+    "naics": "2213",
+    "name": "Water, sewage, and other systems"
+  },
+  "50000000": {
+    "naics": "51",
+    "name": "Information"
+  },
+  "50512000": {
+    "naics": "512",
+    "name": "Motion picture and sound recording industries"
+  },
+  "50512110": {
+    "naics": "51211",
+    "name": "Motion picture and video production"
+  },
+  "50512130": {
+    "naics": "51213",
+    "name": "Motion picture and video exhibition"
+  },
+  "50513000": {
+    "naics": "513",
+    "name": "Publishing industries"
+  },
+  "50513100": {
+    "naics": "5131",
+    "name": "Newspaper, periodical, book, and directory publishers"
+  },
+  "50513110": {
+    "naics": "51311",
+    "name": "Newspaper publishers"
+  },
+  "50513120": {
+    "naics": "51312",
+    "name": "Periodical publishers"
+  },
+  "50513130": {
+    "naics": "51313",
+    "name": "Book publishers"
+  },
+  "50513190": {
+    "naics": "51314,9",
+    "name": "Directory, mailing list, and other publishers"
+  },
+  "50513200": {
+    "naics": "5132",
+    "name": "Software publishers"
+  },
+  "50516000": {
+    "naics": "516",
+    "name": "Broadcasting and content providers"
+  },
+  "50516100": {
+    "naics": "5161",
+    "name": "Radio and television broadcasting stations"
+  },
+  "50516110": {
+    "naics": "51611",
+    "name": "Radio broadcasting stations"
+  },
+  "50516120": {
+    "naics": "51612",
+    "name": "Television broadcasting stations"
+  },
+  "50516200": {
+    "naics": "5162",
+    "name": "Media streaming distribution services, social networks, and other media networks and content providers"
+  },
+  "50517000": {
+    "naics": "517",
+    "name": "Telecommunications"
+  },
+  "50517100": {
+    "naics": "5171",
+    "name": "Wired and wireless telecommunications (except satellite)"
+  },
+  "50517110": {
+    "naics": "51711",
+    "name": "Wired and wireless telecommunications carriers (except satellite)"
+  },
+  "50517111": {
+    "naics": "517111",
+    "name": "Wired telecommunications carriers"
+  },
+  "50517112": {
+    "naics": "517112",
+    "name": "Wireless telecommunications carriers (except satellite)"
+  },
+  "50517120": {
+    "naics": "51712",
+    "name": "Telecommunications resellers"
+  },
+  "50517800": {
+    "naics": "5174,8",
+    "name": "All other telecommunications"
+  },
+  "50518000": {
+    "naics": "518",
+    "name": "Computing infrastructure providers, data processing, web hosting, and related services"
+  },
+  "50519000": {
+    "naics": "519",
+    "name": "Web search portals, libraries, archives, and other information services"
+  },
+  "50519210": {
+    "naics": "51921",
+    "name": "Libraries and archives"
+  },
+  "50519290": {
+    "naics": "51929",
+    "name": "Web search portals and all other information services"
+  },
+  "55000000": {
+    "naics": "-",
+    "name": "Financial activities"
+  },
+  "55520000": {
+    "naics": "52",
+    "name": "Finance and insurance"
+  },
+  "55521000": {
+    "naics": "521",
+    "name": "Monetary authorities-central bank"
+  },
+  "55522000": {
+    "naics": "522",
+    "name": "Credit intermediation and related activities"
+  },
+  "55522100": {
+    "naics": "5221",
+    "name": "Depository credit intermediation"
+  },
+  "55522110": {
+    "naics": "52211",
+    "name": "Commercial banking"
+  },
+  "55522130": {
+    "naics": "52213",
+    "name": "Credit unions"
+  },
+  "55522180": {
+    "naics": "52218",
+    "name": "Savings institutions and other depository credit intermediation"
+  },
+  "55522200": {
+    "naics": "5222",
+    "name": "Nondepository credit intermediation"
+  },
+  "55522210": {
+    "naics": "52221",
+    "name": "Credit card issuing"
+  },
+  "55522220": {
+    "naics": "52222",
+    "name": "Sales financing"
+  },
+  "55522290": {
+    "naics": "52229",
+    "name": "Other nondepository credit intermediation"
+  },
+  "55522291": {
+    "naics": "522291",
+    "name": "Consumer lending"
+  },
+  "55522292": {
+    "naics": "522292",
+    "name": "Real estate credit"
+  },
+  "55522299": {
+    "naics": "522299",
+    "name": "International, secondary market, and all other nondepository credit intermediation"
+  },
+  "55522300": {
+    "naics": "5223",
+    "name": "Activities related to credit intermediation"
+  },
+  "55522310": {
+    "naics": "52231",
+    "name": "Mortgage and nonmortgage loan brokers"
+  },
+  "55522320": {
+    "naics": "52232",
+    "name": "Financial transactions processing, reserve, and clearinghouse activities"
+  },
+  "55522390": {
+    "naics": "52239",
+    "name": "Other activities related to credit intermediation"
+  },
+  "55523000": {
+    "naics": "523,5",
+    "name": "Securities, commodity contracts, funds, trusts, and other financial vehicles, investments, and related activities"
+  },
+  "55523150": {
+    "naics": "52315",
+    "name": "Investment banking and securities intermediation"
+  },
+  "55523200": {
+    "naics": "5231,2",
+    "name": "Securities and commodity contracts brokerage, intermediation, and exchanges"
+  },
+  "55523900": {
+    "naics": "5239,50",
+    "name": "Funds, trusts, and other financial vehicles and investment activities"
+  },
+  "55523910": {
+    "naics": "52391",
+    "name": "Miscellaneous intermediation"
+  },
+  "55523940": {
+    "naics": "52394",
+    "name": "Portfolio management and investment advice"
+  },
+  "55523990": {
+    "naics": "52399,500",
+    "name": "All other financial investment activities"
+  },
+  "55524000": {
+    "naics": "524",
+    "name": "Insurance carriers and related activities"
+  },
+  "55524100": {
+    "naics": "5241",
+    "name": "Insurance carriers"
+  },
+  "55524110": {
+    "naics": "52411",
+    "name": "Direct life, health, and medical insurance carriers"
+  },
+  "55524120": {
+    "naics": "52412",
+    "name": "Direct insurance (except life, health, and medical) carriers"
+  },
+  "55524126": {
+    "naics": "524126",
+    "name": "Direct property and casualty insurance carriers"
+  },
+  "55524128": {
+    "naics": "524127,8",
+    "name": "Direct title insurance and other direct insurance (except life, health, and medical) carriers"
+  },
+  "55524130": {
+    "naics": "52413",
+    "name": "Reinsurance carriers"
+  },
+  "55524200": {
+    "naics": "5242",
+    "name": "Agencies, brokerages, and other insurance related activities"
+  },
+  "55524210": {
+    "naics": "52421",
+    "name": "Insurance agencies and brokerages"
+  },
+  "55524290": {
+    "naics": "52429",
+    "name": "Other insurance related activities"
+  },
+  "55524291": {
+    "naics": "524291",
+    "name": "Claims adjusting"
+  },
+  "55524292": {
+    "naics": "524292",
+    "name": "Pharmacy benefit management and other third party administration of insurance and pension funds"
+  },
+  "55524298": {
+    "naics": "524298",
+    "name": "All other insurance related activities"
+  },
+  "55530000": {
+    "naics": "53",
+    "name": "Real estate and rental and leasing"
+  },
+  "55531000": {
+    "naics": "531",
+    "name": "Real estate"
+  },
+  "55531100": {
+    "naics": "5311",
+    "name": "Lessors of real estate"
+  },
+  "55531110": {
+    "naics": "53111",
+    "name": "Lessors of residential buildings and dwellings"
+  },
+  "55531120": {
+    "naics": "53112",
+    "name": "Lessors of nonresidential buildings (except miniwarehouses)"
+  },
+  "55531130": {
+    "naics": "53113",
+    "name": "Lessors of miniwarehouses and self-storage units"
+  },
+  "55531190": {
+    "naics": "53119",
+    "name": "Lessors of other real estate property"
+  },
+  "55531200": {
+    "naics": "5312",
+    "name": "Offices of real estate agents and brokers"
+  },
+  "55531300": {
+    "naics": "5313",
+    "name": "Activities related to real estate"
+  },
+  "55531310": {
+    "naics": "53131",
+    "name": "Real estate property managers"
+  },
+  "55531311": {
+    "naics": "531311",
+    "name": "Residential property managers"
+  },
+  "55531312": {
+    "naics": "531312",
+    "name": "Nonresidential property managers"
+  },
+  "55531320": {
+    "naics": "53132",
+    "name": "Offices of real estate appraisers"
+  },
+  "55531390": {
+    "naics": "53139",
+    "name": "Other activities related to real estate"
+  },
+  "55532000": {
+    "naics": "532",
+    "name": "Rental and leasing services"
+  },
+  "55532100": {
+    "naics": "5321",
+    "name": "Automotive equipment rental and leasing"
+  },
+  "55532110": {
+    "naics": "53211",
+    "name": "Passenger car rental and leasing"
+  },
+  "55532120": {
+    "naics": "53212",
+    "name": "Truck, utility trailer, and recreational vehicle (RV) rental and leasing"
+  },
+  "55532200": {
+    "naics": "5322",
+    "name": "Consumer goods rental"
+  },
+  "55532283": {
+    "naics": "532283",
+    "name": "Home health equipment rental"
+  },
+  "55532300": {
+    "naics": "5323",
+    "name": "General rental centers"
+  },
+  "55532400": {
+    "naics": "5324",
+    "name": "Commercial and industrial machinery and equipment rental and leasing"
+  },
+  "55532410": {
+    "naics": "53241",
+    "name": "Construction, transportation, mining, and forestry machinery and equipment rental and leasing"
+  },
+  "55532490": {
+    "naics": "53242,9",
+    "name": "Office, commercial, and industrial machinery and equipment rental and leasing"
+  },
+  "55533000": {
+    "naics": "533",
+    "name": "Lessors of nonfinancial intangible assets (except copyrighted works)"
+  },
+  "60000000": {
+    "naics": "-",
+    "name": "Professional and business services"
+  },
+  "60540000": {
+    "naics": "54",
+    "name": "Professional, scientific, and technical services"
+  },
+  "60541100": {
+    "naics": "5411",
+    "name": "Legal services"
+  },
+  "60541110": {
+    "naics": "54111",
+    "name": "Offices of lawyers"
+  },
+  "60541190": {
+    "naics": "54119",
+    "name": "Other legal services"
+  },
+  "60541200": {
+    "naics": "5412",
+    "name": "Accounting, tax preparation, bookkeeping, and payroll services"
+  },
+  "60541211": {
+    "naics": "541211",
+    "name": "Offices of certified public accountants"
+  },
+  "60541213": {
+    "naics": "541213",
+    "name": "Tax preparation services"
+  },
+  "60541214": {
+    "naics": "541214",
+    "name": "Payroll services"
+  },
+  "60541219": {
+    "naics": "541219",
+    "name": "Other accounting services"
+  },
+  "60541300": {
+    "naics": "5413",
+    "name": "Architectural, engineering, and related services"
+  },
+  "60541310": {
+    "naics": "54131",
+    "name": "Architectural services"
+  },
+  "60541320": {
+    "naics": "54132",
+    "name": "Landscape architectural services"
+  },
+  "60541340": {
+    "naics": "54133,4",
+    "name": "Engineering and drafting services"
+  },
+  "60541370": {
+    "naics": "54135,6,7",
+    "name": "Building inspection, surveying, and mapping services"
+  },
+  "60541380": {
+    "naics": "54138",
+    "name": "Testing laboratories and services"
+  },
+  "60541400": {
+    "naics": "5414",
+    "name": "Specialized design services"
+  },
+  "60541410": {
+    "naics": "54141",
+    "name": "Interior design services"
+  },
+  "60541430": {
+    "naics": "54143",
+    "name": "Graphic design services"
+  },
+  "60541500": {
+    "naics": "5415",
+    "name": "Computer systems design and related services"
+  },
+  "60541511": {
+    "naics": "541511",
+    "name": "Custom computer programming services"
+  },
+  "60541512": {
+    "naics": "541512",
+    "name": "Computer systems design services"
+  },
+  "60541513": {
+    "naics": "541513",
+    "name": "Computer facilities management services"
+  },
+  "60541519": {
+    "naics": "541519",
+    "name": "Other computer related services"
+  },
+  "60541600": {
+    "naics": "5416",
+    "name": "Management, scientific, and technical consulting services"
+  },
+  "60541610": {
+    "naics": "54161",
+    "name": "Management consulting services"
+  },
+  "60541611": {
+    "naics": "541611",
+    "name": "Administrative management and general management consulting services"
+  },
+  "60541612": {
+    "naics": "541612",
+    "name": "Human resources consulting services"
+  },
+  "60541613": {
+    "naics": "541613",
+    "name": "Marketing consulting services"
+  },
+  "60541614": {
+    "naics": "541614",
+    "name": "Process, physical distribution, and logistics consulting services"
+  },
+  "60541618": {
+    "naics": "541618",
+    "name": "Other management consulting services"
+  },
+  "60541620": {
+    "naics": "54162",
+    "name": "Environmental consulting services"
+  },
+  "60541690": {
+    "naics": "54169",
+    "name": "Other scientific and technical consulting services"
+  },
+  "60541700": {
+    "naics": "5417",
+    "name": "Scientific research and development services"
+  },
+  "60541710": {
+    "naics": "54171",
+    "name": "Research and development in the physical, engineering, and life sciences"
+  },
+  "60541713": {
+    "naics": "541713",
+    "name": "Research and development in nanotechnology"
+  },
+  "60541714": {
+    "naics": "541714",
+    "name": "Research and development in biotechnology, except nanobiotechnology"
+  },
+  "60541715": {
+    "naics": "541715",
+    "name": "Research and development in the physical, engineering, and life sciences, except nanotechnology and biotechnology"
+  },
+  "60541720": {
+    "naics": "54172",
+    "name": "Research and development in the social sciences and humanities"
+  },
+  "60541800": {
+    "naics": "5418",
+    "name": "Advertising, public relations, and related services"
+  },
+  "60541810": {
+    "naics": "54181",
+    "name": "Advertising agencies"
+  },
+  "60541820": {
+    "naics": "54182",
+    "name": "Public relations agencies"
+  },
+  "60541840": {
+    "naics": "54183,4",
+    "name": "Media buying agencies and media representatives"
+  },
+  "60541850": {
+    "naics": "54185",
+    "name": "Indoor and outdoor display advertising"
+  },
+  "60541860": {
+    "naics": "54186",
+    "name": "Direct mail advertising"
+  },
+  "60541890": {
+    "naics": "54187,9",
+    "name": "Advertising material distribution and other services related to advertising"
+  },
+  "60541900": {
+    "naics": "5419",
+    "name": "Other professional, scientific, and technical services"
+  },
+  "60541910": {
+    "naics": "54191",
+    "name": "Marketing research and public opinion polling"
+  },
+  "60541920": {
+    "naics": "54192",
+    "name": "Photographic services"
+  },
+  "60541940": {
+    "naics": "54194",
+    "name": "Veterinary services"
+  },
+  "60541990": {
+    "naics": "54193,9",
+    "name": "Translation, interpretation, and all other professional, scientific, and technical services"
+  },
+  "60550000": {
+    "naics": "55",
+    "name": "Management of companies and enterprises"
+  },
+  "60551112": {
+    "naics": "551111,2",
+    "name": "Offices of bank and other holding companies"
+  },
+  "60551114": {
+    "naics": "551114",
+    "name": "Corporate, subsidiary, and regional managing offices"
+  },
+  "60560000": {
+    "naics": "56",
+    "name": "Administrative and support and waste management and remediation services"
+  },
+  "60561000": {
+    "naics": "561",
+    "name": "Administrative and support services"
+  },
+  "60561100": {
+    "naics": "5611",
+    "name": "Office administrative services"
+  },
+  "60561200": {
+    "naics": "5612",
+    "name": "Facilities support services"
+  },
+  "60561300": {
+    "naics": "5613",
+    "name": "Employment services"
+  },
+  "60561310": {
+    "naics": "56131",
+    "name": "Employment placement agencies and executive search services"
+  },
+  "60561311": {
+    "naics": "561311",
+    "name": "Employment placement agencies"
+  },
+  "60561312": {
+    "naics": "561312",
+    "name": "Executive search services"
+  },
+  "60561320": {
+    "naics": "56132",
+    "name": "Temporary help services"
+  },
+  "60561330": {
+    "naics": "56133",
+    "name": "Professional employer organizations"
+  },
+  "60561400": {
+    "naics": "5614",
+    "name": "Business support services"
+  },
+  "60561410": {
+    "naics": "56141",
+    "name": "Document preparation services"
+  },
+  "60561420": {
+    "naics": "56142",
+    "name": "Telephone call centers"
+  },
+  "60561421": {
+    "naics": "561421",
+    "name": "Telephone answering services"
+  },
+  "60561422": {
+    "naics": "561422",
+    "name": "Telemarketing bureaus and other contact centers"
+  },
+  "60561430": {
+    "naics": "56143",
+    "name": "Business service centers"
+  },
+  "60561440": {
+    "naics": "56144",
+    "name": "Collection agencies"
+  },
+  "60561490": {
+    "naics": "56145,9",
+    "name": "Repossession, court reporting, stenotype, and other business support services and credit bureaus"
+  },
+  "60561499": {
+    "naics": "561499",
+    "name": "All other business support services"
+  },
+  "60561500": {
+    "naics": "5615",
+    "name": "Travel arrangement and reservation services"
+  },
+  "60561510": {
+    "naics": "56151",
+    "name": "Travel agencies"
+  },
+  "60561520": {
+    "naics": "56152",
+    "name": "Tour operators"
+  },
+  "60561590": {
+    "naics": "56159",
+    "name": "Other travel arrangement and reservation services"
+  },
+  "60561600": {
+    "naics": "5616",
+    "name": "Investigation and security services"
+  },
+  "60561610": {
+    "naics": "56161",
+    "name": "Investigation, guard, and armored car services"
+  },
+  "60561611": {
+    "naics": "561611",
+    "name": "Investigation and personal background check services"
+  },
+  "60561613": {
+    "naics": "561612,3",
+    "name": "Security guards, patrol services, and armored car services"
+  },
+  "60561620": {
+    "naics": "56162",
+    "name": "Security systems services"
+  },
+  "60561700": {
+    "naics": "5617",
+    "name": "Services to buildings and dwellings"
+  },
+  "60561710": {
+    "naics": "56171",
+    "name": "Exterminating and pest control services"
+  },
+  "60561720": {
+    "naics": "56172",
+    "name": "Janitorial services"
+  },
+  "60561730": {
+    "naics": "56173",
+    "name": "Landscaping services"
+  },
+  "60561740": {
+    "naics": "56174",
+    "name": "Carpet and upholstery cleaning services"
+  },
+  "60561790": {
+    "naics": "56179",
+    "name": "Other services to buildings and dwellings"
+  },
+  "60561900": {
+    "naics": "5619",
+    "name": "Other support services"
+  },
+  "60561910": {
+    "naics": "56191",
+    "name": "Packaging and labeling services"
+  },
+  "60561920": {
+    "naics": "56192",
+    "name": "Convention and trade show organizers"
+  },
+  "60561990": {
+    "naics": "56199",
+    "name": "All other support services"
+  },
+  "60562000": {
+    "naics": "562",
+    "name": "Waste management and remediation services"
+  },
+  "60562100": {
+    "naics": "5621",
+    "name": "Waste collection"
+  },
+  "60562111": {
+    "naics": "562111",
+    "name": "Solid waste collection"
+  },
+  "60562119": {
+    "naics": "562112,9",
+    "name": "Hazardous and other waste collection"
+  },
+  "60562200": {
+    "naics": "5622",
+    "name": "Waste treatment and disposal"
+  },
+  "60562211": {
+    "naics": "562211",
+    "name": "Hazardous waste treatment and disposal"
+  },
+  "60562219": {
+    "naics": "562212,3,9",
+    "name": "Solid waste landfill, combustors, and incinerators and other nonhazardous waste treatment and disposal"
+  },
+  "60562900": {
+    "naics": "5629",
+    "name": "Remediation and other waste management services"
+  },
+  "60562910": {
+    "naics": "56291",
+    "name": "Remediation services"
+  },
+  "60562990": {
+    "naics": "56292,9",
+    "name": "Materials recovery facilities and other waste management services"
+  },
+  "65000000": {
+    "naics": "-",
+    "name": "Private education and health services"
+  },
+  "65610000": {
+    "naics": "61",
+    "name": "Private educational services"
+  },
+  "65611100": {
+    "naics": "6111",
+    "name": "Private elementary and secondary schools"
+  },
+  "65611300": {
+    "naics": "6112,3",
+    "name": "Private junior colleges, colleges, universities, and professional schools"
+  },
+  "65611400": {
+    "naics": "6114",
+    "name": "Private business schools and computer and management training"
+  },
+  "65611420": {
+    "naics": "61141,2",
+    "name": "Private business and secretarial schools and private computer training"
+  },
+  "65611430": {
+    "naics": "61143",
+    "name": "Private professional and management development training"
+  },
+  "65611500": {
+    "naics": "6115",
+    "name": "Private technical and trade schools"
+  },
+  "65611512": {
+    "naics": "611512",
+    "name": "Private flight training"
+  },
+  "65611513": {
+    "naics": "611511,3",
+    "name": "Private cosmetology and barber schools and apprenticeship training"
+  },
+  "65611519": {
+    "naics": "611519",
+    "name": "Other private technical and trade schools"
+  },
+  "65611600": {
+    "naics": "6116",
+    "name": "Other private schools and instruction"
+  },
+  "65611610": {
+    "naics": "61161",
+    "name": "Private fine arts schools"
+  },
+  "65611620": {
+    "naics": "61162",
+    "name": "Private sports and recreation instruction"
+  },
+  "65611690": {
+    "naics": "61163,9",
+    "name": "Private language schools and all other private schools and instruction"
+  },
+  "65611691": {
+    "naics": "611691",
+    "name": "Private exam preparation and tutoring"
+  },
+  "65611699": {
+    "naics": "611699",
+    "name": "Private miscellaneous schools and instruction"
+  },
+  "65611700": {
+    "naics": "6117",
+    "name": "Private educational support services"
+  },
+  "65620000": {
+    "naics": "62",
+    "name": "Health care and social assistance"
+  },
+  "65620001": {
+    "naics": "621,2,3",
+    "name": "Health care"
+  },
+  "65621000": {
+    "naics": "621",
+    "name": "Ambulatory health care services"
+  },
+  "65621100": {
+    "naics": "6211",
+    "name": "Offices of physicians"
+  },
+  "65621111": {
+    "naics": "621111",
+    "name": "Offices of physicians (except mental health specialists)"
+  },
+  "65621112": {
+    "naics": "621112",
+    "name": "Offices of physicians, mental health specialists"
+  },
+  "65621200": {
+    "naics": "6212",
+    "name": "Offices of dentists"
+  },
+  "65621300": {
+    "naics": "6213",
+    "name": "Offices of other health practitioners"
+  },
+  "65621310": {
+    "naics": "62131",
+    "name": "Offices of chiropractors"
+  },
+  "65621320": {
+    "naics": "62132",
+    "name": "Offices of optometrists"
+  },
+  "65621330": {
+    "naics": "62133",
+    "name": "Offices of mental health practitioners (except physicians)"
+  },
+  "65621340": {
+    "naics": "62134",
+    "name": "Offices of physical, occupational and speech therapists, and audiologists"
+  },
+  "65621390": {
+    "naics": "62139",
+    "name": "Offices of all other health practitioners"
+  },
+  "65621391": {
+    "naics": "621391",
+    "name": "Offices of podiatrists"
+  },
+  "65621399": {
+    "naics": "621399",
+    "name": "Offices of all other miscellaneous health practitioners"
+  },
+  "65621400": {
+    "naics": "6214",
+    "name": "Outpatient care centers"
+  },
+  "65621420": {
+    "naics": "62142",
+    "name": "Outpatient mental health and substance abuse centers"
+  },
+  "65621490": {
+    "naics": "62141,9",
+    "name": "Other outpatient care centers"
+  },
+  "65621491": {
+    "naics": "621491",
+    "name": "HMO medical centers"
+  },
+  "65621492": {
+    "naics": "621492",
+    "name": "Kidney dialysis centers"
+  },
+  "65621493": {
+    "naics": "621493",
+    "name": "Freestanding ambulatory surgical and emergency centers"
+  },
+  "65621498": {
+    "naics": "621410,98",
+    "name": "Family planning and all other outpatient care centers"
+  },
+  "65621500": {
+    "naics": "6215",
+    "name": "Medical and diagnostic laboratories"
+  },
+  "65621511": {
+    "naics": "621511",
+    "name": "Medical laboratories"
+  },
+  "65621512": {
+    "naics": "621512",
+    "name": "Diagnostic imaging centers"
+  },
+  "65621600": {
+    "naics": "6216",
+    "name": "Home health care services"
+  },
+  "65621900": {
+    "naics": "6219",
+    "name": "Other ambulatory health care services"
+  },
+  "65621910": {
+    "naics": "62191",
+    "name": "Ambulance services"
+  },
+  "65621990": {
+    "naics": "62199",
+    "name": "All other ambulatory health care services"
+  },
+  "65621991": {
+    "naics": "621991",
+    "name": "Blood and organ banks"
+  },
+  "65621999": {
+    "naics": "621999",
+    "name": "All other miscellaneous ambulatory health care services"
+  },
+  "65622000": {
+    "naics": "622",
+    "name": "Hospitals"
+  },
+  "65622100": {
+    "naics": "6221",
+    "name": "General medical and surgical hospitals"
+  },
+  "65622200": {
+    "naics": "6222",
+    "name": "Psychiatric and substance abuse hospitals"
+  },
+  "65622300": {
+    "naics": "6223",
+    "name": "Specialty, except psychiatric and substance abuse, hospitals"
+  },
+  "65623000": {
+    "naics": "623",
+    "name": "Nursing and residential care facilities"
+  },
+  "65623100": {
+    "naics": "6231",
+    "name": "Skilled nursing care facilities"
+  },
+  "65623200": {
+    "naics": "6232",
+    "name": "Residential intellectual and developmental disability, mental health, and substance abuse facilities"
+  },
+  "65623210": {
+    "naics": "62321",
+    "name": "Residential intellectual and developmental disability facilities"
+  },
+  "65623220": {
+    "naics": "62322",
+    "name": "Residential mental health and substance abuse facilities"
+  },
+  "65623300": {
+    "naics": "6233",
+    "name": "Continuing care retirement communities and assisted living facilities for the elderly"
+  },
+  "65623311": {
+    "naics": "623311",
+    "name": "Continuing care retirement communities"
+  },
+  "65623312": {
+    "naics": "623312",
+    "name": "Assisted living facilities for the elderly"
+  },
+  "65623900": {
+    "naics": "6239",
+    "name": "Other residential care facilities"
+  },
+  "65624000": {
+    "naics": "624",
+    "name": "Social assistance"
+  },
+  "65624100": {
+    "naics": "6241",
+    "name": "Individual and family services"
+  },
+  "65624110": {
+    "naics": "62411",
+    "name": "Child and youth services"
+  },
+  "65624120": {
+    "naics": "62412",
+    "name": "Services for the elderly and persons with disabilities"
+  },
+  "65624190": {
+    "naics": "62419",
+    "name": "Other individual and family services"
+  },
+  "65624200": {
+    "naics": "6242",
+    "name": "Community food and housing, and emergency and other relief services"
+  },
+  "65624210": {
+    "naics": "62421",
+    "name": "Community food services"
+  },
+  "65624230": {
+    "naics": "62422,3",
+    "name": "Community housing, emergency, and relief services"
+  },
+  "65624300": {
+    "naics": "6243",
+    "name": "Vocational rehabilitation services"
+  },
+  "65624400": {
+    "naics": "6244",
+    "name": "Child care services"
+  },
+  "70000000": {
+    "naics": "-",
+    "name": "Leisure and hospitality"
+  },
+  "70710000": {
+    "naics": "71",
+    "name": "Arts, entertainment, and recreation"
+  },
+  "70711000": {
+    "naics": "711",
+    "name": "Performing arts, spectator sports, and related industries"
+  },
+  "70711100": {
+    "naics": "7111",
+    "name": "Performing arts companies"
+  },
+  "70711130": {
+    "naics": "71113",
+    "name": "Musical groups and artists"
+  },
+  "70711190": {
+    "naics": "71111,2,9",
+    "name": "Theater, dance, and other performing arts companies and dinner theaters"
+  },
+  "70711200": {
+    "naics": "7112",
+    "name": "Spectator sports"
+  },
+  "70711211": {
+    "naics": "711211",
+    "name": "Sports teams and clubs"
+  },
+  "70711219": {
+    "naics": "711212,9",
+    "name": "Racetracks and other spectator sports"
+  },
+  "70711300": {
+    "naics": "7113,4",
+    "name": "Arts and sports promoters and agents and managers for public figures"
+  },
+  "70711500": {
+    "naics": "7115",
+    "name": "Independent artists, writers, and performers"
+  },
+  "70712000": {
+    "naics": "712",
+    "name": "Museums, historical sites, and similar institutions"
+  },
+  "70712110": {
+    "naics": "71211",
+    "name": "Museums"
+  },
+  "70712190": {
+    "naics": "71212,3,9",
+    "name": "Historical sites, zoos, botanical gardens, nature parks, and other similar institutions"
+  },
+  "70713000": {
+    "naics": "713",
+    "name": "Amusement, gambling, and recreation industries"
+  },
+  "70713100": {
+    "naics": "7131",
+    "name": "Amusement parks and arcades"
+  },
+  "70713200": {
+    "naics": "7132",
+    "name": "Gambling industries"
+  },
+  "70713210": {
+    "naics": "71321",
+    "name": "Casinos, except casino hotels"
+  },
+  "70713290": {
+    "naics": "71329",
+    "name": "Other gambling industries"
+  },
+  "70713900": {
+    "naics": "7139",
+    "name": "Other amusement and recreation industries"
+  },
+  "70713910": {
+    "naics": "71391",
+    "name": "Golf courses and country clubs"
+  },
+  "70713920": {
+    "naics": "71392",
+    "name": "Skiing facilities"
+  },
+  "70713930": {
+    "naics": "71393",
+    "name": "Marinas"
+  },
+  "70713940": {
+    "naics": "71394",
+    "name": "Fitness and recreational sports centers"
+  },
+  "70713950": {
+    "naics": "71395",
+    "name": "Bowling centers"
+  },
+  "70713990": {
+    "naics": "71399",
+    "name": "All other amusement and recreation industries"
+  },
+  "70720000": {
+    "naics": "72",
+    "name": "Accommodation and food services"
+  },
+  "70721000": {
+    "naics": "721",
+    "name": "Accommodation"
+  },
+  "70721100": {
+    "naics": "7211",
+    "name": "Traveler accommodation"
+  },
+  "70721110": {
+    "naics": "72111",
+    "name": "Hotels (except casino hotels) and motels"
+  },
+  "70721120": {
+    "naics": "72112",
+    "name": "Casino hotels"
+  },
+  "70721190": {
+    "naics": "72119",
+    "name": "Other traveler accommodation"
+  },
+  "70721191": {
+    "naics": "721191",
+    "name": "Bed-and-breakfast inns"
+  },
+  "70721199": {
+    "naics": "721310,199",
+    "name": "All other traveler accommodation and rooming and boarding houses, dormitories, and workers' camps"
+  },
+  "70721200": {
+    "naics": "7212",
+    "name": "Recreational vehicle (RV) parks and recreational camps"
+  },
+  "70722000": {
+    "naics": "722",
+    "name": "Food services and drinking places"
+  },
+  "70722300": {
+    "naics": "7223",
+    "name": "Special food services"
+  },
+  "70722310": {
+    "naics": "72231",
+    "name": "Food service contractors"
+  },
+  "70722330": {
+    "naics": "72232,3",
+    "name": "Caterers and mobile food services"
+  },
+  "70722400": {
+    "naics": "7224",
+    "name": "Drinking places, alcoholic beverages"
+  },
+  "70722500": {
+    "naics": "7225",
+    "name": "Restaurants and other eating places"
+  },
+  "70722511": {
+    "naics": "722511",
+    "name": "Full-service restaurants"
+  },
+  "70722513": {
+    "naics": "722513",
+    "name": "Limited-service restaurants"
+  },
+  "70722514": {
+    "naics": "722514",
+    "name": "Cafeterias, grill buffets, and buffets"
+  },
+  "70722515": {
+    "naics": "722515",
+    "name": "Snack and nonalcoholic beverage bars"
+  },
+  "80000000": {
+    "naics": "81",
+    "name": "Other services"
+  },
+  "80811000": {
+    "naics": "811",
+    "name": "Repair and maintenance"
+  },
+  "80811100": {
+    "naics": "8111",
+    "name": "Automotive repair and maintenance"
+  },
+  "80811110": {
+    "naics": "81111",
+    "name": "Automotive mechanical and electrical repair and maintenance"
+  },
+  "80811111": {
+    "naics": "811111",
+    "name": "General automotive repair"
+  },
+  "80811114": {
+    "naics": "811114",
+    "name": "Specialized automotive repair"
+  },
+  "80811120": {
+    "naics": "81112",
+    "name": "Automotive body, paint, interior, and glass repair"
+  },
+  "80811121": {
+    "naics": "811121",
+    "name": "Automotive body, paint, and interior repair and maintenance"
+  },
+  "80811122": {
+    "naics": "811122",
+    "name": "Automotive glass replacement shops"
+  },
+  "80811190": {
+    "naics": "81119",
+    "name": "Other automotive repair and maintenance"
+  },
+  "80811192": {
+    "naics": "811192",
+    "name": "Car washes"
+  },
+  "80811198": {
+    "naics": "811191,8",
+    "name": "Automotive oil change and lubrication shops and all other automotive repair and maintenance"
+  },
+  "80811200": {
+    "naics": "8112",
+    "name": "Electronic and precision equipment repair and maintenance"
+  },
+  "80811300": {
+    "naics": "8113",
+    "name": "Commercial and industrial machinery and equipment (except automotive and electronic) repair and maintenance"
+  },
+  "80811400": {
+    "naics": "8114",
+    "name": "Personal and household goods repair and maintenance"
+  },
+  "80812000": {
+    "naics": "812",
+    "name": "Personal and laundry services"
+  },
+  "80812100": {
+    "naics": "8121",
+    "name": "Personal care services"
+  },
+  "80812110": {
+    "naics": "81211",
+    "name": "Hair, nail, and skin care services"
+  },
+  "80812112": {
+    "naics": "812111,2",
+    "name": "Barber shops and beauty salons"
+  },
+  "80812113": {
+    "naics": "812113",
+    "name": "Nail salons"
+  },
+  "80812190": {
+    "naics": "81219",
+    "name": "Other personal care services"
+  },
+  "80812200": {
+    "naics": "8122",
+    "name": "Death care services"
+  },
+  "80812210": {
+    "naics": "81221",
+    "name": "Funeral homes and funeral services"
+  },
+  "80812220": {
+    "naics": "81222",
+    "name": "Cemeteries and crematories"
+  },
+  "80812300": {
+    "naics": "8123",
+    "name": "Drycleaning and laundry services"
+  },
+  "80812310": {
+    "naics": "81231",
+    "name": "Coin-operated laundries and drycleaners"
+  },
+  "80812320": {
+    "naics": "81232",
+    "name": "Drycleaning and laundry services, except coin-operated"
+  },
+  "80812330": {
+    "naics": "81233",
+    "name": "Linen and uniform supply"
+  },
+  "80812331": {
+    "naics": "812331",
+    "name": "Linen supply"
+  },
+  "80812332": {
+    "naics": "812332",
+    "name": "Industrial launderers"
+  },
+  "80812900": {
+    "naics": "8129",
+    "name": "Other personal services"
+  },
+  "80812910": {
+    "naics": "81291",
+    "name": "Pet care (except veterinary) services"
+  },
+  "80812930": {
+    "naics": "81293",
+    "name": "Parking lots and garages"
+  },
+  "80812990": {
+    "naics": "81292,9",
+    "name": "Photofinishing and all other personal services"
+  },
+  "80813000": {
+    "naics": "813",
+    "name": "Religious, grantmaking, civic, professional, and similar organizations"
+  },
+  "80813200": {
+    "naics": "8132",
+    "name": "Grantmaking and giving services"
+  },
+  "80813211": {
+    "naics": "813211",
+    "name": "Grantmaking foundations"
+  },
+  "80813212": {
+    "naics": "813212",
+    "name": "Voluntary health organizations"
+  },
+  "80813219": {
+    "naics": "813219",
+    "name": "Other grantmaking and giving services"
+  },
+  "80813300": {
+    "naics": "8133",
+    "name": "Social advocacy organizations"
+  },
+  "80813311": {
+    "naics": "813311",
+    "name": "Human rights organizations"
+  },
+  "80813319": {
+    "naics": "813312,9",
+    "name": "Environment, conservation, wildlife, and other social advocacy organizations"
+  },
+  "80813400": {
+    "naics": "8134",
+    "name": "Civic and social organizations"
+  },
+  "80813900": {
+    "naics": "8139",
+    "name": "Business, professional, labor, political, and similar organizations"
+  },
+  "80813910": {
+    "naics": "81391",
+    "name": "Business associations"
+  },
+  "80813920": {
+    "naics": "81392",
+    "name": "Professional organizations"
+  },
+  "80813930": {
+    "naics": "81393",
+    "name": "Labor unions and similar labor organizations"
+  },
+  "80813990": {
+    "naics": "81394,9",
+    "name": "Political and other similar organizations (except business, professional, and labor organizations)"
+  },
+  "90000000": {
+    "naics": "-",
+    "name": "Government"
+  },
+  "90910000": {
+    "naics": "-",
+    "name": "Federal"
+  },
+  "90911000": {
+    "naics": "-",
+    "name": "Federal, except U.S. Postal Service"
+  },
+  "90916220": {
+    "naics": "-",
+    "name": "Federal hospitals"
+  },
+  "90919110": {
+    "naics": "-",
+    "name": "Department of Defense"
+  },
+  "90919120": {
+    "naics": "-",
+    "name": "U.S. Postal Service"
+  },
+  "90919999": {
+    "naics": "-",
+    "name": "Other Federal government"
+  },
+  "90920000": {
+    "naics": "-",
+    "name": "State government"
+  },
+  "90921611": {
+    "naics": "-",
+    "name": "State government education"
+  },
+  "90922000": {
+    "naics": "-",
+    "name": "State government, excluding education"
+  },
+  "90922622": {
+    "naics": "-",
+    "name": "State hospitals"
+  },
+  "90922920": {
+    "naics": "-",
+    "name": "State government general administration"
+  },
+  "90922999": {
+    "naics": "-",
+    "name": "Other State government"
+  },
+  "90930000": {
+    "naics": "-",
+    "name": "Local government"
+  },
+  "90931611": {
+    "naics": "-",
+    "name": "Local government education"
+  },
+  "90932000": {
+    "naics": "-",
+    "name": "Local government, excluding education"
+  },
+  "90932221": {
+    "naics": "-",
+    "name": "Local government utilities"
+  },
+  "90932480": {
+    "naics": "-",
+    "name": "Local government transportation"
+  },
+  "90932622": {
+    "naics": "-",
+    "name": "Local hospitals"
+  },
+  "90932920": {
+    "naics": "-",
+    "name": "Local government general administration"
+  },
+  "90932999": {
+    "naics": "-",
+    "name": "Other local government"
+  }
+}
