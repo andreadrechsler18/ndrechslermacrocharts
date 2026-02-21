@@ -369,7 +369,7 @@ window.NewCoSearch = {
       hovertemplate: '%{x|%b %Y}: %{y:.1f}%<extra></extra>'
     }], {
       margin: { l: 45, r: 10, t: 10, b: 30 },
-      height: 220,
+      height: 180,
       yaxis: { title: 'YoY %', ticksuffix: '%' },
       xaxis: {
         tickformat: '%b\n%Y',
