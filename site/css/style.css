@@ -136,6 +136,33 @@ body {
   cursor: pointer;
 }
 
+/* === Nav Search === */
+
+.nav-search {
+  padding: 8px 16px 12px;
+}
+
+.nav-search input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.nav-search input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.nav-search input:focus {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.15);
+}
+
 /* === Main Content === */
 
 main {
@@ -350,6 +377,124 @@ main {
 
 .index-list a:hover {
   background: var(--color-bg);
+}
+
+/* === Search Page === */
+
+.search-bar {
+  margin-top: 12px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.search-bar input:focus {
+  border-color: var(--color-primary);
+}
+
+.search-hint {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  margin-top: 6px;
+  min-height: 1.2em;
+  font-weight: 500;
+}
+
+.search-results {
+  padding: 16px 24px;
+}
+
+.search-count {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
+.search-group {
+  margin-bottom: 24px;
+}
+
+.search-group-title {
+  font-size: 1.1rem;
+  color: var(--color-primary-dark);
+  border-bottom: 2px solid var(--color-border-light);
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.search-result {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--color-surface);
+}
+
+.search-result:hover {
+  border-color: var(--color-border);
+}
+
+.result-name {
+  font-weight: 500;
+  flex: 1;
+  min-width: 200px;
+}
+
+.result-name mark {
+  background: #fef08a;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+.naics-badge {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+
+.result-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.result-link {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  transition: background var(--transition), color var(--transition);
+}
+
+.result-link:hover {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.search-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--color-text-muted);
+  font-size: 1rem;
 }
 
 /* === Responsive === */

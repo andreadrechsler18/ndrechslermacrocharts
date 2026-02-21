@@ -203,6 +203,13 @@ def copy_calendar():
     print(f"  Wrote calendar/release_calendar.json ({size_kb:.0f} KB)")
 
 
+def build_search():
+    """Build search index from all data files + NAICS mappings."""
+    print("Building search index...")
+    import build_search_index
+    build_search_index.run()
+
+
 def run():
     print("=" * 40)
     print("Post-processing derived data...")
@@ -212,6 +219,7 @@ def run():
     process_ces_pbs()
     process_analysis()
     copy_calendar()
+    build_search()
     print("Post-processing complete.")
 
 

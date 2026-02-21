@@ -2,6 +2,7 @@
 
 const SITE_MAP = [
   { label: "Home", href: "index.html" },
+  { label: "Search", href: "search/index.html" },
   {
     label: "NIPA Data", children: [
       { label: "1BU - Mfg & Trade Inventories", href: "nipa/1bu.html" },
@@ -75,6 +76,9 @@ const SITE_MAP = [
   // Header
   html += '<div class="nav-header"><h1><a href="' + resolvePath('index.html') + '">NewCo Charts</a></h1></div>';
 
+  // Search input
+  html += '<div class="nav-search"><input type="text" id="nav-search-input" placeholder="Search NAICS or keyword..."></div>';
+
   // Build nav items
   SITE_MAP.forEach(item => {
     html += '<div class="nav-section">';
@@ -98,6 +102,17 @@ const SITE_MAP = [
   });
 
   nav.innerHTML = html;
+
+  // Nav search handler
+  var searchInput = nav.querySelector('#nav-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && searchInput.value.trim()) {
+        window.location.href = resolvePath('search/index.html') +
+          '?q=' + encodeURIComponent(searchInput.value.trim());
+      }
+    });
+  }
 
   // Mobile toggle
   const toggle = document.createElement('button');
