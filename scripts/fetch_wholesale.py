@@ -14,10 +14,37 @@ CENSUS_BASE = "https://api.census.gov/data/timeseries/eits/mwts"
 
 DATA_TYPE_NAMES = {
     "SM": "Sales",
+    "IM": "Inventories",
+    "IR": "Inventories/Sales Ratio",
     "MPCIM": "Inventories",
     "MPCSM": "Sales",
     "EI": "End-of-Month Inventories",
     "SI": "Inventories/Sales Ratio",
+}
+
+CATEGORY_NAMES = {
+    "42": "Wholesale Trade",
+    "423": "Durable Goods",
+    "4231": "Motor Vehicle & Parts",
+    "4232": "Furniture & Home Furnishings",
+    "4233": "Lumber & Construction Materials",
+    "4234": "Professional & Commercial Equipment",
+    "42343": "Computer Equipment & Software",
+    "4235": "Metals & Minerals",
+    "4236": "Electrical & Electronic Goods",
+    "4237": "Hardware, Plumbing & Heating Equipment",
+    "4238": "Machinery, Equipment & Supplies",
+    "4239": "Miscellaneous Durable Goods",
+    "424": "Nondurable Goods",
+    "4241": "Paper & Paper Products",
+    "4242": "Drugs & Druggists' Sundries",
+    "4243": "Apparel, Piece Goods & Notions",
+    "4244": "Grocery & Related Products",
+    "4245": "Farm Product Raw Materials",
+    "4246": "Chemicals & Allied Products",
+    "4247": "Petroleum & Petroleum Products",
+    "4248": "Beer, Wine & Distilled Beverages",
+    "4249": "Miscellaneous Nondurable Goods",
 }
 
 
@@ -95,7 +122,8 @@ def run():
 
         if series_key not in series_map:
             dtype_name = DATA_TYPE_NAMES.get(dtype, dtype)
-            series_map[series_key] = {"name": f"{cat} - {dtype_name}", "data": []}
+            cat_name = CATEGORY_NAMES.get(cat, cat)
+            series_map[series_key] = {"name": f"{cat_name} - {dtype_name}", "data": []}
         series_map[series_key]["data"].append({"date": date_str, "value": value})
 
     series_list = []

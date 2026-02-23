@@ -74,12 +74,19 @@ def process_wholesale():
 
     sales, inventory, ratio = [], [], []
 
+    from fetch_wholesale import CATEGORY_NAMES as WS_NAMES, DATA_TYPE_NAMES as WS_DTYPES
+
     for s in data["series"]:
         sid = s["id"]
         parts = sid.rsplit("_", 1)
         if len(parts) != 2:
             continue
         cat, dtype = parts
+
+        # Apply industry names (replaces raw NAICS codes)
+        cat_name = WS_NAMES.get(cat, cat)
+        dtype_name = WS_DTYPES.get(dtype, dtype)
+        s["name"] = f"{cat_name} - {dtype_name}"
 
         if dtype == "SM":
             sales.append(s)
