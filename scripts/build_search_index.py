@@ -133,6 +133,15 @@ DATA_FILE_PAGES = {
         {"page": "nipa/5_7_5bu1.html", "pageLabel": "5.7.5BU1 - Private Inventories",
          "section": "NIPA", "sectionLabel": "NIPA Data"},
     ],
+    # Fed Regional Surveys
+    "fed_surveys/fed_mfg.json": [
+        {"page": "fed_surveys/manufacturing.html", "pageLabel": "Manufacturing Surveys",
+         "section": "FedSurveys", "sectionLabel": "Fed Regional Surveys"},
+    ],
+    "fed_surveys/fed_svc.json": [
+        {"page": "fed_surveys/services.html", "pageLabel": "Services Surveys",
+         "section": "FedSurveys", "sectionLabel": "Fed Regional Surveys"},
+    ],
 }
 
 # M3 series suffixes excluded from display
