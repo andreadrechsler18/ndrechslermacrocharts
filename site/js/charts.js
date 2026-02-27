@@ -20,6 +20,8 @@ window.NewCoCharts = {
     this.categories = options.categories || null;
     this.activeCategory = null;
     this.categoryTotalIndex = null;
+    this.cityFilters = options.cityFilters || null;
+    this.activeCity = null;
 
     // Show loading state
     const grid = document.getElementById('chart-grid');
@@ -68,6 +70,7 @@ window.NewCoCharts = {
       if (this.modes) controlOpts.modes = this.modes;
       if (this.filters) controlOpts.filters = this.filters;
       if (this.categories) controlOpts.categories = this.categories;
+      if (this.cityFilters) controlOpts.cityFilters = this.cityFilters;
       NewCoControls.init(controlsEl, controlOpts);
       this.mode = NewCoControls.mode;
       this.horizon = NewCoControls.horizon;
@@ -117,7 +120,13 @@ window.NewCoCharts = {
     });
 
     document.addEventListener('filterchange', (e) => {
-      this.applyFilter(e.detail);
+      this.activeFilter = e.detail;
+      this.applyVisibility();
+    });
+
+    document.addEventListener('citychange', (e) => {
+      this.activeCity = e.detail;
+      this.applyVisibility();
     });
 
     document.addEventListener('categorychange', (e) => {
@@ -368,19 +377,38 @@ window.NewCoCharts = {
   },
 
   applyFilter(filterKey) {
+    this.activeFilter = filterKey;
+    this.applyVisibility();
+  },
+
+  applyVisibility() {
+    const filterKey = this.activeFilter;
+    const cityKey = this.activeCity;
+
     this.chartElements.forEach(card => {
       if (!card) return;
-      if (!filterKey) {
-        card.style.display = '';
-      } else if (this.filterType === 'suffix') {
-        const sid = card.dataset.seriesId;
-        const suffixes = filterKey.split(',');
-        card.style.display = sid && suffixes.some(s => sid.endsWith(s)) ? '' : 'none';
-      } else {
-        const sid = card.dataset.seriesId;
-        card.style.display = sid && sid.startsWith(filterKey) ? '' : 'none';
+      const sid = card.dataset.seriesId;
+
+      // Check filter (component) match
+      let filterMatch = true;
+      if (filterKey) {
+        if (this.filterType === 'suffix') {
+          const suffixes = filterKey.split(',');
+          filterMatch = sid && suffixes.some(s => sid.endsWith(s));
+        } else {
+          filterMatch = sid && sid.startsWith(filterKey);
+        }
       }
+
+      // Check city match (prefix-based)
+      let cityMatch = true;
+      if (cityKey) {
+        cityMatch = sid && sid.startsWith(cityKey);
+      }
+
+      card.style.display = (filterMatch && cityMatch) ? '' : 'none';
     });
+
     // Re-observe visible cards so lazy loading picks them up
     this.chartElements.forEach(el => {
       if (el && el.style.display !== 'none') {

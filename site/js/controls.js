@@ -59,6 +59,24 @@ window.NewCoControls = {
         '</div>';
     }
 
+    // Optional city filter buttons
+    this.cityFilters = options.cityFilters || null;
+    this.activeCity = null;
+    let cityHtml = '';
+    if (this.cityFilters) {
+      const cityButtons = this.cityFilters.map(c =>
+        '<button data-city="' + c.key + '">' + c.label + '</button>'
+      ).join('');
+      cityHtml =
+        '<div class="control-group">' +
+          '<span class="control-label">City:</span>' +
+          '<div class="btn-group" id="city-toggle">' +
+            '<button data-city="" class="active">All</button>' +
+            cityButtons +
+          '</div>' +
+        '</div>';
+    }
+
     container.innerHTML =
       categoryHtml +
       '<div class="control-group">' +
@@ -66,6 +84,7 @@ window.NewCoControls = {
         '<div class="btn-group" id="mode-toggle">' + modeButtons + '</div>' +
       '</div>' +
       filterHtml +
+      cityHtml +
       '<div class="control-group">' +
         '<span class="control-label">Horizon:</span>' +
         '<div class="btn-group" id="horizon-toggle">' +
@@ -129,6 +148,20 @@ window.NewCoControls = {
         this.activeFilter = newFilter;
         this.updateButtons(filterToggle, 'filter', btn.dataset.filter);
         document.dispatchEvent(new CustomEvent('filterchange', { detail: newFilter }));
+      });
+    }
+
+    // City toggle
+    const cityToggle = container.querySelector('#city-toggle');
+    if (cityToggle) {
+      cityToggle.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const newCity = btn.dataset.city || null;
+        if (newCity === this.activeCity) return;
+        this.activeCity = newCity;
+        this.updateButtons(cityToggle, 'city', btn.dataset.city);
+        document.dispatchEvent(new CustomEvent('citychange', { detail: newCity }));
       });
     }
   },
