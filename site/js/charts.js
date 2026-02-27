@@ -429,6 +429,8 @@ window.NewCoCharts = {
       }
     });
 
+    console.log('[NewCo v2] applyVisibility: filter=' + filterKey + ' city=' + cityKey + ' cards_in_grid=' + grid.children.length);
+
     // Queue unrendered visible cards for rendering
     NewCoLazyLoad.renderQueue = [];
     this.chartElements.forEach(el => {
