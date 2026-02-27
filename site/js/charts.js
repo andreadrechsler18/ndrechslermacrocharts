@@ -102,7 +102,6 @@ window.NewCoCharts = {
 
     // Initialize lazy loading
     NewCoLazyLoad.init((idx) => this.renderChart(idx));
-    this.chartElements.forEach(el => { if (el) NewCoLazyLoad.observe(el); });
 
     // Apply initial mode visibility
     this.applyModeVisibility();
@@ -110,8 +109,9 @@ window.NewCoCharts = {
     // Apply initial filter for pages with filter groups (e.g. Current/Future timing)
     if (NewCoControls.filterGroups) {
       this.activeFilter = NewCoControls.getGroupFilter();
-      this.applyVisibility();
     }
+    // Apply visibility (populates grid with matching cards and starts observation)
+    this.applyVisibility();
 
     // Listen for control changes
     document.addEventListener('modechange', (e) => {
@@ -154,8 +154,8 @@ window.NewCoCharts = {
 
   async renderChart(index) {
     const card = this.chartElements[index];
-    // Skip if card is hidden (filter changed while queued for rendering)
-    if (card && card.style.display === 'none') return;
+    // Skip if card is not in the DOM (filtered out)
+    if (!card || !card.isConnected) return;
 
     const series = this.data.series[index];
     if (!series || !series.data || series.data.length === 0) return;
@@ -394,14 +394,14 @@ window.NewCoCharts = {
   applyVisibility() {
     const filterKey = this.activeFilter;
     const cityKey = this.activeCity;
-
-    // First, hide ALL chart cards in the grid to catch any strays
     const grid = document.getElementById('chart-grid');
-    grid.querySelectorAll('.chart-card').forEach(card => {
-      card.style.display = 'none';
-    });
 
-    // Then selectively show matching cards
+    // Remove all cards from the DOM (references kept in chartElements)
+    while (grid.firstChild) {
+      grid.removeChild(grid.firstChild);
+    }
+
+    // Re-append only matching cards
     this.chartElements.forEach(card => {
       if (!card) return;
       const sid = card.dataset.seriesId;
@@ -423,15 +423,16 @@ window.NewCoCharts = {
         cityMatch = sid && sid.startsWith(cityKey);
       }
 
-      if (filterMatch && cityMatch) {
-        card.style.display = '';
+      // Also respect mode visibility (e.g. hidden total series)
+      if (filterMatch && cityMatch && card.style.display !== 'none') {
+        grid.appendChild(card);
       }
     });
 
-    // Clear stale render queue and prioritize visible unrendered cards
+    // Queue unrendered visible cards for rendering
     NewCoLazyLoad.renderQueue = [];
     this.chartElements.forEach(el => {
-      if (el && el.style.display !== 'none') {
+      if (el && el.isConnected) {
         const idx = parseInt(el.dataset.seriesIndex, 10);
         if (!this.rendered.has(idx)) {
           NewCoLazyLoad.renderQueue.push(idx);
@@ -443,7 +444,6 @@ window.NewCoCharts = {
       NewCoLazyLoad.processBatch();
     }
 
-    // Defer re-rendering until browser has completed layout of newly visible cards
     requestAnimationFrame(() => {
       this.reRenderVisible();
     });
@@ -451,11 +451,17 @@ window.NewCoCharts = {
 
   applyCategory(category) {
     this.activeCategory = category;
+    const grid = document.getElementById('chart-grid');
+
+    // Remove all cards from the DOM
+    while (grid.firstChild) {
+      grid.removeChild(grid.firstChild);
+    }
 
     if (!category) {
       // Show all charts
       this.categoryTotalIndex = null;
-      this.chartElements.forEach(card => { if (card) card.style.display = ''; });
+      this.chartElements.forEach(card => { if (card) grid.appendChild(card); });
     } else {
       // Set the category total series for share calculations
       this.categoryTotalIndex = this.seriesIdMap[category.totalId] ?? null;
@@ -468,14 +474,16 @@ window.NewCoCharts = {
         if (!card) return;
         const sid = card.dataset.seriesId;
         const num = parseInt(sid.split('_').pop(), 10);
-        card.style.display = (num >= startNum && num <= endNum) ? '' : 'none';
+        if (num >= startNum && num <= endNum) {
+          grid.appendChild(card);
+        }
       });
     }
 
-    // Clear stale render queue and prioritize visible unrendered cards
+    // Queue unrendered visible cards for rendering
     NewCoLazyLoad.renderQueue = [];
     this.chartElements.forEach(el => {
-      if (el && el.style.display !== 'none') {
+      if (el && el.isConnected) {
         const idx = parseInt(el.dataset.seriesIndex, 10);
         if (!this.rendered.has(idx)) {
           NewCoLazyLoad.renderQueue.push(idx);
@@ -487,7 +495,6 @@ window.NewCoCharts = {
       NewCoLazyLoad.processBatch();
     }
 
-    // Defer re-rendering until browser has completed layout of newly visible cards
     requestAnimationFrame(() => {
       this.reRenderVisible();
     });
@@ -496,7 +503,7 @@ window.NewCoCharts = {
   reRenderVisible() {
     this.rendered.forEach(index => {
       const card = this.chartElements[index];
-      if (card && card.style.display === 'none') return;
+      if (!card || !card.isConnected) return;
       this.renderChart(index);
     });
   },
