@@ -28,6 +28,7 @@
       chartType: 'line',
       filterType: 'suffix',
       filters: [
+        { separator: 'Current' },
         { key: '_GA_C', label: 'General Activity' },
         { key: '_EMP_C', label: 'Employment' },
         { key: '_PP_C', label: 'Prices Paid' },
@@ -37,11 +38,20 @@
         { key: '_WB_C', label: 'Wages & Benefits' },
         { key: '_AW_C', label: 'Hours Worked' },
         { key: '_OL_C', label: 'Company Outlook' },
-        { key: '_GA_F', label: 'Future General Activity' },
-        { key: '_EMP_F', label: 'Future Employment' },
-        { key: '_PP_F', label: 'Future Prices Paid' },
-        { key: '_REV_F', label: 'Future Revenue' },
-        { key: '_CE_F', label: 'Future Capital Expenditures' }
+        { key: '_PEMP_C', label: 'Part-Time Employment' },
+        { key: '_IV_C', label: 'Inventories' },
+        { separator: 'Future' },
+        { key: '_GA_F', label: 'General Activity' },
+        { key: '_EMP_F', label: 'Employment' },
+        { key: '_PP_F', label: 'Prices Paid' },
+        { key: '_PR_F', label: 'Prices Received' },
+        { key: '_REV_F', label: 'Revenue/Sales' },
+        { key: '_CE_F', label: 'Capital Expenditures' },
+        { key: '_WB_F', label: 'Wages & Benefits' },
+        { key: '_AW_F', label: 'Hours Worked' },
+        { key: '_OL_F', label: 'Company Outlook' },
+        { key: '_PEMP_F', label: 'Part-Time Employment' },
+        { key: '_IV_F', label: 'Inventories' }
       ],
       cityFilters: [
         { key: 'PHILLY_', label: 'Philadelphia' },

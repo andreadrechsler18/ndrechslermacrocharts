@@ -210,6 +210,7 @@ main {
 
 .btn-group {
   display: inline-flex;
+  flex-wrap: wrap;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   overflow: hidden;
@@ -237,6 +238,18 @@ main {
 .btn-group button.active {
   background: var(--color-primary);
   color: #fff;
+}
+
+.btn-group-sep {
+  padding: 6px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted);
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--color-border);
+  white-space: nowrap;
 }
 
 /* === Chart Grid === */

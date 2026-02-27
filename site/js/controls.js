@@ -47,7 +47,9 @@ window.NewCoControls = {
     let filterHtml = '';
     if (this.filters) {
       const filterButtons = this.filters.map(f =>
-        '<button data-filter="' + f.key + '">' + f.label + '</button>'
+        f.separator
+          ? '<span class="btn-group-sep">' + f.separator + '</span>'
+          : '<button data-filter="' + f.key + '">' + f.label + '</button>'
       ).join('');
       filterHtml =
         '<div class="control-group">' +
