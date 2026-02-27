@@ -195,7 +195,7 @@ window.NewCoControls = {
         // Reset active filter and rebuild filter buttons
         this.activeFilter = null;
         this.rebuildFilterButtons();
-        document.dispatchEvent(new CustomEvent('filterchange', { detail: null }));
+        document.dispatchEvent(new CustomEvent('filterchange', { detail: this.getGroupFilter() }));
       });
     }
 
@@ -209,7 +209,9 @@ window.NewCoControls = {
         if (newFilter === this.activeFilter) return;
         this.activeFilter = newFilter;
         this.updateButtons(filterToggle, 'filter', btn.dataset.filter);
-        document.dispatchEvent(new CustomEvent('filterchange', { detail: newFilter }));
+        // When "All" is selected with filter groups, use group-wide filter
+        const effectiveFilter = (newFilter === null && this.filterGroups) ? this.getGroupFilter() : newFilter;
+        document.dispatchEvent(new CustomEvent('filterchange', { detail: effectiveFilter }));
       });
     }
 
@@ -246,6 +248,12 @@ window.NewCoControls = {
         '<button data-mode="' + m.key + '" class="' + (this.mode === m.key ? 'active' : '') + '">' + m.label + '</button>'
       ).join('');
     }
+  },
+
+  getGroupFilter() {
+    if (!this.filterGroups || !this.activeFilterGroup) return null;
+    const filters = this.filterGroups[this.activeFilterGroup] || [];
+    return filters.map(f => f.key).join(',');
   },
 
   rebuildFilterButtons() {

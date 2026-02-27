@@ -39,86 +39,82 @@ def run():
         print("  Error: Excel has too few rows")
         return
 
-    # Find the header row with dates (row that has datetime or month-year values)
+    # Find the header row with category names (contains "Date" in column 0)
     header_row_idx = None
-    date_columns = {}
-
     for i, row in enumerate(rows):
-        date_count = 0
-        for j, cell in enumerate(row):
-            if cell is None:
-                continue
-            if isinstance(cell, datetime):
-                date_count += 1
-            elif isinstance(cell, str) and len(cell) >= 6:
-                # Try to parse as date string
-                for fmt in ('%b-%y', '%B %Y', '%b %Y', '%Y-%m'):
-                    try:
-                        datetime.strptime(cell, fmt)
-                        date_count += 1
-                        break
-                    except ValueError:
-                        pass
-        if date_count >= 10:
+        if row and row[0] and str(row[0]).strip().lower() == 'date':
             header_row_idx = i
             break
 
     if header_row_idx is None:
-        print("  Error: Could not find date header row")
+        print("  Error: Could not find header row")
         return
 
-    # Parse dates from header row
     header = rows[header_row_idx]
-    for j, cell in enumerate(header):
-        if cell is None:
-            continue
-        dt = None
-        if isinstance(cell, datetime):
-            dt = cell
-        elif isinstance(cell, str):
-            for fmt in ('%b-%y', '%B %Y', '%b %Y', '%Y-%m'):
-                try:
-                    dt = datetime.strptime(cell, fmt)
-                    break
-                except ValueError:
-                    pass
-        if dt:
-            date_columns[j] = dt.strftime('%Y-%m-01')
 
-    if len(date_columns) < 10:
-        print(f"  Error: Only found {len(date_columns)} date columns")
+    # Extract category names from header columns (col 1+)
+    categories = {}
+    for j in range(1, len(header)):
+        if header[j] is not None:
+            # Clean up category name (remove embedded newlines, footnote markers)
+            name = str(header[j]).replace('\n', ' ').replace('_x000D_', ' ')
+            import re
+            name = re.sub(r'\s+', ' ', name).strip()
+            # Remove trailing footnote numbers like "1" or "2"
+            name = re.sub(r'\d+$', '', name).strip()
+            if name:
+                categories[j] = name
+
+    if len(categories) < 5:
+        print(f"  Error: Only found {len(categories)} category columns")
         return
 
-    print(f"  Found {len(date_columns)} date columns")
-    sorted_dates = sorted(date_columns.values())
-    print(f"  Date range: {sorted_dates[0]} to {sorted_dates[-1]}")
+    print(f"  Found {len(categories)} categories")
 
-    # Parse data rows (rows after the header)
-    series_list = []
+    # Parse date strings from column 0 (format: "Mon-YY" with optional suffixes like p, r, p+)
+    def parse_date_cell(cell):
+        if cell is None:
+            return None
+        s = str(cell).strip()
+        if not s:
+            return None
+        # Strip revision/preliminary suffixes: p, r, p+
+        cleaned = re.sub(r'[pr+]+$', '', s)
+        if isinstance(cell, datetime):
+            return cell.strftime('%Y-%m-01')
+        for fmt in ('%b-%y', '%B-%y', '%b-%Y', '%B %Y', '%b %Y', '%Y-%m'):
+            try:
+                dt = datetime.strptime(cleaned, fmt)
+                return dt.strftime('%Y-%m-01')
+            except ValueError:
+                pass
+        return None
+
+    # Build per-category data series from data rows
+    # Each row: col 0 = date, cols 1+ = values per category
+    series_data = {j: [] for j in categories}
+
     for i in range(header_row_idx + 1, len(rows)):
         row = rows[i]
         if row is None or len(row) < 2:
             continue
 
-        name = row[0]
-        if name is None or not str(name).strip():
-            continue
-        name = str(name).strip()
-
-        # Skip footnote/header rows
-        if name.startswith('(') or name.startswith('Note') or name.startswith('Source'):
+        date_str = parse_date_cell(row[0])
+        if not date_str:
             continue
 
-        # Collect data points
-        data_points = []
-        for j, date_str in sorted(date_columns.items()):
+        for j in categories:
             if j < len(row) and row[j] is not None:
                 try:
                     val = float(row[j])
-                    data_points.append({"date": date_str, "value": val})
+                    series_data[j].append({"date": date_str, "value": val})
                 except (ValueError, TypeError):
                     pass
 
+    # Build series list
+    series_list = []
+    for j, name in sorted(categories.items()):
+        data_points = sorted(series_data[j], key=lambda d: d["date"])
         if len(data_points) >= 12:
             series_list.append({
                 "id": f"CONST_{len(series_list):03d}",
@@ -126,6 +122,10 @@ def run():
                 "display_order": len(series_list),
                 "data": data_points
             })
+
+    sorted_dates = [d["date"] for d in series_list[0]["data"]] if series_list else []
+    if sorted_dates:
+        print(f"  Date range: {sorted_dates[0]} to {sorted_dates[-1]}")
 
     result = {
         "metadata": {

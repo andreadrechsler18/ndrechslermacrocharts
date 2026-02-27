@@ -107,6 +107,12 @@ window.NewCoCharts = {
     // Apply initial mode visibility
     this.applyModeVisibility();
 
+    // Apply initial filter for pages with filter groups (e.g. Current/Future timing)
+    if (NewCoControls.filterGroups) {
+      this.activeFilter = NewCoControls.getGroupFilter();
+      this.applyVisibility();
+    }
+
     // Listen for control changes
     document.addEventListener('modechange', (e) => {
       this.mode = e.detail;
@@ -147,6 +153,10 @@ window.NewCoCharts = {
   },
 
   async renderChart(index) {
+    const card = this.chartElements[index];
+    // Skip if card is hidden (filter changed while queued for rendering)
+    if (card && card.style.display === 'none') return;
+
     const series = this.data.series[index];
     if (!series || !series.data || series.data.length === 0) return;
 
@@ -385,6 +395,13 @@ window.NewCoCharts = {
     const filterKey = this.activeFilter;
     const cityKey = this.activeCity;
 
+    // First, hide ALL chart cards in the grid to catch any strays
+    const grid = document.getElementById('chart-grid');
+    grid.querySelectorAll('.chart-card').forEach(card => {
+      card.style.display = 'none';
+    });
+
+    // Then selectively show matching cards
     this.chartElements.forEach(card => {
       if (!card) return;
       const sid = card.dataset.seriesId;
@@ -406,15 +423,25 @@ window.NewCoCharts = {
         cityMatch = sid && sid.startsWith(cityKey);
       }
 
-      card.style.display = (filterMatch && cityMatch) ? '' : 'none';
+      if (filterMatch && cityMatch) {
+        card.style.display = '';
+      }
     });
 
-    // Re-observe visible cards so lazy loading picks them up
+    // Clear stale render queue and prioritize visible unrendered cards
+    NewCoLazyLoad.renderQueue = [];
     this.chartElements.forEach(el => {
       if (el && el.style.display !== 'none') {
+        const idx = parseInt(el.dataset.seriesIndex, 10);
+        if (!this.rendered.has(idx)) {
+          NewCoLazyLoad.renderQueue.push(idx);
+        }
         NewCoLazyLoad.observe(el);
       }
     });
+    if (NewCoLazyLoad.renderQueue.length > 0 && !NewCoLazyLoad.rendering) {
+      NewCoLazyLoad.processBatch();
+    }
 
     // Defer re-rendering until browser has completed layout of newly visible cards
     requestAnimationFrame(() => {
@@ -445,12 +472,20 @@ window.NewCoCharts = {
       });
     }
 
-    // Re-observe visible cards so lazy loading picks them up
+    // Clear stale render queue and prioritize visible unrendered cards
+    NewCoLazyLoad.renderQueue = [];
     this.chartElements.forEach(el => {
       if (el && el.style.display !== 'none') {
+        const idx = parseInt(el.dataset.seriesIndex, 10);
+        if (!this.rendered.has(idx)) {
+          NewCoLazyLoad.renderQueue.push(idx);
+        }
         NewCoLazyLoad.observe(el);
       }
     });
+    if (NewCoLazyLoad.renderQueue.length > 0 && !NewCoLazyLoad.rendering) {
+      NewCoLazyLoad.processBatch();
+    }
 
     // Defer re-rendering until browser has completed layout of newly visible cards
     requestAnimationFrame(() => {

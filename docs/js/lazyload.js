@@ -45,7 +45,11 @@ window.NewCoLazyLoad = {
     const batch = this.renderQueue.splice(0, this.BATCH_SIZE);
 
     for (const idx of batch) {
-      await this.renderCallback(idx);
+      try {
+        await this.renderCallback(idx);
+      } catch (e) {
+        console.error('Chart render failed for index', idx, e);
+      }
     }
 
     if (this.renderQueue.length > 0) {
