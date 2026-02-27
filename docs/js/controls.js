@@ -44,21 +44,64 @@ window.NewCoControls = {
     // Optional filter buttons
     this.filters = options.filters || null;
     this.activeFilter = null;
+    this.filterGroups = null;
+    this.activeFilterGroup = null;
     let filterHtml = '';
     if (this.filters) {
-      const filterButtons = this.filters.map(f =>
-        f.separator
-          ? '<span class="btn-group-sep">' + f.separator + '</span>'
-          : '<button data-filter="' + f.key + '">' + f.label + '</button>'
-      ).join('');
-      filterHtml =
-        '<div class="control-group">' +
-          '<span class="control-label">Filter:</span>' +
-          '<div class="btn-group" id="filter-toggle">' +
-            '<button data-filter="" class="active">All</button>' +
-            filterButtons +
-          '</div>' +
-        '</div>';
+      // Check if filters use separator groups (e.g. Current / Future)
+      const hasSeparators = this.filters.some(f => f.separator);
+
+      if (hasSeparators) {
+        // Split into groups by separator
+        this.filterGroups = {};
+        let currentGroup = null;
+        this.filters.forEach(f => {
+          if (f.separator) {
+            currentGroup = f.separator;
+            this.filterGroups[currentGroup] = [];
+          } else if (currentGroup) {
+            this.filterGroups[currentGroup].push(f);
+          }
+        });
+        const groupNames = Object.keys(this.filterGroups);
+        this.activeFilterGroup = groupNames[0] || null;
+
+        // Timing toggle
+        const timingButtons = groupNames.map(g =>
+          '<button data-timing="' + g + '" class="' + (g === this.activeFilterGroup ? 'active' : '') + '">' + g + '</button>'
+        ).join('');
+        const timingHtml =
+          '<div class="control-group">' +
+            '<span class="control-label">Timing:</span>' +
+            '<div class="btn-group" id="timing-toggle">' + timingButtons + '</div>' +
+          '</div>';
+
+        // Filter buttons for active group
+        const activeFilters = this.filterGroups[this.activeFilterGroup] || [];
+        const filterButtons = activeFilters.map(f =>
+          '<button data-filter="' + f.key + '">' + f.label + '</button>'
+        ).join('');
+        filterHtml = timingHtml +
+          '<div class="control-group">' +
+            '<span class="control-label">Component:</span>' +
+            '<div class="btn-group" id="filter-toggle">' +
+              '<button data-filter="" class="active">All</button>' +
+              filterButtons +
+            '</div>' +
+          '</div>';
+      } else {
+        const filterButtons = this.filters.map(f =>
+          '<button data-filter="' + f.key + '">' + f.label + '</button>'
+        ).join('');
+        filterHtml =
+          '<div class="control-group">' +
+            '<span class="control-label">Filter:</span>' +
+            '<div class="btn-group" id="filter-toggle">' +
+              '<button data-filter="" class="active">All</button>' +
+              filterButtons +
+            '</div>' +
+          '</div>';
+      }
     }
 
     // Optional city filter buttons
@@ -139,6 +182,23 @@ window.NewCoControls = {
       });
     }
 
+    // Timing toggle (switches which filter group is shown)
+    const timingToggle = container.querySelector('#timing-toggle');
+    if (timingToggle) {
+      timingToggle.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const newTiming = btn.dataset.timing;
+        if (newTiming === this.activeFilterGroup) return;
+        this.activeFilterGroup = newTiming;
+        this.updateButtons(timingToggle, 'timing', newTiming);
+        // Reset active filter and rebuild filter buttons
+        this.activeFilter = null;
+        this.rebuildFilterButtons();
+        document.dispatchEvent(new CustomEvent('filterchange', { detail: null }));
+      });
+    }
+
     // Filter toggle
     const filterToggle = container.querySelector('#filter-toggle');
     if (filterToggle) {
@@ -186,6 +246,17 @@ window.NewCoControls = {
         '<button data-mode="' + m.key + '" class="' + (this.mode === m.key ? 'active' : '') + '">' + m.label + '</button>'
       ).join('');
     }
+  },
+
+  rebuildFilterButtons() {
+    const filterToggle = this.container.querySelector('#filter-toggle');
+    if (!filterToggle || !this.filterGroups) return;
+    const filters = this.filterGroups[this.activeFilterGroup] || [];
+    filterToggle.innerHTML =
+      '<button data-filter="" class="active">All</button>' +
+      filters.map(f =>
+        '<button data-filter="' + f.key + '">' + f.label + '</button>'
+      ).join('');
   },
 
   updateButtons(group, attr, value) {
