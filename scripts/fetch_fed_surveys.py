@@ -57,9 +57,15 @@ SOURCES = {
         "url": "https://www.newyorkfed.org/medialibrary/media/survey/business_leaders/data/bls_notseasonallyadjusted_diffusion.csv",
         "format": "csv",
     },
-    # Kansas City (URLs TBD - user will provide)
-    # "kc_mfg": {"url": "...", "format": "..."},
-    # "kc_svc": {"url": "...", "format": "..."},
+    # Kansas City
+    "kc_mfg": {
+        "url": "https://www.kansascityfed.org/Manufacturing/documents/14937/2026Feb26historicalmfg.xlsx",
+        "format": "kc_xlsx",
+    },
+    "kc_svc": {
+        "url": "https://www.kansascityfed.org/Services/documents/14259/2026Janhistoricalserv.xlsx",
+        "format": "kc_xlsx",
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -286,6 +292,76 @@ NY_SVC_COLS = {
     "ASFDINA": ("TS_F", "Future Technology Spending"),
 }
 
+# Kansas City: transposed format — row labels map to (std_code, display_name)
+# Separate current/future dicts since same row labels appear in both sections.
+KC_MFG_CURRENT = {
+    "Composite Index": ("GA_C", "Composite Index"),
+    "Production": ("PROD_C", "Production"),
+    "Volume of shipments": ("SH_C", "Shipments"),
+    "Volume of new orders": ("NO_C", "New Orders"),
+    "Backlog of orders": ("UO_C", "Unfilled Orders"),
+    "Number of employees": ("EMP_C", "Employment"),
+    "Average employee workweek": ("AW_C", "Avg Workweek"),
+    "Prices received for finished product": ("PR_C", "Prices Received"),
+    "Prices paid for raw materials": ("PP_C", "Prices Paid"),
+    "Capital expenditures": ("CE_C", "Capital Expenditures"),
+    "New orders for exports": ("EX_C", "Export Orders"),
+    "Supplier delivery time": ("DT_C", "Supplier Delivery Time"),
+    "Inventories: Materials": ("RMI_C", "Inventories: Materials"),
+    "Inventories: Finished goods": ("IV_C", "Inventories: Finished Goods"),
+}
+
+KC_MFG_FUTURE = {
+    "Composite Index": ("GA_F", "Future Composite Index"),
+    "Production": ("PROD_F", "Future Production"),
+    "Volume of shipments": ("SH_F", "Future Shipments"),
+    "Volume of new orders": ("NO_F", "Future New Orders"),
+    "Backlog of orders": ("UO_F", "Future Unfilled Orders"),
+    "Number of employees": ("EMP_F", "Future Employment"),
+    "Average employee workweek": ("AW_F", "Future Avg Workweek"),
+    "Prices received for finished product": ("PR_F", "Future Prices Received"),
+    "Prices paid for raw materials": ("PP_F", "Future Prices Paid"),
+    "Capital expenditures": ("CE_F", "Future Capital Expenditures"),
+    "New orders for exports": ("EX_F", "Future Export Orders"),
+    "Supplier delivery time": ("DT_F", "Future Supplier Delivery Time"),
+    "Inventories: Materials": ("RMI_F", "Future Inventories: Materials"),
+    "Inventories: Finished goods": ("IV_F", "Future Inventories: Finished Goods"),
+}
+
+KC_SVC_CURRENT = {
+    "Composite Index": ("GA_C", "Composite Index"),
+    "General Revenue/Sales": ("REV_C", "Revenue/Sales"),
+    "Number of Employees": ("EMP_C", "Employment"),
+    "Employee Hours Worked": ("AW_C", "Hours Worked"),
+    "Part-Time/Temporary Employment": ("PEMP_C", "Part-Time Employment"),
+    "Wages and Benefits": ("WB_C", "Wages & Benefits"),
+    "Inventory Levels": ("IV_C", "Inventories"),
+    "Credit Conditions/Access to Credit": ("CR_C", "Credit Conditions"),
+    "Capital Expenditures": ("CE_C", "Capital Expenditures"),
+    "Input Prices": ("PP_C", "Prices Paid"),
+    "Selling Prices": ("PR_C", "Prices Received"),
+}
+
+KC_SVC_FUTURE = {
+    "Composite Index": ("GA_F", "Future Composite Index"),
+    "General Revenue/Sales": ("REV_F", "Future Revenue/Sales"),
+    "Number of Employees": ("EMP_F", "Future Employment"),
+    "Employee Hours Worked": ("AW_F", "Future Hours Worked"),
+    "Part-Time/Temporary Employment": ("PEMP_F", "Future Part-Time Employment"),
+    "Wages and Benefits": ("WB_F", "Future Wages & Benefits"),
+    "Inventory Levels": ("IV_F", "Future Inventories"),
+    "Credit Conditions/Access to Credit": ("CR_F", "Future Credit Conditions"),
+    "Capital Expenditures": ("CE_F", "Future Capital Expenditures"),
+    "Input Prices": ("PP_F", "Future Prices Paid"),
+    "Selling Prices": ("PR_F", "Future Prices Received"),
+}
+
+# Combined for build_series_list name lookups
+KC_MFG_COLS = {**{v[0]: v for v in KC_MFG_CURRENT.values()},
+               **{v[0]: v for v in KC_MFG_FUTURE.values()}}
+KC_SVC_COLS = {**{v[0]: v for v in KC_SVC_CURRENT.values()},
+               **{v[0]: v for v in KC_SVC_FUTURE.values()}}
+
 CITY_NAMES = {
     "philly": "Philadelphia",
     "dallas": "Dallas",
@@ -303,6 +379,8 @@ COL_MAPS = {
     "richmond_svc": RICHMOND_SVC_COLS,
     "ny_mfg": NY_MFG_COLS,
     "ny_svc": NY_SVC_COLS,
+    "kc_mfg": KC_MFG_COLS,
+    "kc_svc": KC_SVC_COLS,
 }
 
 # Common components across most surveys (for labeling)
@@ -427,6 +505,82 @@ def parse_xlsx_source(content, col_map, sheet_name=None):
     return series
 
 
+def parse_kc_xlsx(content, current_map, future_map, sheet_name=None):
+    """Parse a Kansas City Fed Excel file (transposed: dates in columns, series in rows).
+
+    The file has multiple sections. We want the seasonally adjusted sections:
+      - 'Versus a Month Ago' + '(seasonally adjusted)' -> current
+      - 'Expected in Six Months' + '(seasonally adjusted)' -> future
+    """
+    wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True)
+    ws = wb[sheet_name] if sheet_name else wb.active
+
+    # Row 3 contains dates across columns (col 2 onwards)
+    dates = []
+    for c in range(2, ws.max_column + 1):
+        raw = ws.cell(3, c).value
+        d = parse_date(raw)
+        if d:
+            dates.append((c, d))
+
+    if not dates:
+        return {}
+
+    # Walk rows to find SA sections
+    series = {}
+    section = None  # "current_sa" or "future_sa" or None
+
+    for r in range(4, ws.max_row + 1):
+        label = ws.cell(r, 1).value
+        if label is None:
+            continue
+        label = str(label).strip()
+
+        # Detect section headers
+        if label == "Versus a Month Ago":
+            # Check next row for (seasonally adjusted)
+            next_label = ws.cell(r + 1, 1).value
+            if next_label and "seasonally adjusted" in str(next_label).lower():
+                section = "current_sa"
+            else:
+                section = None
+            continue
+        elif label == "Expected in Six Months":
+            next_label = ws.cell(r + 1, 1).value
+            if next_label and "seasonally adjusted" in str(next_label).lower():
+                section = "future_sa"
+            else:
+                section = None
+            continue
+        elif label == "Versus a Year Ago":
+            section = None
+            continue
+        elif "seasonally adjusted" in label.lower():
+            # This is the "(seasonally adjusted)" or "(not seasonally adjusted)" tag
+            if "not" in label.lower():
+                section = None
+            continue
+
+        if section is None:
+            continue
+
+        # Map row label to standardized code
+        col_map = current_map if section == "current_sa" else future_map
+        if label not in col_map:
+            continue
+
+        std_code, _ = col_map[label]
+
+        data_points = []
+        for col_idx, date_str in dates:
+            val = parse_value(ws.cell(r, col_idx).value)
+            data_points.append({"date": date_str, "value": val})
+
+        series[std_code] = data_points
+
+    return series
+
+
 def build_series_list(parsed, city_key, col_map, survey_type):
     """Convert parsed series dict to the site's standard series list format."""
     city_name = CITY_NAMES[city_key]
@@ -473,6 +627,12 @@ def fetch_and_parse(key):
         else:
             date_col = "surveyDate"
         parsed = parse_csv_source(content, col_map, date_col)
+    elif src["format"] == "kc_xlsx":
+        # Kansas City transposed format
+        if key == "kc_mfg":
+            parsed = parse_kc_xlsx(content, KC_MFG_CURRENT, KC_MFG_FUTURE)
+        else:
+            parsed = parse_kc_xlsx(content, KC_SVC_CURRENT, KC_SVC_FUTURE)
     else:
         # Excel
         sheet = None
