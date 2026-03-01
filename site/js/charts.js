@@ -163,12 +163,29 @@ window.NewCoCharts = {
     await this.waitForPlotly();
 
     const containerId = 'chart-' + index;
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error('[NewCo] renderChart: container not found for', containerId);
+      return;
+    }
+
+    console.log('[NewCo] renderChart: rendering index', index, 'series', series.id);
+
     const plotData = this.prepareData(series);
 
-    Plotly.newPlot(containerId, [plotData.trace], plotData.layout, {
-      responsive: true,
-      displayModeBar: false
-    });
+    try {
+      Plotly.newPlot(container, [plotData.trace], plotData.layout, {
+        responsive: true,
+        displayModeBar: false
+      });
+    } catch (err) {
+      console.error('[NewCo] Plotly.newPlot failed for index', index, err);
+      return;
+    }
+
+    // Remove loading text if Plotly didn't replace it
+    const loading = container.querySelector('.chart-loading');
+    if (loading) loading.remove();
 
     this.rendered.add(index);
   },

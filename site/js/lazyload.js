@@ -43,6 +43,7 @@ window.NewCoLazyLoad = {
 
     this.rendering = true;
     const batch = this.renderQueue.splice(0, this.BATCH_SIZE);
+    console.log('[NewCo] processBatch: rendering indices', batch);
 
     for (const idx of batch) {
       try {
