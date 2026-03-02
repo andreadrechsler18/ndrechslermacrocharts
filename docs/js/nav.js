@@ -62,10 +62,10 @@ const SITE_MAP = [
   const scripts = document.querySelectorAll('script[src*="nav.js"]');
   let siteRoot = '';
   if (scripts.length > 0) {
-    const src = scripts[0].getAttribute('src').split('?')[0];
-    // src is like "../js/nav.js" or "./js/nav.js" or "js/nav.js"
-    // Strip off "js/nav.js" to get the path to site root
-    siteRoot = src.replace(/js\/nav\.js$/, '');
+    const src = scripts[0].getAttribute('src');
+    // src is like "../js/nav.js?v=3" or "js/nav.js" etc.
+    // Strip "js/nav.js" and anything after it (query params, hash)
+    siteRoot = src.replace(/js\/nav\.js.*$/, '');
   }
 
   function resolvePath(href) {
