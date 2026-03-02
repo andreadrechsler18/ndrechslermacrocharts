@@ -62,7 +62,7 @@ const SITE_MAP = [
   const scripts = document.querySelectorAll('script[src*="nav.js"]');
   let siteRoot = '';
   if (scripts.length > 0) {
-    const src = scripts[0].getAttribute('src');
+    const src = scripts[0].getAttribute('src').split('?')[0];
     // src is like "../js/nav.js" or "./js/nav.js" or "js/nav.js"
     // Strip off "js/nav.js" to get the path to site root
     siteRoot = src.replace(/js\/nav\.js$/, '');
