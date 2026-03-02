@@ -164,24 +164,14 @@ window.NewCoCharts = {
 
     const containerId = 'chart-' + index;
     const container = document.getElementById(containerId);
-    if (!container) {
-      console.error('[NewCo] renderChart: container not found for', containerId);
-      return;
-    }
-
-    console.log('[NewCo] renderChart: rendering index', index, 'series', series.id);
+    if (!container) return;
 
     const plotData = this.prepareData(series);
 
-    try {
-      Plotly.newPlot(container, [plotData.trace], plotData.layout, {
-        responsive: true,
-        displayModeBar: false
-      });
-    } catch (err) {
-      console.error('[NewCo] Plotly.newPlot failed for index', index, err);
-      return;
-    }
+    Plotly.newPlot(container, [plotData.trace], plotData.layout, {
+      responsive: true,
+      displayModeBar: false
+    });
 
     // Remove loading text if Plotly didn't replace it
     const loading = container.querySelector('.chart-loading');
@@ -445,8 +435,6 @@ window.NewCoCharts = {
         grid.appendChild(card);
       }
     });
-
-    console.log('[NewCo v2] applyVisibility: filter=' + filterKey + ' city=' + cityKey + ' cards_in_grid=' + grid.children.length);
 
     // Queue unrendered visible cards for rendering
     NewCoLazyLoad.renderQueue = [];

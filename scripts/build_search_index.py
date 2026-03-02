@@ -142,6 +142,11 @@ DATA_FILE_PAGES = {
         {"page": "fed_surveys/services.html", "pageLabel": "Services Surveys",
          "section": "FedSurveys", "sectionLabel": "Fed Regional Surveys"},
     ],
+    # PPI
+    "ppi/ppi_services.json": [
+        {"page": "ppi/selected_services.html", "pageLabel": "Selected Services",
+         "section": "PPI", "sectionLabel": "PPI - Producer Price Index"},
+    ],
 }
 
 # M3 series suffixes excluded from display

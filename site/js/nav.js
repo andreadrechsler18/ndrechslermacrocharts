@@ -46,6 +46,11 @@ const SITE_MAP = [
     ]
   },
   {
+    label: "PPI", children: [
+      { label: "Selected Services", href: "ppi/selected_services.html" },
+    ]
+  },
+  {
     label: "Analysis", children: [
       { label: "AI Impact on Prof. Services", href: "analysis/ai_employment.html" },
     ]

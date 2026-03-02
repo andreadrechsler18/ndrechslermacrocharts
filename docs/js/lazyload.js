@@ -43,14 +43,9 @@ window.NewCoLazyLoad = {
 
     this.rendering = true;
     const batch = this.renderQueue.splice(0, this.BATCH_SIZE);
-    console.log('[NewCo] processBatch: rendering indices', batch);
 
     for (const idx of batch) {
-      try {
-        await this.renderCallback(idx);
-      } catch (e) {
-        console.error('Chart render failed for index', idx, e);
-      }
+      await this.renderCallback(idx);
     }
 
     if (this.renderQueue.length > 0) {

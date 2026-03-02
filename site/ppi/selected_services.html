@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPI - Selected Professional Services - NewCo Charts</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <main>
+    <header class="page-header">
+      <h1>PPI &mdash; Selected Professional Services</h1>
+      <div class="controls" id="chart-controls"></div>
+    </header>
+    <div class="chart-grid" id="chart-grid"></div>
+  </main>
+  <script src="../js/nav.js?v=3"></script>
+  <script src="../js/controls.js?v=3"></script>
+  <script src="../js/lazyload.js?v=3"></script>
+  <script src="../js/charts.js?v=3"></script>
+  <script>
+    NewCoCharts.init({
+      dataUrl: '../../data/json/ppi/ppi_services.json',
+      defaultMode: 'raw',
+      defaultHorizon: 24,
+      filters: [
+        { key: 'PCU5413--', label: 'A/E Summary' },
+        { key: 'PCU541310', label: 'Architectural' },
+        { key: 'PCU541330', label: 'Engineering' },
+        { key: 'PCU5416--', label: 'Consulting Summary' },
+        { key: 'PCU541610', label: 'Management Consulting' },
+      ]
+    });
+  </script>
+</body>
+</html>
