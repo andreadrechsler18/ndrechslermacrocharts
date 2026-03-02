@@ -276,6 +276,9 @@ IP_SERIES = [
     ("IPG339S", "Miscellaneous"),
     ("IPN3391S", "Medical equipment and supplies"),
 
+    # === SPECIAL AGGREGATES ===
+    ("IPHITEK2S", "Selected High-Technology Industries"),
+
     # === OTHER ===
     ("IPN1133S", "Logging"),
     ("IPG5131PS", "Newspaper, periodical, book, and directory publishers"),
