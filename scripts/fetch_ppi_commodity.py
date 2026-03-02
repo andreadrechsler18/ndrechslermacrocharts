@@ -1,15 +1,15 @@
 """
-Fetch BLS Producer Price Index (PPI) data for selected professional services.
+Fetch BLS Producer Price Index (PPI) data by commodity group.
 
-Covers NAICS 5413 (Architectural, Engineering & Related Services) through
-541610-5 (Human Resources Consulting Services) from PPI Table 11.
+Covers commodity group 45 "Professional Services" from PPI Table 9,
+item codes 1 through 610101 (Legal Services through IT Consulting).
 
 Uses the BLS API v2 to pull monthly, not seasonally adjusted index values.
+Series IDs follow pattern: WPU{commodity_group}{item_code} (dashes removed).
 """
 
 import os
 import sys
-import json
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -18,56 +18,70 @@ from utils import load_api_keys, write_json, period_to_date
 BLS_API_URL = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
 
 # Series definitions: (BLS series ID, display name)
-# Series IDs follow pattern: PCU{industry_code}{product_code}
-# Dashes in product codes are removed.
+# Commodity group 45 = Professional Services
 SERIES = [
-    # --- Architectural, Engineering & Related Services (5413) ---
-    ("PCU5413--5413--", "Architectural, Engineering & Related Services"),
+    # --- Group aggregate ---
+    ("WPU45",        "Professional Services"),
 
-    # Architectural Services (541310)
-    ("PCU541310541310",    "Architectural Services"),
-    ("PCU541310541310P",   "Architectural - Primary Services"),
-    ("PCU5413105413101",   "Architectural - Residential Building"),
-    ("PCU5413105413107",   "Architectural - Nonresidential Building"),
-    ("PCU54131054131071",  "Architectural - Commercial & Industrial Building"),
-    ("PCU54131054131072",  "Architectural - Institutional Building"),
-    ("PCU5413105413108",   "Architectural - Other (Historic Restoration, Consulting)"),
+    # --- 45-1: Legal Services ---
+    ("WPU451",       "Legal Services"),
+    ("WPU4511",      "Legal Services (4511)"),
+    ("WPU451101",    "Legal Services (451101)"),
+    ("WPU45110101",  "Legal Services (45110101)"),
 
-    # Engineering Services (541330)
-    ("PCU541330541330",    "Engineering Services"),
-    ("PCU541330541330P",   "Engineering - Primary Services"),
-    ("PCU5413305413301",   "Engineering - Building Related"),
-    ("PCU541330541330101", "Engineering - Residential Building"),
-    ("PCU541330541330102", "Engineering - Commercial, Public & Institutional Building"),
-    ("PCU541330541330103", "Engineering - Industrial & Manufacturing Plant"),
-    ("PCU5413305413302",   "Engineering - Non-Building Related"),
-    ("PCU541330541330201", "Engineering - Transportation"),
-    ("PCU54133054133020101", "Engineering - Highway & Roadway"),
-    ("PCU54133054133020102", "Engineering - Other Transportation (Mass Transit)"),
-    ("PCU541330541330202", "Engineering - Municipal Utility & Power Generation"),
-    ("PCU541330541330203", "Engineering - All Other Non-Building"),
-    ("PCU541330541330SM",  "Engineering - Other Receipts"),
+    # --- 45-2: Accounting Services ---
+    ("WPU452",       "Accounting Services"),
+    ("WPU4521",      "Accounting Services, excl. Payroll"),
+    ("WPU452101",    "Financial Auditing"),
+    ("WPU45210101",  "Financial Auditing (detail)"),
+    ("WPU452102",    "Tax Preparation & Planning"),
+    ("WPU45210201",  "Tax Preparation & Planning (detail)"),
+    ("WPU452104",    "Other Accounting (Billing & Review)"),
+    ("WPU45210401",  "Other Accounting (Billing & Review, detail)"),
+    ("WPU452105",    "Bookkeeping & Compilation"),
+    ("WPU45210501",  "Bookkeeping & Compilation (detail)"),
 
-    # --- Management & Technical Consulting Services (5416) ---
-    ("PCU5416--5416--", "Management & Technical Consulting Services"),
+    # --- 45-3: Architectural & Engineering Services ---
+    ("WPU453",       "Architectural & Engineering Services"),
+    ("WPU4531",      "Architectural Services"),
+    ("WPU453101",    "Architectural Services (453101)"),
+    ("WPU45310101",  "Architectural Services (detail)"),
+    ("WPU4532",      "Engineering Services"),
+    ("WPU453201",    "Engineering Services (453201)"),
+    ("WPU45320101",  "Engineering Services (detail)"),
 
-    # Management Consulting Services (541610)
-    ("PCU541610541610",    "Management Consulting Services"),
-    ("PCU541610541610P",   "Management Consulting - Primary Services"),
-    ("PCU5416105416101",   "Management Consulting - Administrative & General"),
-    ("PCU5416105416103",   "Management Consulting - Marketing"),
-    ("PCU5416105416104",   "Management Consulting - Process, Distribution & Logistics"),
-    ("PCU5416105416105",   "Management Consulting - Human Resources"),
+    # --- 45-4: Management, Scientific & Technical Consulting ---
+    ("WPU454",       "Management, Scientific & Technical Consulting"),
+    ("WPU4541",      "Management Consulting Services"),
+    ("WPU454101",    "Administrative & General Management Consulting"),
+    ("WPU45410101",  "Administrative & General Management Consulting (detail)"),
+    ("WPU454102",    "Human Resources Consulting"),
+    ("WPU45410201",  "Human Resources Consulting (detail)"),
+    ("WPU454103",    "Marketing Consulting"),
+    ("WPU45410301",  "Marketing Consulting (detail)"),
+    ("WPU454104",    "Process, Distribution & Logistics Consulting"),
+    ("WPU45410401",  "Process, Distribution & Logistics Consulting (detail)"),
+
+    # --- 45-5: Advertising & Related Services ---
+    ("WPU455",       "Advertising & Related Services"),
+    ("WPU4551",      "Advertising Agency Services"),
+    ("WPU455101",    "Advertising Agency Services (455101)"),
+    ("WPU45510101",  "Advertising Agency Services (detail)"),
+
+    # --- 45-6: Information Technology Services ---
+    ("WPU456",       "IT Technical Support & Consulting"),
+    ("WPU4561",      "IT Technical Support & Consulting (4561)"),
+    ("WPU456101",    "IT Technical Support & Consulting (456101)"),
+    ("WPU45610101",  "IT Technical Support & Consulting (detail)"),
 ]
 
-# BLS API v2 with a registration key allows 20 years per request
-# and up to 50 series. We have ~28 series, fits in one request.
-START_YEAR = 2006  # Most series start around 06/2006
+# Most commodity 45 series start around Dec 2008 / mid-2009
+START_YEAR = 2007
 END_YEAR = datetime.now().year
 
 
 def run():
-    print("Fetching PPI Selected Services from BLS API...")
+    print("Fetching PPI Commodity Group 45 from BLS API...")
 
     keys = load_api_keys()
     bls_key = keys.get('bls', '')
@@ -77,8 +91,6 @@ def run():
     all_series_ids = [s[0] for s in SERIES]
     name_map = {s[0]: s[1] for s in SERIES}
 
-    # BLS API allows 20 years per request with a key.
-    # We may need multiple requests to cover the full range.
     all_data = {}  # series_id -> list of {date, value}
 
     # Fetch in 20-year windows
@@ -154,8 +166,8 @@ def run():
 
     result = {
         "metadata": {
-            "title": "PPI - Selected Services by Industry",
-            "source": "Bureau of Labor Statistics, Producer Price Index (Table 11)",
+            "title": "PPI - By Commodity (Professional Services)",
+            "source": "Bureau of Labor Statistics, Producer Price Index (Table 9)",
             "unit": "Index",
             "frequency": "monthly",
             "seasonally_adjusted": False,
@@ -164,7 +176,7 @@ def run():
         "series": series_list
     }
 
-    write_json(result, "ppi/ppi_services.json")
+    write_json(result, "ppi/ppi_commodity.json")
     print(f"  {len(series_list)} series written")
 
 

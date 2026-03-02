@@ -47,7 +47,8 @@ const SITE_MAP = [
   },
   {
     label: "PPI", children: [
-      { label: "Selected Services", href: "ppi/selected_services.html" },
+      { label: "Selected Services by Industry", href: "ppi/selected_services.html" },
+      { label: "By Commodity", href: "ppi/commodity.html" },
     ]
   },
   {

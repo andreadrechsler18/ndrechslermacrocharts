@@ -144,7 +144,11 @@ DATA_FILE_PAGES = {
     ],
     # PPI
     "ppi/ppi_services.json": [
-        {"page": "ppi/selected_services.html", "pageLabel": "Selected Services",
+        {"page": "ppi/selected_services.html", "pageLabel": "Selected Services by Industry",
+         "section": "PPI", "sectionLabel": "PPI - Producer Price Index"},
+    ],
+    "ppi/ppi_commodity.json": [
+        {"page": "ppi/commodity.html", "pageLabel": "By Commodity",
          "section": "PPI", "sectionLabel": "PPI - Producer Price Index"},
     ],
 }
