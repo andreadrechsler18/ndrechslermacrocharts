@@ -1,8 +1,9 @@
 """
 Fetch BLS Producer Price Index (PPI) data for selected professional services.
 
-Covers NAICS 5413 (Architectural, Engineering & Related Services) through
-541610-5 (Human Resources Consulting Services) from PPI Table 11.
+Covers NAICS 5413 (Architectural, Engineering & Related Services),
+541610 (Management Consulting Services), and 5132 (Software Publishers)
+from PPI Table 11.
 
 Uses the BLS API v2 to pull monthly, not seasonally adjusted index values.
 """
@@ -58,11 +59,26 @@ SERIES = [
     ("PCU5416105416103",   "Management Consulting - Marketing"),
     ("PCU5416105416104",   "Management Consulting - Process, Distribution & Logistics"),
     ("PCU5416105416105",   "Management Consulting - Human Resources"),
+
+    # --- Software Publishers (5132 / 513210) ---
+    ("PCU5132--5132--",       "Software Publishers"),
+    ("PCU51321-51321-",       "Software Publishers (51321)"),
+    ("PCU513210513210",       "Software Publishers (513210)"),
+    ("PCU513210513210P",      "Software Publishers - Primary Services"),
+    ("PCU5132105132105",      "Software Publishing, excl. Games"),
+    ("PCU513210513210505",    "System & Application Software, excl. Maint/Support/Games"),
+    ("PCU51321051321050501",  "System Software Publishing"),
+    ("PCU51321051321050502",  "Application Software Publishing"),
+    ("PCU513210513210505021", "Desktop & Portable Device Application Software"),
+    ("PCU513210513210505022", "Other Application Software Publishing"),
+    ("PCU513210513210506",    "Software Maintenance, Tech Support & Related Services"),
+    ("PCU5132105132107",      "Game Software Publishing"),
+    ("PCU513210513210SM",     "Software Publishers - Other Receipts"),
 ]
 
 # BLS API v2 with a registration key allows 20 years per request
 # and up to 50 series. We have ~28 series, fits in one request.
-START_YEAR = 2006  # Most series start around 06/2006
+START_YEAR = 1997  # Some software publisher series start Dec 1997
 END_YEAR = datetime.now().year
 
 
