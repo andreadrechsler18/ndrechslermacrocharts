@@ -107,6 +107,47 @@ def process_wholesale():
             "series": series_list
         }
 
+    # Compute "Other Professional Equipment" = 4234 minus 42343
+    def compute_diff(series_a, series_b):
+        """Subtract series_b data from series_a, matched by date."""
+        b_map = {d["date"]: d["value"] for d in series_b["data"]}
+        points = []
+        for d in series_a["data"]:
+            a_val = d["value"]
+            b_val = b_map.get(d["date"])
+            if a_val is not None and b_val is not None:
+                points.append({"date": d["date"], "value": round(a_val - b_val, 1)})
+            else:
+                points.append({"date": d["date"], "value": None})
+        return points
+
+    sales_4234 = next((s for s in sales if s["id"] == "4234_SM"), None)
+    sales_42343 = next((s for s in sales if s["id"] == "42343_SM"), None)
+    inv_4234 = next((s for s in inventory if s["id"] == "4234_IM"), None)
+    inv_42343 = next((s for s in inventory if s["id"] == "42343_IM"), None)
+
+    if sales_4234 and sales_42343:
+        other_sales = compute_diff(sales_4234, sales_42343)
+        sales.append({"id": "4234X_SM", "name": "Other Professional Equipment - Sales", "data": other_sales})
+
+    if inv_4234 and inv_42343:
+        other_inv = compute_diff(inv_4234, inv_42343)
+        inventory.append({"id": "4234X_IM", "name": "Other Professional Equipment - Inventories", "data": other_inv})
+
+    if sales_4234 and sales_42343 and inv_4234 and inv_42343:
+        # Ratio = other inventory / other sales
+        other_s_map = {d["date"]: d["value"] for d in other_sales}
+        other_i_map = {d["date"]: d["value"] for d in other_inv}
+        ratio_pts = []
+        for d in other_sales:
+            s_val = other_s_map.get(d["date"])
+            i_val = other_i_map.get(d["date"])
+            if s_val and i_val is not None and s_val != 0:
+                ratio_pts.append({"date": d["date"], "value": round(i_val / s_val, 2)})
+            else:
+                ratio_pts.append({"date": d["date"], "value": None})
+        ratio.append({"id": "4234X_IR", "name": "Other Professional Equipment - Inventories/Sales Ratio", "data": ratio_pts})
+
     if sales:
         save_json(make_output(sales, "Wholesale Trade - Sales",
                               "Millions of dollars"), "wholesale/wholesale_sales.json")
