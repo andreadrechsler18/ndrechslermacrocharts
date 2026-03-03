@@ -293,6 +293,38 @@ window.NewCoCharts = {
         values = popValues;
         yLabel = 'Period over Period Change';
       }
+    } else if (this.mode === 'yoy3') {
+      // 3-month rolling sum, then YoY % change
+      const freq = this.data.metadata.frequency;
+      const lookback = (freq === 'quarterly') ? 4 : 12;
+
+      // Step 1: compute trailing 3-month sums
+      const sum3Dates = [];
+      const sum3Values = [];
+      for (let i = 2; i < rawDates.length; i++) {
+        sum3Dates.push(rawDates[i]);
+        const v0 = rawValues[i], v1 = rawValues[i - 1], v2 = rawValues[i - 2];
+        if (v0 == null || v1 == null || v2 == null) {
+          sum3Values.push(null);
+        } else {
+          sum3Values.push(v0 + v1 + v2);
+        }
+      }
+
+      // Step 2: YoY of the rolling sums
+      dates = [];
+      values = [];
+      for (let i = lookback; i < sum3Dates.length; i++) {
+        const current = sum3Values[i];
+        const previous = sum3Values[i - lookback];
+        dates.push(sum3Dates[i]);
+        if (current == null || previous == null || previous === 0) {
+          values.push(null);
+        } else {
+          values.push(((current - previous) / Math.abs(previous)) * 100);
+        }
+      }
+      yLabel = '3-Mo Rolling Sum YoY %';
     } else if (this.mode === 'raw') {
       dates = rawDates;
       values = rawValues;
