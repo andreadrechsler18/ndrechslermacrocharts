@@ -35,6 +35,7 @@ const SITE_MAP = [
       { label: "Sales", href: "wholesale/sales.html" },
       { label: "Inventories", href: "wholesale/inventory.html" },
       { label: "Inventory/Sales Ratio", href: "wholesale/ratio.html" },
+      { label: "Implied Purchases", href: "wholesale/implied_purchases.html" },
     ]
   },
   { label: "Unemployment by Industry", href: "unemployment/index.html" },

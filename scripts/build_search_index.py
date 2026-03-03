@@ -72,6 +72,10 @@ DATA_FILE_PAGES = {
         {"page": "wholesale/ratio.html", "pageLabel": "Wholesale I/S Ratio",
          "section": "Wholesale", "sectionLabel": "Monthly Wholesale Trade"},
     ],
+    "wholesale/wholesale_implied_purchases.json": [
+        {"page": "wholesale/implied_purchases.html", "pageLabel": "Wholesale Implied Purchases",
+         "section": "Wholesale", "sectionLabel": "Monthly Wholesale Trade"},
+    ],
     "construction/construction.json": [
         {"page": "construction/index.html", "pageLabel": "Construction Spending",
          "section": "Construction", "sectionLabel": "Construction Spending"},

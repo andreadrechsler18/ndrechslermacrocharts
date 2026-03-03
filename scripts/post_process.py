@@ -158,6 +158,58 @@ def process_wholesale():
         save_json(make_output(ratio, "Wholesale Trade - Inventory/Sales Ratio",
                               "Ratio"), "wholesale/wholesale_ratio.json")
 
+    # Compute implied purchases: Sales × 0.7 + ΔInventory (month-over-month)
+    inv_by_cat = {}
+    for s in inventory:
+        parts = s["id"].rsplit("_", 1)
+        if len(parts) == 2 and parts[1] == "IM":
+            inv_by_cat[parts[0]] = s
+
+    implied = []
+    for s in sales:
+        parts = s["id"].rsplit("_", 1)
+        if len(parts) != 2:
+            continue
+        cat = parts[0]
+        inv_s = inv_by_cat.get(cat)
+        if not inv_s:
+            continue
+
+        # Build inventory lookup by date
+        inv_map = {d["date"]: d["value"] for d in inv_s["data"]}
+
+        # Sort all dates to determine previous month for each date
+        all_dates = sorted(set(d["date"] for d in s["data"]) | set(inv_map.keys()))
+        prev_inv_map = {}
+        for i, dt in enumerate(all_dates):
+            if i > 0:
+                prev_inv_map[dt] = inv_map.get(all_dates[i - 1])
+
+        points = []
+        for d in s["data"]:
+            sales_val = d["value"]
+            inv_val = inv_map.get(d["date"])
+            prev_inv_val = prev_inv_map.get(d["date"])
+
+            if sales_val is not None and inv_val is not None and prev_inv_val is not None:
+                delta_inv = inv_val - prev_inv_val
+                ip_val = round(sales_val * 0.7 + delta_inv, 1)
+                points.append({"date": d["date"], "value": ip_val})
+            else:
+                points.append({"date": d["date"], "value": None})
+
+        cat_name = s["name"].rsplit(" - ", 1)[0]
+        implied.append({
+            "id": f"{cat}_IP",
+            "name": f"{cat_name} - Implied Purchases",
+            "data": points
+        })
+
+    if implied:
+        save_json(make_output(implied, "Wholesale Trade - Implied Purchases",
+                              "Millions of dollars"), "wholesale/wholesale_implied_purchases.json")
+        print(f"  {len(implied)} implied purchases series")
+
 
 def process_ces_pbs():
     """Filter CES employees to PBS (CES60*) subset."""
