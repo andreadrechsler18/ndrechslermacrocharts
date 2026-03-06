@@ -235,6 +235,52 @@ def process_ces_pbs():
     print(f"  {len(pbs)} PBS series")
 
 
+def process_ces_split():
+    """Split CES employees into preliminary (current month) and detailed (lagged)."""
+    print("Splitting CES employees by release timing...")
+    data = load_json("ces/employees.json")
+    if not data:
+        return
+
+    # Find the latest date across all series
+    max_date = max(
+        s["data"][-1]["date"]
+        for s in data["series"]
+        if s["data"]
+    )
+
+    preliminary = []
+    detailed = []
+    for s in data["series"]:
+        if not s["data"]:
+            continue
+        last = s["data"][-1]["date"]
+        if last == max_date:
+            preliminary.append(s)
+        else:
+            detailed.append(s)
+
+    for i, s in enumerate(preliminary):
+        s["display_order"] = i
+    for i, s in enumerate(detailed):
+        s["display_order"] = i
+
+    meta = data["metadata"]
+
+    if preliminary:
+        save_json({
+            "metadata": {**meta, "title": "Employees - Preliminary (Current Month)"},
+            "series": preliminary
+        }, "ces/employees_preliminary.json")
+    if detailed:
+        save_json({
+            "metadata": {**meta, "title": "Employees - Detailed (1-Month Lag)"},
+            "series": detailed
+        }, "ces/employees_detailed.json")
+
+    print(f"  {len(preliminary)} preliminary, {len(detailed)} detailed")
+
+
 def process_analysis():
     """Extract key AI-exposed series for the analysis page."""
     print("Generating AI impact analysis JSON...")
@@ -317,6 +363,7 @@ def run():
     process_qss()
     process_wholesale()
     process_ces_pbs()
+    process_ces_split()
     process_analysis()
     copy_calendar()
     build_search()

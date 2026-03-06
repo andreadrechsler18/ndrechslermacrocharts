@@ -39,9 +39,17 @@ NAICS_SECTORS = {
 # Data file -> list of pages that show this data
 DATA_FILE_PAGES = {
     "ces/employees.json": [
-        {"page": "ces/employees_yoy.html", "pageLabel": "Employees YoY",
+        {"page": "ces/employees_yoy.html", "pageLabel": "Employees - All YoY",
          "section": "CES", "sectionLabel": "Current Employment Statistics"},
-        {"page": "ces/employees_long.html", "pageLabel": "Employees (Long)",
+        {"page": "ces/employees_long.html", "pageLabel": "Employees - All (Long)",
+         "section": "CES", "sectionLabel": "Current Employment Statistics"},
+    ],
+    "ces/employees_preliminary.json": [
+        {"page": "ces/employees_preliminary.html", "pageLabel": "Employees - Preliminary",
+         "section": "CES", "sectionLabel": "Current Employment Statistics"},
+    ],
+    "ces/employees_detailed.json": [
+        {"page": "ces/employees_detailed.html", "pageLabel": "Employees - Detailed",
          "section": "CES", "sectionLabel": "Current Employment Statistics"},
     ],
     "ces/employees_pbs.json": [
