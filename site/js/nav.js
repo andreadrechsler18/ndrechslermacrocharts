@@ -24,8 +24,7 @@ const SITE_MAP = [
     label: "Current Employment Statistics", children: [
       { label: "Employees - Preliminary", href: "ces/employees_preliminary.html" },
       { label: "Employees - Detailed", href: "ces/employees_detailed.html" },
-      { label: "Employees - All YoY", href: "ces/employees_yoy.html" },
-      { label: "Employees - All (Long)", href: "ces/employees_long.html" },
+      { label: "Employees - All", href: "ces/employees_long.html" },
       { label: "Prof. & Business Services", href: "ces/employees_pbs.html" },
       { label: "Aggregate Payrolls", href: "ces/payrolls.html" },
     ]
