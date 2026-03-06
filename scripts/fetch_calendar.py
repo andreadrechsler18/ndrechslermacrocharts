@@ -31,39 +31,68 @@ OUTPUT_PATH = os.path.join(CONFIG_DIR, 'release_calendar.json')
 
 
 def scrape_bls():
-    """Scrape BLS Employment Situation release dates from schedule page."""
-    print("  Scraping BLS Employment Situation schedule...")
-    url = "https://www.bls.gov/schedule/news_release/empsit.htm"
+    """Scrape BLS CES release dates from schedule page, with first-Friday fallback."""
+    print("  Fetching BLS Employment release schedule...")
 
-    try:
-        from bs4 import BeautifulSoup
-        resp = retry_request(url, headers=BLS_HEADERS)
-        soup = BeautifulSoup(resp.text, 'html.parser')
+    # Try scraping the CES news release schedule page
+    urls = [
+        "https://www.bls.gov/ces/publications/news-release-schedule.htm",
+        "https://www.bls.gov/schedule/news_release/empsit.htm",
+    ]
 
-        table = soup.select_one('table.release-list')
-        if not table:
-            print("    WARNING: Could not find release-list table")
-            return []
-
-        dates = []
-        for row in table.select('tbody tr'):
-            cells = row.find_all('td')
-            if len(cells) < 2:
+    for url in urls:
+        try:
+            from bs4 import BeautifulSoup
+            resp = retry_request(url, headers=BLS_HEADERS)
+            if resp.status_code != 200:
+                print(f"    {url} returned {resp.status_code}, trying next...")
                 continue
-            date_text = cells[1].get_text(strip=True)
-            for fmt in ('%b. %d, %Y', '%B %d, %Y'):
-                try:
-                    dt = datetime.strptime(date_text, fmt)
-                    dates.append(dt.strftime('%Y-%m-%d'))
-                    break
-                except ValueError:
-                    continue
+            soup = BeautifulSoup(resp.text, 'html.parser')
 
-        print(f"    Found {len(dates)} BLS release dates")
-        return dates
-    except Exception as e:
-        print(f"    ERROR scraping BLS: {e}")
-        return []
+            # Try multiple table selectors
+            table = soup.select_one('table.release-list') or soup.select_one('table')
+            if not table:
+                print(f"    WARNING: No table found at {url}")
+                continue
+
+            dates = []
+            for row in table.find_all('tr')[1:]:
+                cells = row.find_all(['td', 'th'])
+                for cell in cells:
+                    text = cell.get_text(strip=True)
+                    for fmt in ('%B %d, %Y', '%b. %d, %Y', '%b %d, %Y',
+                                '%m/%d/%Y', '%Y-%m-%d'):
+                        try:
+                            dt = datetime.strptime(text, fmt)
+                            dates.append(dt.strftime('%Y-%m-%d'))
+                            break
+                        except ValueError:
+                            continue
+
+            if dates:
+                dates = sorted(set(dates))
+                print(f"    Found {len(dates)} BLS release dates from {url}")
+                return dates
+            else:
+                print(f"    No dates parsed from {url}, trying next...")
+
+        except Exception as e:
+            print(f"    ERROR scraping {url}: {e}")
+
+    # Fallback: compute first Friday of each month for current + next year
+    print("    Scraping failed, computing first-Friday-of-month fallback dates...")
+    from calendar import monthrange
+    now = datetime.now()
+    dates = []
+    for year in [now.year, now.year + 1]:
+        for month in range(1, 13):
+            # Find first Friday: day 1's weekday, then offset to Friday (4)
+            first_day_weekday = datetime(year, month, 1).weekday()  # 0=Mon
+            friday_offset = (4 - first_day_weekday) % 7
+            first_friday = 1 + friday_offset
+            dates.append(f"{year}-{month:02d}-{first_friday:02d}")
+    print(f"    Generated {len(dates)} first-Friday fallback dates")
+    return dates
 
 
 def scrape_bea():

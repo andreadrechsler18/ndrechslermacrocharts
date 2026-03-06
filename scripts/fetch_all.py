@@ -40,9 +40,9 @@ def run():
     errors = []
 
     for name, func in steps:
-        print(f"\n{'─' * 40}")
-        print(f"▶ {name}")
-        print(f"{'─' * 40}")
+        print(f"\n{'-' * 40}")
+        print(f"> {name}")
+        print(f"{'-' * 40}")
         start = time.time()
         try:
             func()

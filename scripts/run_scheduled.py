@@ -169,9 +169,9 @@ def run():
     errors = []
 
     for name, func in fetchers:
-        print(f"\n{'─' * 40}")
-        print(f"▶ {name}")
-        print(f"{'─' * 40}")
+        print(f"\n{'-' * 40}")
+        print(f"> {name}")
+        print(f"{'-' * 40}")
         start = time.time()
         try:
             func()
@@ -183,9 +183,9 @@ def run():
             errors.append((name, str(e)))
 
     # Always run post-processing if any fetcher ran
-    print(f"\n{'─' * 40}")
-    print(f"▶ Post-processing")
-    print(f"{'─' * 40}")
+    print(f"\n{'-' * 40}")
+    print(f"> Post-processing")
+    print(f"{'-' * 40}")
     try:
         post_process.run()
     except Exception as e:
