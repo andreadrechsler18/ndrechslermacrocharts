@@ -144,6 +144,11 @@
     .source-badge.fed_dallas     { background: #efebe9; color: #4e342e; }
     .source-badge.fed_richmond   { background: #e0f7fa; color: #006064; }
     .source-badge.fed_kc         { background: #f1f8e9; color: #33691e; }
+    .source-badge .ref-period {
+      opacity: 0.7;
+      font-weight: 400;
+      margin-left: 2px;
+    }
 
     /* Table view */
     .cal-table-wrap {
@@ -241,6 +246,55 @@
       fed_kc: 'KC Fed',
     };
 
+    // Reference period rules: how far behind the release date is the data
+    const PERIOD_RULES = {
+      bls:                  { type: 'monthly', lag: 1 },   // Previous month
+      bls_ppi:              { type: 'monthly', lag: 1 },   // Previous month
+      bea:                  { type: 'monthly', lag: 1 },   // ~Previous month (mix of GDP/PCE)
+      census_m3:            { type: 'monthly', lag: 2 },   // 2 months prior
+      census_construction:  { type: 'monthly', lag: 2 },   // 2 months prior
+      census_wholesale:     { type: 'monthly', lag: 2 },   // 2 months prior
+      census_qss:           { type: 'quarterly', lag: 1 }, // Previous quarter
+      fred_ip:              { type: 'monthly', lag: 1 },   // Previous month
+      fed_ny:               { type: 'monthly', lag: 0 },   // Current month survey
+      fed_philly:           { type: 'monthly', lag: 0 },   // Current month survey
+      fed_dallas:           { type: 'monthly', lag: 0 },   // Current month survey
+      fed_richmond:         { type: 'monthly', lag: 0 },   // Current month survey
+      fed_kc:               { type: 'monthly', lag: 0 },   // Current month survey
+    };
+
+    const SHORT_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function getReferencePeriod(dateStr, source) {
+      const rule = PERIOD_RULES[source];
+      if (!rule) return '';
+      const [y, m] = dateStr.split('-').map(Number);
+
+      if (rule.type === 'monthly') {
+        let refMonth = m - rule.lag;
+        let refYear = y;
+        while (refMonth <= 0) { refMonth += 12; refYear--; }
+        return SHORT_MONTHS[refMonth - 1] + ' ' + refYear;
+      }
+
+      if (rule.type === 'quarterly') {
+        const releaseQ = Math.ceil(m / 3);
+        let refQ = releaseQ - rule.lag;
+        let refYear = y;
+        while (refQ <= 0) { refQ += 4; refYear--; }
+        return 'Q' + refQ + ' ' + refYear;
+      }
+
+      return '';
+    }
+
+    function badgeHtml(source, dateStr) {
+      const label = SOURCE_LABELS[source] || source;
+      const period = getReferencePeriod(dateStr, source);
+      const periodSpan = period ? ` <span class="ref-period">${period}</span>` : '';
+      return `<span class="source-badge ${source}">${label}${periodSpan}</span>`;
+    }
+
     const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     const MONTHS = ['January','February','March','April','May','June',
                     'July','August','September','October','November','December'];
@@ -286,7 +340,10 @@
       container.innerHTML = upcoming.map(item => `
         <div class="upcoming-item">
           <span class="up-date">${formatDate(item.date)} (${dayOfWeek(item.date)})</span>
-          <span class="up-source">${item.sources.map(s => SOURCE_LABELS[s] || s).join(', ')}</span>
+          <span class="up-source">${item.sources.map(s => {
+            const period = getReferencePeriod(item.date, s);
+            return (SOURCE_LABELS[s] || s) + (period ? ' (' + period + ')' : '');
+          }).join(', ')}</span>
         </div>
       `).join('');
     }
@@ -323,7 +380,7 @@
               <span class="release-date">${formatDate(item.date)}</span>
               <span class="release-day">${dayOfWeek(item.date)}</span>
               <div class="release-sources">
-                ${item.sources.map(s => `<span class="source-badge ${s}">${SOURCE_LABELS[s] || s}</span>`).join('')}
+                ${item.sources.map(s => badgeHtml(s, item.date)).join('')}
               </div>
             </div>`;
         }).join('');
@@ -340,7 +397,7 @@
       const t = today();
       const sources = Object.keys(schedules);
 
-      let html = '<table class="cal-table"><thead><tr><th>Source</th><th>Release Date</th><th>Day</th><th>Status</th></tr></thead><tbody>';
+      let html = '<table class="cal-table"><thead><tr><th>Source</th><th>Release Date</th><th>Day</th><th>Data Period</th><th>Status</th></tr></thead><tbody>';
 
       for (const key of sources) {
         const dates = currentFilter === 'upcoming'
@@ -355,11 +412,12 @@
           else if (d < t) { cls = 'past'; status = 'Released'; }
           else { status = 'Upcoming'; }
 
+          const period = getReferencePeriod(d, key);
           html += `<tr class="${cls}">`;
           if (i === 0) {
             html += `<td rowspan="${dates.length}" style="font-weight:600;vertical-align:top"><span class="source-badge ${key}">${SOURCE_LABELS[key] || key}</span></td>`;
           }
-          html += `<td>${formatDate(d)}</td><td>${dayOfWeek(d)}</td><td>${status}</td></tr>`;
+          html += `<td>${formatDate(d)}</td><td>${dayOfWeek(d)}</td><td>${period}</td><td>${status}</td></tr>`;
         }
       }
 
