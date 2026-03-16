@@ -6,10 +6,14 @@ datasets that have a release today AND whose release time has passed.
 Each source is fetched ~5 minutes after its official release time.
 
 Release times (all Eastern Time):
-  BLS (Employment)      - 8:30 AM ET
+  BLS (Employment/PPI)  - 8:30 AM ET
   BEA (NIPA/GDP)        - 8:30 AM ET
+  Fed NY/Philly         - 8:30 AM ET
   FRED (Ind. Production) - 9:15 AM ET
   Census (M3, Constr.)  - 10:00 AM ET
+  Fed Richmond          - 10:00 AM ET
+  Fed Dallas            - 11:30 AM ET (10:30 AM CT)
+  Fed KC                - 12:00 PM ET (11:00 AM CT)
 """
 
 import os
@@ -30,6 +34,9 @@ import fetch_construction
 import fetch_wholesale
 import fetch_fred
 import fetch_unemployment
+import fetch_ppi
+import fetch_ppi_commodity
+import fetch_fed_surveys
 import post_process
 
 ET = ZoneInfo("America/New_York")
@@ -42,6 +49,13 @@ FETCHER_MAP = {
         "fetchers": [
             ("CES Employment Data", fetch_ces.run),
             ("Unemployment by Industry", fetch_unemployment.run),
+        ],
+    },
+    "bls_ppi": {
+        "release_time": (8, 30),
+        "fetchers": [
+            ("PPI by Industry", fetch_ppi.run),
+            ("PPI by Commodity", fetch_ppi_commodity.run),
         ],
     },
     "bea": {
@@ -80,6 +94,36 @@ FETCHER_MAP = {
             ("Industrial Production", fetch_fred.run),
         ],
     },
+    "fed_ny": {
+        "release_time": (8, 30),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
+    "fed_philly": {
+        "release_time": (8, 30),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
+    "fed_richmond": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
+    "fed_dallas": {
+        "release_time": (11, 30),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
+    "fed_kc": {
+        "release_time": (12, 0),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
 }
 
 # Minutes to wait after release time before fetching
@@ -102,6 +146,7 @@ def get_ready_fetchers(calendar):
     current_time = (now_et.hour, now_et.minute)
     schedules = calendar.get("schedules", {})
     fetchers = []
+    seen_funcs = set()
     skipped = []
 
     for cal_key, dates in schedules.items():
@@ -114,7 +159,12 @@ def get_ready_fetchers(calendar):
                 fetch_after = (fetch_after[0] + 1, fetch_after[1] - 60)
 
             if current_time >= fetch_after:
-                fetchers.extend(entry["fetchers"])
+                for name, func in entry["fetchers"]:
+                    # Deduplicate: skip if same function already queued
+                    # (e.g. fetch_fed_surveys.run shared across multiple calendar keys)
+                    if func not in seen_funcs:
+                        fetchers.append((name, func))
+                        seen_funcs.add(func)
             else:
                 for name, _ in entry["fetchers"]:
                     skipped.append((name, f"{rh}:{rm:02d} AM ET"))

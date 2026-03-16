@@ -237,6 +237,43 @@ def scrape_fred_ip():
         return []
 
 
+def scrape_fred_ppi():
+    """Fetch PPI release dates from FRED API."""
+    print("  Fetching FRED PPI schedule...")
+
+    try:
+        keys = load_api_keys()
+        fred_key = keys.get("fred", "")
+        if not fred_key:
+            print("    WARNING: No FRED API key, skipping")
+            return []
+
+        url = "https://api.stlouisfed.org/fred/release/dates"
+        params = {
+            "release_id": 46,  # Producer Price Index
+            "api_key": fred_key,
+            "file_type": "json",
+            "include_release_dates_with_no_data": "true",
+        }
+        resp = retry_request(url, params=params)
+        data = resp.json()
+
+        dates = []
+        for item in data.get("release_dates", []):
+            date_str = item.get("date", "")
+            if date_str:
+                dates.append(date_str)
+
+        cutoff = datetime.now().replace(month=max(1, datetime.now().month - 1)).strftime('%Y-%m-%d')
+        dates = [d for d in dates if d >= cutoff]
+
+        print(f"    Found {len(dates)} PPI release dates")
+        return sorted(dates)
+    except Exception as e:
+        print(f"    ERROR fetching FRED PPI: {e}")
+        return []
+
+
 def scrape_fed_surveys():
     """Fetch Fed regional survey release dates from FRED API + computed fallbacks."""
     print("  Fetching Fed regional survey release schedules...")
@@ -339,6 +376,10 @@ def run():
     # FRED (Industrial Production)
     fred_dates = scrape_fred_ip()
     calendar["schedules"]["fred_ip"] = fred_dates
+
+    # FRED (PPI)
+    ppi_dates = scrape_fred_ppi()
+    calendar["schedules"]["bls_ppi"] = ppi_dates
 
     # Fed Regional Surveys
     fed_surveys = scrape_fed_surveys()

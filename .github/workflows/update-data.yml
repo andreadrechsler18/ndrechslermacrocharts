@@ -6,15 +6,18 @@ on:
     # so the correct one fires year-round. The Python script checks ET time
     # and skips sources whose release hasn't happened yet.
     #
-    # BLS/BEA release at 8:30 AM ET → fetch at 8:35 AM ET
+    # BLS/BEA/NY Fed/Philly Fed release at 8:30 AM ET → fetch at 8:35 AM ET
     - cron: '35 12 * * 1-5'   # 8:35 AM EDT (Mar-Nov)
     - cron: '35 13 * * 1-5'   # 8:35 AM EST (Nov-Mar)
     # FRED IP releases at 9:15 AM ET → fetch at 9:20 AM ET
     - cron: '20 13 * * 1-5'   # 9:20 AM EDT (Mar-Nov)
     - cron: '20 14 * * 1-5'   # 9:20 AM EST (Nov-Mar)
-    # Census releases at 10:00 AM ET → fetch at 10:05 AM ET
+    # Census/Richmond Fed release at 10:00 AM ET → fetch at 10:05 AM ET
     - cron: '5 14 * * 1-5'    # 10:05 AM EDT (Mar-Nov)
     - cron: '5 15 * * 1-5'    # 10:05 AM EST (Nov-Mar)
+    # Dallas Fed (10:30 CT) / KC Fed (11:00 CT) → fetch at 12:05 PM ET
+    - cron: '5 16 * * 1-5'    # 12:05 PM EDT (Mar-Nov)
+    - cron: '5 17 * * 1-5'    # 12:05 PM EST (Nov-Mar)
   workflow_dispatch:
     inputs:
       force_full:

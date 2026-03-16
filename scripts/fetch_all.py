@@ -16,6 +16,9 @@ import fetch_construction
 import fetch_wholesale
 import fetch_fred
 import fetch_unemployment
+import fetch_ppi
+import fetch_ppi_commodity
+import fetch_fed_surveys
 import post_process
 
 
@@ -29,6 +32,9 @@ def run():
         ("Monthly Wholesale Trade (Census API)", fetch_wholesale.run),
         ("Industrial Production (FRED API)", fetch_fred.run),
         ("Unemployment by Industry (BLS API)", fetch_unemployment.run),
+        ("PPI by Industry (BLS API)", fetch_ppi.run),
+        ("PPI by Commodity (BLS API)", fetch_ppi_commodity.run),
+        ("Fed Regional Surveys", fetch_fed_surveys.run),
         ("Post-processing (derived data)", post_process.run),
     ]
 
