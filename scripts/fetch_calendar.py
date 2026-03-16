@@ -237,6 +237,85 @@ def scrape_fred_ip():
         return []
 
 
+def scrape_fed_surveys():
+    """Fetch Fed regional survey release dates from FRED API + computed fallbacks."""
+    print("  Fetching Fed regional survey release schedules...")
+
+    # FRED release IDs for surveys that have them
+    FRED_RELEASES = {
+        "fed_ny": 321,       # Empire State Manufacturing
+        "fed_philly": 351,   # Manufacturing Business Outlook Survey
+        "fed_dallas": 374,   # Texas Manufacturing Outlook Survey
+    }
+
+    results = {}
+    try:
+        keys = load_api_keys()
+        fred_key = keys.get("fred", "")
+
+        if fred_key:
+            today = datetime.now().strftime('%Y-%m-%d')
+            cutoff = datetime.now().replace(month=max(1, datetime.now().month - 1)).strftime('%Y-%m-%d')
+
+            for cal_key, release_id in FRED_RELEASES.items():
+                try:
+                    url = "https://api.stlouisfed.org/fred/release/dates"
+                    params = {
+                        "release_id": release_id,
+                        "api_key": fred_key,
+                        "file_type": "json",
+                        "include_release_dates_with_no_data": "true",
+                    }
+                    resp = retry_request(url, params=params)
+                    data = resp.json()
+                    dates = [item["date"] for item in data.get("release_dates", []) if item.get("date")]
+                    dates = [d for d in dates if d >= cutoff]
+                    results[cal_key] = sorted(dates)
+                    print(f"    {cal_key}: {len(results[cal_key])} dates from FRED")
+                except Exception as e:
+                    print(f"    ERROR fetching {cal_key} from FRED: {e}")
+        else:
+            print("    WARNING: No FRED API key, skipping FRED-based survey dates")
+    except Exception as e:
+        print(f"    ERROR loading API keys: {e}")
+
+    # Compute dates for Richmond (4th Tuesday) and KC (last Thursday)
+    from calendar import monthrange
+    now = datetime.now()
+
+    def nth_weekday(year, month, weekday, n):
+        """Return the nth occurrence of weekday (0=Mon) in given month."""
+        first_day = datetime(year, month, 1).weekday()
+        offset = (weekday - first_day) % 7
+        day = 1 + offset + (n - 1) * 7
+        if day > monthrange(year, month)[1]:
+            return None
+        return f"{year}-{month:02d}-{day:02d}"
+
+    def last_weekday(year, month, weekday):
+        """Return the last occurrence of weekday (0=Mon) in given month."""
+        last_day = monthrange(year, month)[1]
+        dt = datetime(year, month, last_day)
+        offset = (dt.weekday() - weekday) % 7
+        return f"{year}-{month:02d}-{last_day - offset:02d}"
+
+    for cal_key, compute_fn in [
+        ("fed_richmond", lambda y, m: nth_weekday(y, m, 1, 4)),   # 4th Tuesday
+        ("fed_kc", lambda y, m: last_weekday(y, m, 3)),           # Last Thursday
+    ]:
+        if cal_key not in results:
+            dates = []
+            for year in [now.year, now.year + 1]:
+                for month in range(1, 13):
+                    d = compute_fn(year, month)
+                    if d:
+                        dates.append(d)
+            results[cal_key] = sorted(dates)
+            print(f"    {cal_key}: {len(results[cal_key])} computed dates")
+
+    return results
+
+
 def run():
     print("Fetching release calendars...")
 
@@ -260,6 +339,10 @@ def run():
     # FRED (Industrial Production)
     fred_dates = scrape_fred_ip()
     calendar["schedules"]["fred_ip"] = fred_dates
+
+    # Fed Regional Surveys
+    fed_surveys = scrape_fed_surveys()
+    calendar["schedules"].update(fed_surveys)
 
     # Write calendar
     os.makedirs(CONFIG_DIR, exist_ok=True)
