@@ -280,9 +280,12 @@ def scrape_fed_surveys():
 
     # FRED release IDs for surveys that have them
     FRED_RELEASES = {
-        "fed_ny": 321,       # Empire State Manufacturing
-        "fed_philly": 351,   # Manufacturing Business Outlook Survey
-        "fed_dallas": 374,   # Texas Manufacturing Outlook Survey
+        "fed_ny": 321,           # Empire State Manufacturing
+        "fed_ny_svc": 322,       # Business Leaders Survey (Services)
+        "fed_philly": 351,       # Manufacturing Business Outlook Survey
+        "fed_philly_svc": 352,   # Nonmanufacturing Business Outlook Survey
+        "fed_dallas": 374,       # Texas Manufacturing Outlook Survey
+        "fed_dallas_svc": 376,   # Texas Service Sector Outlook Survey
     }
 
     results = {}
@@ -337,8 +340,10 @@ def scrape_fed_surveys():
         return f"{year}-{month:02d}-{last_day - offset:02d}"
 
     for cal_key, compute_fn in [
-        ("fed_richmond", lambda y, m: nth_weekday(y, m, 1, 4)),   # 4th Tuesday
-        ("fed_kc", lambda y, m: last_weekday(y, m, 3)),           # Last Thursday
+        ("fed_richmond", lambda y, m: nth_weekday(y, m, 1, 4)),       # 4th Tuesday
+        ("fed_richmond_svc", lambda y, m: nth_weekday(y, m, 1, 4)),   # 4th Tuesday
+        ("fed_kc", lambda y, m: last_weekday(y, m, 3)),               # Last Thursday
+        ("fed_kc_svc", lambda y, m: last_weekday(y, m, 3)),           # Last Thursday
     ]:
         if cal_key not in results:
             dates = []

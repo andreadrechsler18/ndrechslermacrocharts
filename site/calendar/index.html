@@ -139,11 +139,16 @@
     .source-badge.census_wholesale    { background: #f3e5f5; color: #6a1b9a; }
     .source-badge.census_qss         { background: #e0f2f1; color: #00695c; }
     .source-badge.fred_ip    { background: #fff8e1; color: #f57f17; }
-    .source-badge.fed_ny         { background: #e8eaf6; color: #283593; }
-    .source-badge.fed_philly     { background: #fce4ec; color: #880e4f; }
-    .source-badge.fed_dallas     { background: #efebe9; color: #4e342e; }
-    .source-badge.fed_richmond   { background: #e0f7fa; color: #006064; }
-    .source-badge.fed_kc         { background: #f1f8e9; color: #33691e; }
+    .source-badge.fed_ny,
+    .source-badge.fed_ny_svc     { background: #e8eaf6; color: #283593; }
+    .source-badge.fed_philly,
+    .source-badge.fed_philly_svc { background: #fce4ec; color: #880e4f; }
+    .source-badge.fed_dallas,
+    .source-badge.fed_dallas_svc { background: #efebe9; color: #4e342e; }
+    .source-badge.fed_richmond,
+    .source-badge.fed_richmond_svc { background: #e0f7fa; color: #006064; }
+    .source-badge.fed_kc,
+    .source-badge.fed_kc_svc     { background: #f1f8e9; color: #33691e; }
     .source-badge .ref-period {
       opacity: 0.7;
       font-weight: 400;
@@ -239,11 +244,16 @@
       census_wholesale: 'Census Wholesale',
       census_qss: 'Census QSS',
       fred_ip: 'FRED Ind. Production',
-      fed_ny: 'NY Empire State',
-      fed_philly: 'Philly Fed',
-      fed_dallas: 'Dallas Fed',
-      fed_richmond: 'Richmond Fed',
-      fed_kc: 'KC Fed',
+      fed_ny: 'NY Empire Mfg',
+      fed_ny_svc: 'NY Business Leaders Svc',
+      fed_philly: 'Philly Fed Mfg',
+      fed_philly_svc: 'Philly Fed Svc',
+      fed_dallas: 'Dallas Fed Mfg',
+      fed_dallas_svc: 'Dallas Fed Svc',
+      fed_richmond: 'Richmond Fed Mfg',
+      fed_richmond_svc: 'Richmond Fed Svc',
+      fed_kc: 'KC Fed Mfg',
+      fed_kc_svc: 'KC Fed Svc',
     };
 
     // Reference period rules: how far behind the release date is the data
@@ -257,10 +267,15 @@
       census_qss:           { type: 'quarterly', lag: 1 }, // Previous quarter
       fred_ip:              { type: 'monthly', lag: 1 },   // Previous month
       fed_ny:               { type: 'monthly', lag: 0 },   // Current month survey
+      fed_ny_svc:           { type: 'monthly', lag: 0 },   // Current month survey
       fed_philly:           { type: 'monthly', lag: 0 },   // Current month survey
+      fed_philly_svc:       { type: 'monthly', lag: 0 },   // Current month survey
       fed_dallas:           { type: 'monthly', lag: 0 },   // Current month survey
+      fed_dallas_svc:       { type: 'monthly', lag: 0 },   // Current month survey
       fed_richmond:         { type: 'monthly', lag: 0 },   // Current month survey
+      fed_richmond_svc:     { type: 'monthly', lag: 0 },   // Current month survey
       fed_kc:               { type: 'monthly', lag: 0 },   // Current month survey
+      fed_kc_svc:           { type: 'monthly', lag: 0 },   // Current month survey
     };
 
     const SHORT_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];

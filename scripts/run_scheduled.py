@@ -100,7 +100,19 @@ FETCHER_MAP = {
             ("Fed Regional Surveys", fetch_fed_surveys.run),
         ],
     },
+    "fed_ny_svc": {
+        "release_time": (8, 30),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
     "fed_philly": {
+        "release_time": (8, 30),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
+    "fed_philly_svc": {
         "release_time": (8, 30),
         "fetchers": [
             ("Fed Regional Surveys", fetch_fed_surveys.run),
@@ -112,13 +124,31 @@ FETCHER_MAP = {
             ("Fed Regional Surveys", fetch_fed_surveys.run),
         ],
     },
+    "fed_richmond_svc": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
     "fed_dallas": {
         "release_time": (11, 30),
         "fetchers": [
             ("Fed Regional Surveys", fetch_fed_surveys.run),
         ],
     },
+    "fed_dallas_svc": {
+        "release_time": (11, 30),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
     "fed_kc": {
+        "release_time": (12, 0),
+        "fetchers": [
+            ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
+    "fed_kc_svc": {
         "release_time": (12, 0),
         "fetchers": [
             ("Fed Regional Surveys", fetch_fed_surveys.run),
