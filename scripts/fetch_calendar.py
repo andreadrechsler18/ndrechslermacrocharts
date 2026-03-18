@@ -123,7 +123,9 @@ def scrape_bea():
                 except (ValueError, TypeError):
                     continue
 
-        result = sorted(dates)
+        # Filter to recent/future dates only (same pattern as FRED scrapers)
+        cutoff = datetime.now().replace(month=max(1, datetime.now().month - 1)).strftime('%Y-%m-%d')
+        result = sorted(d for d in dates if d >= cutoff)
         print(f"    Found {len(result)} BEA NIPA-relevant release dates")
         return result
     except Exception as e:
