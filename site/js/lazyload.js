@@ -1,4 +1,4 @@
-/* NewCo Charts - Lazy Loading via IntersectionObserver */
+/* NDMacroCharts - Lazy Loading via IntersectionObserver */
 
 window.NewCoLazyLoad = {
   observer: null,

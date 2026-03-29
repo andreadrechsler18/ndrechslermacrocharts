@@ -1,4 +1,4 @@
-/* NewCo Charts - Shared Navigation */
+/* NDMacroCharts - Shared Navigation */
 
 const SITE_MAP = [
   { label: "Home", href: "index.html" },
@@ -88,7 +88,7 @@ const SITE_MAP = [
   let html = '';
 
   // Header
-  html += '<div class="nav-header"><h1><a href="' + resolvePath('index.html') + '">NewCo Charts</a></h1></div>';
+  html += '<div class="nav-header"><h1><a href="' + resolvePath('index.html') + '">NDMacroCharts</a></h1></div>';
 
   // Search input
   html += '<div class="nav-search"><input type="text" id="nav-search-input" placeholder="Search NAICS or keyword..."></div>';

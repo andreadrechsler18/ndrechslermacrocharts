@@ -1,4 +1,4 @@
-/* NewCo Charts - AI Chat Panel */
+/* NDMacroCharts - AI Chat Panel */
 
 window.NewCoChat = {
   workerUrl: null,

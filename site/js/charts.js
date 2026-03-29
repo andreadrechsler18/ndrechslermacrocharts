@@ -1,4 +1,4 @@
-/* NewCo Charts - Core Chart Rendering Engine */
+/* NDMacroCharts - Core Chart Rendering Engine */
 
 window.NewCoCharts = {
   data: null,

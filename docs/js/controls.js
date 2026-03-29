@@ -1,4 +1,4 @@
-/* NewCo Charts - Controls (Raw/YoY Toggle + Time Horizon + Category) */
+/* NDMacroCharts - Controls (Raw/YoY Toggle + Time Horizon + Category) */
 
 window.NewCoControls = {
   mode: 'yoy',

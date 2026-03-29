@@ -59,11 +59,11 @@ SOURCES = {
     },
     # Kansas City
     "kc_mfg": {
-        "url": "https://www.kansascityfed.org/Manufacturing/documents/14937/2026Feb26historicalmfg.xlsx",
+        "url": "https://www.kansascityfed.org/documents/15449/2026Mar26historicalmfg.xlsx",
         "format": "kc_xlsx",
     },
     "kc_svc": {
-        "url": "https://www.kansascityfed.org/Services/documents/14259/2026Janhistoricalserv.xlsx",
+        "url": "https://www.kansascityfed.org/documents/15485/2026Marhistoricalserv.xlsx",
         "format": "kc_xlsx",
     },
 }

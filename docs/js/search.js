@@ -1,4 +1,4 @@
-/* NewCo Charts - Search */
+/* NDMacroCharts - Search */
 
 window.NewCoSearch = {
   index: null,
