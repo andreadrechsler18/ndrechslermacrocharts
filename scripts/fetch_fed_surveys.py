@@ -8,6 +8,7 @@ Each city has manufacturing and services surveys.
 import csv
 import io
 import os
+import re
 import sys
 from datetime import datetime, timezone
 
@@ -57,13 +58,17 @@ SOURCES = {
         "url": "https://www.newyorkfed.org/medialibrary/media/survey/business_leaders/data/bls_notseasonallyadjusted_diffusion.csv",
         "format": "csv",
     },
-    # Kansas City
+    # Kansas City — URLs discovered dynamically (see discover_kc_urls)
     "kc_mfg": {
-        "url": "https://www.kansascityfed.org/documents/15449/2026Mar26historicalmfg.xlsx",
+        "url": None,  # resolved at runtime
+        "landing": "https://www.kansascityfed.org/surveys/manufacturing-survey/",
+        "link_pattern": r'href="(/documents/\d+/[^"]*historical\w*mfg[^"]*\.xlsx)"',
         "format": "kc_xlsx",
     },
     "kc_svc": {
-        "url": "https://www.kansascityfed.org/documents/15485/2026Marhistoricalserv.xlsx",
+        "url": None,  # resolved at runtime
+        "landing": "https://www.kansascityfed.org/surveys/services-survey/",
+        "link_pattern": r'href="(/documents/\d+/[^"]*historical\w*serv[^"]*\.xlsx)"',
         "format": "kc_xlsx",
     },
 }
@@ -440,9 +445,28 @@ def parse_value(raw):
         return None
 
 
+def discover_kc_urls():
+    """Scrape KC Fed survey landing pages to find current Excel download URLs."""
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    for key in ("kc_mfg", "kc_svc"):
+        src = SOURCES[key]
+        if src["url"]:
+            continue
+        print(f"  Discovering {key} download URL...")
+        resp = retry_request(src["landing"], headers=headers)
+        match = re.search(src["link_pattern"], resp.text)
+        if not match:
+            raise RuntimeError(f"Could not find Excel link on {src['landing']}")
+        url = "https://www.kansascityfed.org" + match.group(1)
+        src["url"] = url
+        print(f"    Found: {url}")
+
+
 def download(key):
     """Download a source file and return raw bytes."""
     src = SOURCES[key]
+    if src["url"] is None:
+        discover_kc_urls()
     print(f"  Downloading {key}...")
     resp = retry_request(src["url"])
     print(f"    {len(resp.content):,} bytes")
