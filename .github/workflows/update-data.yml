@@ -74,7 +74,16 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/json/ docs/data/
           git commit -m "Auto-update economic data $(date -u +%Y-%m-%d)"
-          git pull --rebase origin master
+          # Retry with conflict resolution: if rebase conflicts (e.g. local push
+          # modified the same JSON files), abort, pull, re-stage, and commit again.
+          if ! git pull --rebase origin master; then
+            echo "Rebase conflict — resetting and retrying..."
+            git rebase --abort
+            git reset --soft HEAD~1
+            git pull origin master
+            git add data/json/ docs/data/
+            git commit -m "Auto-update economic data $(date -u +%Y-%m-%d)"
+          fi
           git push
 
   # Refresh the release calendar monthly (1st of each month at 6 AM UTC)
