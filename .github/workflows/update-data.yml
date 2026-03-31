@@ -74,15 +74,18 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/json/ docs/data/
           git commit -m "Auto-update economic data $(date -u +%Y-%m-%d)"
-          # Retry with conflict resolution: if rebase conflicts (e.g. local push
-          # modified the same JSON files), abort, pull, re-stage, and commit again.
+          # Handle conflicts when remote changed the same data files.
+          # Copy fresh data aside, reset to remote HEAD, restore data, recommit.
           if ! git pull --rebase origin master; then
-            echo "Rebase conflict — resetting and retrying..."
+            echo "Rebase conflict — saving data and resetting to remote..."
             git rebase --abort
-            git reset --soft HEAD~1
-            git pull origin master
+            cp -r data/json/ /tmp/fresh-data/
+            cp -r docs/data/ /tmp/fresh-docs/
+            git reset --hard origin/master
+            cp -r /tmp/fresh-data/* data/json/
+            cp -r /tmp/fresh-docs/* docs/data/
             git add data/json/ docs/data/
-            git commit -m "Auto-update economic data $(date -u +%Y-%m-%d)"
+            git diff --cached --quiet || git commit -m "Auto-update economic data $(date -u +%Y-%m-%d)"
           fi
           git push
 
