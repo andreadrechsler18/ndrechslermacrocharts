@@ -54,6 +54,26 @@ const SITE_MAP = [
     ]
   },
   {
+    label: "Google Trends — Web", children: [
+      { label: "Apparel", href: "google_trends/web_apparel.html" },
+      { label: "Beauty", href: "google_trends/web_beauty.html" },
+      { label: "Electronics", href: "google_trends/web_electronics.html" },
+      { label: "Footwear", href: "google_trends/web_footwear.html" },
+      { label: "Restaurants", href: "google_trends/web_restaurants.html" },
+      { label: "Retail", href: "google_trends/web_retail.html" },
+    ]
+  },
+  {
+    label: "Google Trends — YouTube", children: [
+      { label: "Apparel", href: "google_trends/youtube_apparel.html" },
+      { label: "Beauty", href: "google_trends/youtube_beauty.html" },
+      { label: "Electronics", href: "google_trends/youtube_electronics.html" },
+      { label: "Footwear", href: "google_trends/youtube_footwear.html" },
+      { label: "Restaurants", href: "google_trends/youtube_restaurants.html" },
+      { label: "Retail", href: "google_trends/youtube_retail.html" },
+    ]
+  },
+  {
     label: "Analysis", children: [
       { label: "AI Impact on Prof. Services", href: "analysis/ai_employment.html" },
     ]

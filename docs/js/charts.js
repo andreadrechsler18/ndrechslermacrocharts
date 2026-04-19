@@ -296,7 +296,7 @@ window.NewCoCharts = {
     } else if (this.mode === 'yoy3') {
       // 3-month rolling sum, then YoY % change
       const freq = this.data.metadata.frequency;
-      const lookback = (freq === 'quarterly') ? 4 : 12;
+      const lookback = (freq === 'quarterly') ? 4 : (freq === 'weekly') ? 52 : 12;
 
       // Step 1: compute trailing 3-month sums
       const sum3Dates = [];
@@ -332,7 +332,7 @@ window.NewCoCharts = {
     } else {
       // Compute YoY % change
       const freq = this.data.metadata.frequency;
-      const lookback = (freq === 'quarterly') ? 4 : 12;
+      const lookback = (freq === 'quarterly') ? 4 : (freq === 'weekly') ? 52 : 12;
       dates = [];
       values = [];
 
