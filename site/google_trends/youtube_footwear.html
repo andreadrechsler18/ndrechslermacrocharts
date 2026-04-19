@@ -25,6 +25,11 @@
       dataUrl: '../data/google_trends/youtube_footwear.json',
       defaultMode: 'raw',
       defaultHorizon: 0,
+      horizons: [
+        { value: 12, label: '1Y' },
+        { value: 24, label: '2Y' },
+        { value: 60, label: '5Y' }
+      ],
       chartType: 'line',
       modes: [
         { key: 'raw', label: 'Interest (0-100)' },

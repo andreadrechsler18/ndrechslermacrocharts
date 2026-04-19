@@ -8,6 +8,13 @@ window.NewCoControls = {
     this.container = container;
     this.mode = options.mode || 'yoy';
     this.horizon = options.horizon || 24;
+    this.horizons = options.horizons || [
+      { value: 12, label: '1Y' },
+      { value: 24, label: '2Y' },
+      { value: 60, label: '5Y' },
+      { value: 120, label: '10Y' },
+      { value: 0, label: 'Max' }
+    ];
     this.baseModes = options.modes || [
       { key: 'raw', label: 'Raw Data' },
       { key: 'yoy', label: 'YoY % Change' }
@@ -133,11 +140,7 @@ window.NewCoControls = {
       '<div class="control-group">' +
         '<span class="control-label">Horizon:</span>' +
         '<div class="btn-group" id="horizon-toggle">' +
-          '<button data-horizon="12" class="' + (this.horizon === 12 ? 'active' : '') + '">1Y</button>' +
-          '<button data-horizon="24" class="' + (this.horizon === 24 ? 'active' : '') + '">2Y</button>' +
-          '<button data-horizon="60" class="' + (this.horizon === 60 ? 'active' : '') + '">5Y</button>' +
-          '<button data-horizon="120" class="' + (this.horizon === 120 ? 'active' : '') + '">10Y</button>' +
-          '<button data-horizon="0" class="' + (this.horizon === 0 ? 'active' : '') + '">Max</button>' +
+          this.horizons.map(h => '<button data-horizon="' + h.value + '" class="' + (this.horizon === h.value ? 'active' : '') + '">' + h.label + '</button>').join('') +
         '</div>' +
       '</div>';
 

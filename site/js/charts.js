@@ -12,6 +12,7 @@ window.NewCoCharts = {
     this.horizon = options.defaultHorizon || 24;
     this.totalSeriesIndex = options.totalSeriesIndex != null ? options.totalSeriesIndex : null;
     this.modes = options.modes || null;
+    this.horizons = options.horizons || null;
     this.filters = options.filters || null;
     this.filterType = options.filterType || 'prefix';
     this.excludePatterns = options.excludePatterns || null;
@@ -71,6 +72,7 @@ window.NewCoCharts = {
       if (this.filters) controlOpts.filters = this.filters;
       if (this.categories) controlOpts.categories = this.categories;
       if (this.cityFilters) controlOpts.cityFilters = this.cityFilters;
+      if (this.horizons) controlOpts.horizons = this.horizons;
       NewCoControls.init(controlsEl, controlOpts);
       this.mode = NewCoControls.mode;
       this.horizon = NewCoControls.horizon;
