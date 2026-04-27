@@ -7,6 +7,7 @@ Each city has manufacturing and services surveys.
 
 import csv
 import io
+import json
 import os
 import re
 import sys
@@ -445,21 +446,58 @@ def parse_value(raw):
         return None
 
 
+KC_URL_CACHE = os.path.join(os.path.dirname(__file__), "..", "config", "kc_fed_urls.json")
+
+
+def _load_kc_cache():
+    """Load last-known KC Fed URLs from disk."""
+    try:
+        with open(KC_URL_CACHE) as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+def _save_kc_cache(cache):
+    """Save KC Fed URLs to disk for fallback."""
+    with open(KC_URL_CACHE, "w") as f:
+        json.dump(cache, f, indent=2)
+
+
 def discover_kc_urls():
-    """Scrape KC Fed survey landing pages to find current Excel download URLs."""
+    """Scrape KC Fed survey landing pages to find current Excel download URLs.
+
+    Falls back to last-known URLs if the landing pages are unreachable
+    (e.g. timeout from GitHub Actions runners).
+    """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    cache = _load_kc_cache()
+
     for key in ("kc_mfg", "kc_svc"):
         src = SOURCES[key]
         if src["url"]:
             continue
         print(f"  Discovering {key} download URL...")
-        resp = retry_request(src["landing"], headers=headers)
-        match = re.search(src["link_pattern"], resp.text)
-        if not match:
-            raise RuntimeError(f"Could not find Excel link on {src['landing']}")
-        url = "https://www.kansascityfed.org" + match.group(1)
-        src["url"] = url
-        print(f"    Found: {url}")
+        try:
+            resp = retry_request(src["landing"], headers=headers)
+            match = re.search(src["link_pattern"], resp.text)
+            if match:
+                url = "https://www.kansascityfed.org" + match.group(1)
+                src["url"] = url
+                cache[key] = url
+                print(f"    Found: {url}")
+                continue
+        except Exception as e:
+            print(f"    Discovery failed: {e}")
+
+        # Fall back to cached URL
+        if key in cache:
+            src["url"] = cache[key]
+            print(f"    Using cached URL: {cache[key]}")
+        else:
+            print(f"    ERROR: No cached URL available for {key}")
+
+    _save_kc_cache(cache)
 
 
 def download(key):
