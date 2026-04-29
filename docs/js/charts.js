@@ -160,7 +160,15 @@ window.NewCoCharts = {
     if (!card || !card.isConnected) return;
 
     const series = this.data.series[index];
-    if (!series || !series.data || series.data.length === 0) return;
+    if (!series) return;
+    if (!series.data || series.data.length === 0) {
+      const container = document.getElementById('chart-' + index);
+      if (container) {
+        container.innerHTML = '<div class="chart-no-data">No data &mdash; search timed out or returned an error</div>';
+      }
+      this.rendered.add(index);
+      return;
+    }
 
     await this.waitForPlotly();
 

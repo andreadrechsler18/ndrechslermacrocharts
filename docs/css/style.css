@@ -298,6 +298,18 @@ main {
   font-size: 0.85rem;
 }
 
+.chart-no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 230px;
+  color: #999;
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: center;
+  padding: 0 12px;
+}
+
 /* === Landing Page === */
 
 .landing-hero {
