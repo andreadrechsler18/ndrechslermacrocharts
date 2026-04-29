@@ -148,6 +148,16 @@ const SITE_MAP = [
     });
   }
 
+  // Restore sidebar scroll position across page navigations
+  var savedScroll = sessionStorage.getItem('navScrollTop');
+  if (savedScroll) nav.scrollTop = parseInt(savedScroll, 10);
+
+  nav.addEventListener('click', function(e) {
+    if (e.target.closest('.nav-link')) {
+      sessionStorage.setItem('navScrollTop', String(nav.scrollTop));
+    }
+  });
+
   // Mobile toggle
   const toggle = document.createElement('button');
   toggle.className = 'nav-toggle';
