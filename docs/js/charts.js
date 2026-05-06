@@ -38,6 +38,21 @@ window.NewCoCharts = {
       return;
     }
 
+    // Shift quarterly dates from start-of-quarter to end-of-quarter (e.g.
+    // 2025-10-01 → 2025-12-01) so axis labels read as the closing month of
+    // the quarter the value covers.
+    if (options.dateAlignment === 'quarter-end') {
+      const shift = (d) => {
+        const m = d.match(/^(\d{4})-(\d{2})-01$/);
+        if (!m) return d;
+        const endMonth = parseInt(m[2], 10) + 2;
+        return m[1] + '-' + String(endMonth).padStart(2, '0') + '-01';
+      };
+      this.data.series.forEach(s => {
+        s.data.forEach(p => { p.date = shift(p.date); });
+      });
+    }
+
     // Generate computed series (e.g. subtract one series from another)
     if (options.computedSeries) {
       options.computedSeries.forEach(cs => {

@@ -19,13 +19,14 @@
   <script src="../js/nav.js?v=3"></script>
   <script src="../js/controls.js?v=3"></script>
   <script src="../js/lazyload.js?v=3"></script>
-  <script src="../js/charts.js?v=3"></script>
+  <script src="../js/charts.js?v=5"></script>
   <script>
     NewCoCharts.init({
       dataUrl: '../../data/json/qss/qss.json',
       defaultMode: 'raw',
       defaultHorizon: 0,
       totalSeriesIndex: 0,
+      dateAlignment: 'quarter-end',
       modes: [
         { key: 'raw', label: 'Raw Data' },
         { key: 'yoy', label: 'YoY % Change' },
