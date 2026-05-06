@@ -19,19 +19,23 @@
   <script src="../js/nav.js?v=3"></script>
   <script src="../js/controls.js?v=3"></script>
   <script src="../js/lazyload.js?v=3"></script>
-  <script src="../js/charts.js?v=3"></script>
+  <script src="../js/charts.js?v=4"></script>
   <script>
     NewCoCharts.init({
-      dataUrl: '../data/m3/m3.json',
+      dataUrl: '../../data/json/m3/m3.json',
       defaultMode: 'yoy',
       defaultHorizon: 24,
       filterType: 'suffix',
       excludePatterns: ['_MPC', '_IS'],
+      computedRatios: [
+        { numeratorSuffix: '_NO', denominatorSuffix: '_VS', resultSuffix: '_BB', resultNameSuffix: 'Book:Bill Ratio' }
+      ],
       filters: [
         { key: '_VS', label: 'Shipments' },
         { key: '_NO', label: 'Orders' },
         { key: '_UO', label: 'Unfilled Orders' },
-        { key: '_TI,_FI,_MI,_WI', label: 'Inventories' }
+        { key: '_TI,_FI,_MI,_WI', label: 'Inventories' },
+        { key: '_BB', label: 'Book:Bill' }
       ]
     });
   </script>

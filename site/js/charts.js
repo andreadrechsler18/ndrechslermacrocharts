@@ -54,6 +54,40 @@ window.NewCoCharts = {
       });
     }
 
+    // Generate ratio series for every numerator/denominator suffix pair sharing a prefix.
+    // E.g. { numeratorSuffix:'_NO', denominatorSuffix:'_VS', resultSuffix:'_BB' } pairs
+    // 33C_NO with 33C_VS and emits 33C_BB = 33C_NO / 33C_VS at every shared date.
+    if (options.computedRatios) {
+      const idIndex = {};
+      this.data.series.forEach((s, i) => { idIndex[s.id] = i; });
+      options.computedRatios.forEach(cr => {
+        this.data.series
+          .filter(s => s.id.endsWith(cr.numeratorSuffix))
+          .forEach(num => {
+            const prefix = num.id.slice(0, -cr.numeratorSuffix.length);
+            const denomIdx = idIndex[prefix + cr.denominatorSuffix];
+            if (denomIdx == null) return;
+            const denom = this.data.series[denomIdx];
+            const denomMap = {};
+            denom.data.forEach(d => { denomMap[d.date] = d.value; });
+            const data = num.data.map(d => {
+              const dv = denomMap[d.date];
+              if (d.value == null || dv == null || dv === 0) {
+                return { date: d.date, value: null };
+              }
+              return { date: d.date, value: d.value / dv };
+            });
+            const baseName = num.name.replace(/ - [^-]+$/, '');
+            const resultName = baseName + ' - ' + (cr.resultNameSuffix || 'Ratio');
+            this.data.series.push({
+              id: prefix + cr.resultSuffix,
+              name: resultName,
+              data: data
+            });
+          });
+      });
+    }
+
     // Build series ID to array index map (for category total lookups)
     this.seriesIdMap = {};
     this.data.series.forEach((s, i) => { this.seriesIdMap[s.id] = i; });
