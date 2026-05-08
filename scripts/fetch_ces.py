@@ -10,18 +10,30 @@ Output files:
   - ces/payrolls.json        (Aggregate weekly payrolls - all industries)
 """
 
+import json
 import os
 import sys
 import pandas as pd
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 sys.path.insert(0, os.path.dirname(__file__))
 from utils import (
     load_api_keys, write_json, retry_request,
-    period_to_date, ensure_raw_dir, RAW_DIR
+    period_to_date, ensure_raw_dir, RAW_DIR, CONFIG_DIR
 )
 
 BLS_BASE = "https://download.bls.gov/pub/time.series/ce"
+
+
+def _is_bls_release_today():
+    """True if today (ET) is in the BLS Employment Situation release calendar."""
+    try:
+        today = datetime.now(ZoneInfo("America/New_York")).strftime('%Y-%m-%d')
+        with open(os.path.join(CONFIG_DIR, 'release_calendar.json')) as f:
+            return today in json.load(f).get('schedules', {}).get('bls', [])
+    except (OSError, ValueError):
+        return False
 
 FILES_TO_DOWNLOAD = [
     "ce.series",
@@ -32,11 +44,18 @@ FILES_TO_DOWNLOAD = [
 
 
 def download_flat_files():
-    """Download BLS CES flat files if not already cached."""
+    """Download BLS CES flat files if not already cached.
+
+    On a BLS release day, the cache is bypassed so we always re-fetch — BLS may
+    publish later than scheduled and a cached pre-release file would mask new data.
+    """
     ensure_raw_dir()
+    release_day = _is_bls_release_today()
+    if release_day:
+        print("  BLS release day — bypassing cache")
     for filename in FILES_TO_DOWNLOAD:
         local_path = os.path.join(RAW_DIR, filename)
-        if os.path.exists(local_path):
+        if os.path.exists(local_path) and not release_day:
             age_hours = (datetime.now().timestamp() - os.path.getmtime(local_path)) / 3600
             if age_hours < 24:
                 print(f"  Using cached {filename} ({age_hours:.1f}h old)")
