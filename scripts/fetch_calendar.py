@@ -79,18 +79,21 @@ def scrape_bls():
         except Exception as e:
             print(f"    ERROR scraping {url}: {e}")
 
-    # Fallback: compute first Friday of each month for current + next year
+    # Fallback: compute first Friday of each month for current + next year.
+    # BLS rule: when the 1st of the month is itself a Friday, the Employment
+    # Situation slips to the second Friday (the 8th) — the reference week
+    # hasn't closed yet on day 1.
     print("    Scraping failed, computing first-Friday-of-month fallback dates...")
-    from calendar import monthrange
     now = datetime.now()
     dates = []
     for year in [now.year, now.year + 1]:
         for month in range(1, 13):
-            # Find first Friday: day 1's weekday, then offset to Friday (4)
-            first_day_weekday = datetime(year, month, 1).weekday()  # 0=Mon
+            first_day_weekday = datetime(year, month, 1).weekday()  # 0=Mon, 4=Fri
             friday_offset = (4 - first_day_weekday) % 7
-            first_friday = 1 + friday_offset
-            dates.append(f"{year}-{month:02d}-{first_friday:02d}")
+            day = 1 + friday_offset
+            if day == 1:
+                day = 8
+            dates.append(f"{year}-{month:02d}-{day:02d}")
     print(f"    Generated {len(dates)} first-Friday fallback dates")
     return dates
 
