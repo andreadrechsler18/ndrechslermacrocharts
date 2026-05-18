@@ -68,7 +68,7 @@ CATEGORY_NAMES = {
     "CMS": "Communications Equipment",
     "ANM": "All Manufacturing New Orders",
     "BTP": "Business-Type Products",
-    "TGP": "Technology Goods Products",
+    "TGP": "Turbines, Generators, and Other Power Transmission Equipment",
     "MXD": "Manufacturing excl. Defense",
     # NAICS 321 - Wood Products
     "21S": "Wood Products",
