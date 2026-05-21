@@ -229,10 +229,14 @@ window.NewCoCharts = {
     const plotData = this.prepareData(series);
 
     const isPhone = this.mobileStatic && window.innerWidth <= 768;
+    if (isPhone) {
+      plotData.layout.dragmode = false;
+    }
     Plotly.newPlot(container, [plotData.trace], plotData.layout, {
       responsive: true,
       displayModeBar: false,
-      staticPlot: isPhone
+      scrollZoom: false,
+      doubleClick: false
     });
 
     // Remove loading text if Plotly didn't replace it
