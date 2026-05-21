@@ -601,6 +601,46 @@ main {
   }
 }
 
+@media (max-width: 480px) {
+  .page-header {
+    padding: 12px 16px 12px 56px;
+  }
+  .page-header h1 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+  }
+  .controls {
+    gap: 8px;
+  }
+  .control-group {
+    gap: 4px;
+  }
+  .btn-group button {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+  .chart-grid {
+    padding: 8px;
+    gap: 8px;
+  }
+  .chart-card {
+    padding: 10px;
+  }
+  .chart-title {
+    font-size: 0.9rem;
+    min-height: 0;
+    margin-bottom: 8px;
+  }
+  .chart-container {
+    height: 260px;
+  }
+  .chart-loading,
+  .chart-error,
+  .chart-no-data {
+    height: 260px;
+  }
+}
+
 /* === Chat Panel === */
 
 .chat-toggle {

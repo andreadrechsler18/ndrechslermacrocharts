@@ -464,7 +464,6 @@ window.NewCoCharts = {
           zerolinecolor: '#999',
           zerolinewidth: 1
         },
-        height: 230,
         plot_bgcolor: '#fff',
         paper_bgcolor: '#fff',
         font: { family: 'Segoe UI, Roboto, sans-serif' }
