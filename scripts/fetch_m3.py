@@ -65,9 +65,9 @@ CATEGORY_NAMES = {
     "MVP": "Motor Vehicles and Parts",
     "ODG": "All Other Durable Goods",
     "CRP": "Computers and Related Products",
-    "CMS": "Communications Equipment",
-    "ANM": "All Manufacturing New Orders",
-    "BTP": "Business-Type Products",
+    "CMS": "Construction Materials and Supplies",
+    "ANM": "Aluminum and Nonferrous Metals",
+    "BTP": "Motor Vehicle Bodies, Parts, and Trailers",
     "TGP": "Turbines, Generators, and Other Power Transmission Equipment",
     "MXD": "Manufacturing excl. Defense",
     # NAICS 321 - Wood Products
