@@ -23,6 +23,7 @@ window.NewCoCharts = {
     this.categoryTotalIndex = null;
     this.cityFilters = options.cityFilters || null;
     this.activeCity = null;
+    this.mobileStatic = options.mobileStatic || false;
 
     // Show loading state
     const grid = document.getElementById('chart-grid');
@@ -227,9 +228,11 @@ window.NewCoCharts = {
 
     const plotData = this.prepareData(series);
 
+    const isPhone = this.mobileStatic && window.innerWidth <= 768;
     Plotly.newPlot(container, [plotData.trace], plotData.layout, {
       responsive: true,
-      displayModeBar: false
+      displayModeBar: false,
+      staticPlot: isPhone
     });
 
     // Remove loading text if Plotly didn't replace it

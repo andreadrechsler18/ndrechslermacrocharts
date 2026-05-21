@@ -5,16 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>M3 - NDMacroCharts</title>
   <link rel="stylesheet" href="../css/style.css">
-  <style>
-    /* M3 page only — let vertical touch swipes scroll the page instead of
-       being captured by Plotly. Applied at <=768px so desktop is untouched. */
-    @media (max-width: 768px) {
-      .chart-container,
-      .chart-container * {
-        touch-action: pan-y;
-      }
-    }
-  </style>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
 </head>
 <body>
@@ -29,12 +19,13 @@
   <script src="../js/nav.js?v=3"></script>
   <script src="../js/controls.js?v=3"></script>
   <script src="../js/lazyload.js?v=3"></script>
-  <script src="../js/charts.js?v=4"></script>
+  <script src="../js/charts.js?v=5"></script>
   <script>
     NewCoCharts.init({
       dataUrl: '../data/m3/m3.json',
       defaultMode: 'yoy',
       defaultHorizon: 24,
+      mobileStatic: true,
       filterType: 'suffix',
       excludePatterns: ['_MPC', '_IS'],
       computedRatios: [
