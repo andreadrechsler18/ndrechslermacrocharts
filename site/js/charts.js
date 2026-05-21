@@ -23,7 +23,6 @@ window.NewCoCharts = {
     this.categoryTotalIndex = null;
     this.cityFilters = options.cityFilters || null;
     this.activeCity = null;
-    this.mobileStatic = options.mobileStatic || false;
 
     // Show loading state
     const grid = document.getElementById('chart-grid');
@@ -228,8 +227,9 @@ window.NewCoCharts = {
 
     const plotData = this.prepareData(series);
 
-    const isPhone = this.mobileStatic && window.innerWidth <= 768;
-    if (isPhone) {
+    // On phones: disable Plotly's drag/zoom so vertical swipes scroll the
+    // page instead of being captured. Tooltips still work on tap.
+    if (window.innerWidth <= 768) {
       plotData.layout.dragmode = false;
     }
     Plotly.newPlot(container, [plotData.trace], plotData.layout, {

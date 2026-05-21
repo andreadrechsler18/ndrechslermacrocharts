@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme B: Economist Editorial - NewCo Charts Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #faf7f2;
+      --color-surface: #ffffff;
+      --color-nav-bg: #1b2838;
+      --color-nav-hover: #243447;
+      --color-border: #e0d8cc;
+      --color-border-light: #ece6db;
+      --color-primary: #a0162b;
+      --color-primary-dark: #7d1122;
+      --color-accent: #1b6b93;
+      --color-text: #2c2c2c;
+      --color-text-light: #5a5a5a;
+      --color-text-muted: #8a8578;
+      --nav-width: 270px;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+      --font-serif: 'Source Serif 4', Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Nav */
+    #main-nav {
+      width: var(--nav-width);
+      background: var(--color-nav-bg);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+    }
+    .nav-header {
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-header h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .nav-header .subtitle {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 4px;
+      font-weight: 300;
+    }
+
+    .nav-section { padding: 4px 0; }
+    .nav-link {
+      display: block;
+      padding: 9px 20px;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 400;
+      transition: all 0.2s;
+    }
+    .nav-link:hover { color: #fff; background: var(--color-nav-hover); }
+    .nav-link.active {
+      color: #fff;
+      background: var(--color-nav-hover);
+      border-right: 3px solid var(--color-primary);
+      font-weight: 500;
+    }
+    .nav-parent-label {
+      display: block;
+      padding: 12px 20px 4px;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+    .nav-children .nav-link { padding-left: 32px; font-size: 0.84rem; }
+
+    /* Main */
+    main { margin-left: var(--nav-width); flex: 1; min-width: 0; }
+
+    /* Hero */
+    .landing-hero {
+      padding: 56px 48px 48px;
+      border-bottom: 3px double var(--color-border);
+      background: var(--color-surface);
+      position: relative;
+    }
+    .landing-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -7px;
+      left: 48px; right: 48px;
+      height: 1px;
+      background: var(--color-border);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .landing-hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.1;
+      letter-spacing: -1px;
+      max-width: 600px;
+    }
+    .landing-hero p {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--color-text-light);
+      margin-top: 16px;
+      line-height: 1.6;
+      max-width: 520px;
+      font-style: italic;
+    }
+    .hero-rule {
+      width: 60px;
+      height: 3px;
+      background: var(--color-primary);
+      margin-top: 24px;
+    }
+
+    /* Section grid */
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 0;
+      max-width: 1100px;
+      padding: 32px 48px;
+    }
+    .section-card {
+      padding: 24px 24px 24px 0;
+      text-decoration: none;
+      color: var(--color-text);
+      border-bottom: 1px solid var(--color-border-light);
+      transition: all 0.2s;
+      display: block;
+    }
+    .section-card:hover {
+      padding-left: 12px;
+    }
+    .section-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 4px;
+      transition: color 0.2s;
+    }
+    .section-card:hover h3 { color: var(--color-primary); }
+    .section-card p {
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+      line-height: 1.5;
+    }
+    .section-card .meta {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Chart page mock */
+    .page-header-mock {
+      padding: 24px 48px 16px;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+    .page-header-mock h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 12px;
+    }
+    .mock-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .mock-label {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    .mock-btn {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      padding: 6px 16px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-light);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mock-btn:first-of-type { border-radius: 4px 0 0 4px; }
+    .mock-btn:last-of-type { border-radius: 0 4px 4px 0; }
+    .mock-btn + .mock-btn { border-left: none; }
+    .mock-btn:hover { background: var(--color-bg); }
+    .mock-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* Chart grid */
+    .chart-grid-mock {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 20px 48px;
+    }
+    .chart-card-mock {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-light);
+      padding: 14px;
+      min-height: 220px;
+    }
+    .chart-card-mock .title {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-text);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .chart-placeholder {
+      height: 170px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 4px 4px;
+      gap: 2px;
+      overflow: hidden;
+    }
+    .bar {
+      flex: 1;
+      background: var(--color-accent);
+      opacity: 0.65;
+      border-radius: 1px 1px 0 0;
+    }
+    .bar:hover { opacity: 1; }
+    .bar.neg { background: var(--color-primary); }
+
+    .preview-badge {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: var(--color-primary);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 6px 14px;
+      z-index: 999;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+  <nav id="main-nav">
+    <div class="nav-header">
+      <h1>NewCo Charts</h1>
+      <div class="subtitle">Economic Data</div>
+    </div>
+    <div class="nav-section"><a class="nav-link active" href="#">Home</a></div>
+    <div class="nav-section">
+      <span class="nav-parent-label">NIPA Data</span>
+      <div class="nav-children">
+        <a class="nav-link" href="#">1BU - Mfg & Trade Inventories</a>
+        <a class="nav-link" href="#">2.4.4U - PCE Deflator</a>
+        <a class="nav-link" href="#">2.4.5U - Nominal Spending</a>
+      </div>
+    </div>
+    <div class="nav-section"><a class="nav-link" href="#">M3 - Shipments & Orders</a></div>
+    <div class="nav-section">
+      <span class="nav-parent-label">Employment</span>
+      <div class="nav-children">
+        <a class="nav-link" href="#">Employees YoY</a>
+        <a class="nav-link" href="#">Prof. & Business Services</a>
+        <a class="nav-link" href="#">Aggregate Payrolls</a>
+      </div>
+    </div>
+    <div class="nav-section"><a class="nav-link" href="#">Quarterly Services</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Construction Spending</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Industrial Production</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Release Calendar</a></div>
+  </nav>
+
+  <main>
+    <div class="landing-hero">
+      <div class="hero-eyebrow">Interactive Data</div>
+      <h1>U.S. Economic Indicators, Visualized</h1>
+      <p>Comprehensive charts drawn from official federal data sources, updated automatically on each release day.</p>
+      <div class="hero-rule"></div>
+    </div>
+
+    <div class="section-grid">
+      <a class="section-card" href="#">
+        <h3>NIPA Data</h3>
+        <p>National Income and Product Accounts &mdash; inventories, sales, spending, imports and exports.</p>
+        <div class="meta">Bureau of Economic Analysis &bull; 10 Tables</div>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Current Employment Statistics</h3>
+        <p>Nonfarm payrolls and aggregate weekly payrolls across all industries.</p>
+        <div class="meta">Bureau of Labor Statistics &bull; 800+ Series</div>
+      </a>
+      <a class="section-card" href="#">
+        <h3>M3 Survey</h3>
+        <p>Manufacturers' shipments, inventories, and new orders.</p>
+        <div class="meta">Census Bureau &bull; Monthly</div>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Quarterly Services Survey</h3>
+        <p>Revenue estimates for selected service industries.</p>
+        <div class="meta">Census Bureau &bull; Quarterly</div>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Construction Spending</h3>
+        <p>Value of construction put in place, private and public.</p>
+        <div class="meta">Census Bureau &bull; Monthly</div>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Industrial Production</h3>
+        <p>Production indexes for manufacturing, mining, and electric &amp; gas utilities.</p>
+        <div class="meta">Federal Reserve &bull; Monthly</div>
+      </a>
+    </div>
+
+    <div class="page-header-mock">
+      <h2>Sample: CES Employees, Year-over-Year</h2>
+      <div class="mock-controls">
+        <span class="mock-label">Mode</span>
+        <button class="mock-btn">Raw</button>
+        <button class="mock-btn active">YoY %</button>
+        <span class="mock-label" style="margin-left:12px">Range</span>
+        <button class="mock-btn">1Y</button>
+        <button class="mock-btn active">5Y</button>
+        <button class="mock-btn">Max</button>
+      </div>
+    </div>
+    <div class="chart-grid-mock" id="chart-grid"></div>
+  </main>
+
+  <div class="preview-badge">THEME B: ECONOMIST EDITORIAL</div>
+
+  <script>
+    const grid = document.getElementById('chart-grid');
+    const titles = ['Mining & Logging','Construction','Durable Goods','Nondurable Goods',
+                    'Wholesale Trade','Retail Trade','Transportation','Information'];
+    titles.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'chart-card-mock';
+      let bars = '';
+      for (let i = 0; i < 24; i++) {
+        const h = Math.random() * 140 + 10;
+        const neg = Math.random() > 0.75;
+        bars += `<div class="bar${neg ? ' neg' : ''}" style="height:${h}px"></div>`;
+      }
+      card.innerHTML = `<div class="title">${t}</div><div class="chart-placeholder">${bars}</div>`;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

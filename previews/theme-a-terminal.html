@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme A: Terminal / Bloomberg - NewCo Charts Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #0a0e14;
+      --color-surface: #111820;
+      --color-surface-2: #1a2230;
+      --color-border: #1e2a3a;
+      --color-border-light: #162030;
+      --color-primary: #ff6b2b;
+      --color-primary-dark: #e05520;
+      --color-accent-green: #00e676;
+      --color-accent-red: #ff5252;
+      --color-accent-blue: #40c4ff;
+      --color-accent-yellow: #ffd740;
+      --color-text: #d4dae3;
+      --color-text-light: #8a96a8;
+      --color-text-muted: #5a6578;
+      --nav-width: 260px;
+      --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Nav */
+    #main-nav {
+      width: var(--nav-width);
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+    }
+
+    .nav-header {
+      padding: 20px 16px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-header h1 {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: -0.5px;
+    }
+    .nav-header .tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-accent-green);
+      display: block;
+      margin-top: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-section { padding: 4px 0; }
+    .nav-link {
+      display: block;
+      padding: 7px 16px;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .nav-link:hover {
+      color: var(--color-text);
+      background: var(--color-surface-2);
+      border-left-color: var(--color-primary);
+    }
+    .nav-link.active {
+      color: var(--color-primary);
+      background: var(--color-surface-2);
+      border-left-color: var(--color-primary);
+    }
+    .nav-parent-label {
+      display: block;
+      padding: 10px 16px 4px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .nav-children .nav-link { padding-left: 28px; font-size: 0.75rem; }
+
+    /* Main */
+    main { margin-left: var(--nav-width); flex: 1; min-width: 0; }
+
+    /* Hero */
+    .landing-hero {
+      padding: 48px 32px;
+      border-bottom: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .landing-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, var(--color-border) 39px, var(--color-border) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, var(--color-border) 39px, var(--color-border) 40px);
+      opacity: 0.15;
+    }
+    .landing-hero h1 {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      position: relative;
+      letter-spacing: -1px;
+    }
+    .landing-hero p {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--color-text-light);
+      margin-top: 8px;
+      position: relative;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 24px;
+      position: relative;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-stat .value {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--color-accent-green);
+    }
+    .hero-stat .label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Cards */
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      padding: 1px;
+      background: var(--color-border);
+    }
+    .section-card {
+      background: var(--color-surface);
+      padding: 20px 24px;
+      text-decoration: none;
+      color: var(--color-text);
+      transition: background 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .section-card:hover {
+      background: var(--color-surface-2);
+      border-left-color: var(--color-primary);
+    }
+    .section-card h3 {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--color-accent-blue);
+      margin-bottom: 6px;
+    }
+    .section-card p {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+    .section-card .source-tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-accent-yellow);
+      background: rgba(255, 215, 64, 0.08);
+      padding: 2px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Page header mock */
+    .page-header-mock {
+      padding: 16px 24px;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .page-header-mock h2 {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--color-text);
+    }
+    .mock-btn {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 5px 12px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface-2);
+      color: var(--color-text-light);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mock-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .mock-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+    /* Chart grid mock */
+    .chart-grid-mock {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      padding: 1px;
+      background: var(--color-border);
+    }
+    .chart-card-mock {
+      background: var(--color-surface);
+      padding: 12px;
+      min-height: 220px;
+    }
+    .chart-card-mock .title {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-text-light);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .chart-placeholder {
+      height: 170px;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+      gap: 3px;
+      overflow: hidden;
+    }
+    .bar {
+      flex: 1;
+      background: var(--color-accent-blue);
+      opacity: 0.6;
+      border-radius: 1px 1px 0 0;
+      transition: opacity 0.2s;
+    }
+    .bar:hover { opacity: 1; }
+    .bar.neg { background: var(--color-accent-red); }
+
+    /* Footer */
+    .preview-badge {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-primary);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 6px 12px;
+      z-index: 999;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+  <nav id="main-nav">
+    <div class="nav-header">
+      <h1>NewCo Charts</h1>
+      <span class="tag">&#9679; Live Data Terminal</span>
+    </div>
+    <div class="nav-section"><a class="nav-link active" href="#">Home</a></div>
+    <div class="nav-section">
+      <span class="nav-parent-label">NIPA Data</span>
+      <div class="nav-children">
+        <a class="nav-link" href="#">1BU - Mfg & Trade Inventories</a>
+        <a class="nav-link" href="#">2.4.4U - PCE Deflator</a>
+        <a class="nav-link" href="#">2.4.5U - Nominal Spending</a>
+      </div>
+    </div>
+    <div class="nav-section"><a class="nav-link" href="#">M3 - Shipments & Orders</a></div>
+    <div class="nav-section">
+      <span class="nav-parent-label">Employment</span>
+      <div class="nav-children">
+        <a class="nav-link" href="#">Employees YoY</a>
+        <a class="nav-link" href="#">Prof. & Business Services</a>
+        <a class="nav-link" href="#">Aggregate Payrolls</a>
+      </div>
+    </div>
+    <div class="nav-section"><a class="nav-link" href="#">Quarterly Services</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Construction Spending</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Industrial Production</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Release Calendar</a></div>
+  </nav>
+
+  <main>
+    <div class="landing-hero">
+      <h1>> NewCo Charts_</h1>
+      <p>Real-time U.S. economic data &mdash; interactive visualizations</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="value">1,200+</span>
+          <span class="label">Data Series</span>
+        </div>
+        <div class="hero-stat">
+          <span class="value">7</span>
+          <span class="label">Federal Sources</span>
+        </div>
+        <div class="hero-stat">
+          <span class="value">Daily</span>
+          <span class="label">Auto-Updated</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-grid">
+      <a class="section-card" href="#">
+        <h3>NIPA Data</h3>
+        <p>National Income and Product Accounts &mdash; inventories, sales, spending, imports/exports.</p>
+        <span class="source-tag">BEA &bull; 10 Tables</span>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Current Employment Statistics</h3>
+        <p>Nonfarm payrolls and aggregate weekly payrolls across all industries.</p>
+        <span class="source-tag">BLS &bull; 800+ Series</span>
+      </a>
+      <a class="section-card" href="#">
+        <h3>M3 Survey</h3>
+        <p>Manufacturers' shipments, inventories, and orders.</p>
+        <span class="source-tag">CENSUS &bull; Monthly</span>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Quarterly Services Survey</h3>
+        <p>Revenue estimates for selected service industries.</p>
+        <span class="source-tag">CENSUS &bull; Quarterly</span>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Construction Spending</h3>
+        <p>Value of construction put in place.</p>
+        <span class="source-tag">CENSUS &bull; Monthly</span>
+      </a>
+      <a class="section-card" href="#">
+        <h3>Industrial Production</h3>
+        <p>Production indexes across manufacturing, mining, and utilities.</p>
+        <span class="source-tag">FRED / FED &bull; Monthly</span>
+      </a>
+    </div>
+
+    <!-- Sample chart page mock -->
+    <div class="page-header-mock">
+      <h2>Sample: CES Employees YoY %</h2>
+      <button class="mock-btn">Raw</button>
+      <button class="mock-btn active">YoY %</button>
+      <button class="mock-btn">1Y</button>
+      <button class="mock-btn">5Y</button>
+      <button class="mock-btn">Max</button>
+    </div>
+    <div class="chart-grid-mock" id="chart-grid"></div>
+  </main>
+
+  <div class="preview-badge">THEME A: TERMINAL / BLOOMBERG</div>
+
+  <script>
+    // Generate mock chart bars
+    const grid = document.getElementById('chart-grid');
+    const titles = ['Mining & Logging','Construction','Durable Goods','Nondurable Goods',
+                    'Wholesale Trade','Retail Trade','Transportation','Information'];
+    titles.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'chart-card-mock';
+      let bars = '';
+      for (let i = 0; i < 24; i++) {
+        const h = Math.random() * 140 + 10;
+        const neg = Math.random() > 0.7;
+        bars += `<div class="bar${neg ? ' neg' : ''}" style="height:${h}px"></div>`;
+      }
+      card.innerHTML = `<div class="title">${t}</div><div class="chart-placeholder">${bars}</div>`;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

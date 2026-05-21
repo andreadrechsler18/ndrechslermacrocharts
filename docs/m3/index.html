@@ -5,17 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>M3 - NDMacroCharts</title>
   <link rel="stylesheet" href="../css/style.css">
-  <style>
-    /* M3 page only — phones: let vertical swipes scroll the page even when
-       they start on a chart. Combined with dragmode:false in JS, tooltips
-       still work on tap but pan/zoom is disabled. Desktop untouched. */
-    @media (max-width: 768px) {
-      .chart-container,
-      .chart-container * {
-        touch-action: pan-y;
-      }
-    }
-  </style>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
 </head>
 <body>
@@ -30,13 +19,12 @@
   <script src="../js/nav.js?v=3"></script>
   <script src="../js/controls.js?v=3"></script>
   <script src="../js/lazyload.js?v=3"></script>
-  <script src="../js/charts.js?v=6"></script>
+  <script src="../js/charts.js?v=7"></script>
   <script>
     NewCoCharts.init({
       dataUrl: '../data/m3/m3.json',
       defaultMode: 'yoy',
       defaultHorizon: 24,
-      mobileStatic: true,
       filterType: 'suffix',
       excludePatterns: ['_MPC', '_IS'],
       computedRatios: [

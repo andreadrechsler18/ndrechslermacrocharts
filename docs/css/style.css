@@ -280,6 +280,16 @@ main {
   height: 230px;
 }
 
+/* Phones: let vertical touch swipes scroll the page even when the gesture
+   starts on a chart. Combined with dragmode:false in charts.js, this keeps
+   tap-tooltips alive while disabling Plotly's pan/pinch on touch devices. */
+@media (max-width: 768px) {
+  .chart-container,
+  .chart-container * {
+    touch-action: pan-y;
+  }
+}
+
 .chart-loading {
   display: flex;
   align-items: center;

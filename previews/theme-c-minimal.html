@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme C: Modern Minimal - NewCo Charts Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-surface: #ffffff;
+      --color-surface-hover: #f6f8fa;
+      --color-border: #e8ecf0;
+      --color-border-light: #f0f2f5;
+      --color-primary: #2563eb;
+      --color-primary-light: #3b82f6;
+      --color-primary-subtle: #eff6ff;
+      --color-text: #0f172a;
+      --color-text-light: #64748b;
+      --color-text-muted: #94a3b8;
+      --color-nav-bg: #fafafa;
+      --nav-width: 256px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Nav - light side panel */
+    #main-nav {
+      width: var(--nav-width);
+      background: var(--color-nav-bg);
+      border-right: 1px solid var(--color-border);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+      padding: 0 12px;
+    }
+    .nav-header {
+      padding: 24px 8px 20px;
+    }
+    .nav-header h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.5px;
+    }
+    .nav-header h1 span {
+      color: var(--color-primary);
+    }
+
+    .nav-section { padding: 2px 0; }
+    .nav-link {
+      display: block;
+      padding: 8px 12px;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 450;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+      margin: 1px 0;
+    }
+    .nav-link:hover {
+      color: var(--color-text);
+      background: var(--color-surface);
+    }
+    .nav-link.active {
+      color: var(--color-primary);
+      background: var(--color-primary-subtle);
+      font-weight: 550;
+    }
+    .nav-parent-label {
+      display: block;
+      padding: 14px 12px 6px;
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .nav-children .nav-link {
+      padding-left: 24px;
+      font-size: 0.84rem;
+    }
+
+    /* Main */
+    main { margin-left: var(--nav-width); flex: 1; min-width: 0; }
+
+    /* Hero */
+    .landing-hero {
+      padding: 64px 40px 56px;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: var(--color-primary-subtle);
+      color: var(--color-primary);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero-pill .dot {
+      width: 6px; height: 6px;
+      background: var(--color-primary);
+      border-radius: 50%;
+    }
+    .landing-hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      max-width: 500px;
+    }
+    .landing-hero p {
+      font-size: 1.05rem;
+      color: var(--color-text-light);
+      margin-top: 12px;
+      line-height: 1.6;
+      max-width: 460px;
+      font-weight: 400;
+    }
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+    }
+    .hero-btn {
+      padding: 10px 24px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .hero-btn.primary {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .hero-btn.primary:hover { background: #1d4ed8; }
+    .hero-btn.secondary {
+      background: var(--color-surface);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+    .hero-btn.secondary:hover { background: var(--color-surface-hover); }
+
+    /* Section grid */
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+      padding: 28px 40px;
+      max-width: 1100px;
+    }
+    .section-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 22px;
+      text-decoration: none;
+      color: var(--color-text);
+      transition: all 0.2s;
+    }
+    .section-card:hover {
+      border-color: var(--color-primary-light);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08);
+      transform: translateY(-1px);
+    }
+    .section-card .icon-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .section-card .icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--color-primary-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .section-card .arrow {
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+    .section-card:hover .arrow { transform: translateX(3px); color: var(--color-primary); }
+    .section-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+    .section-card p {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      line-height: 1.5;
+    }
+
+    /* Chart page mock */
+    .page-header-mock {
+      padding: 20px 40px;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .page-header-mock h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    .mock-controls { display: flex; gap: 6px; }
+    .mock-btn {
+      font-family: var(--font);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-light);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mock-btn:hover { border-color: var(--color-primary-light); color: var(--color-primary); }
+    .mock-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* Chart grid */
+    .chart-grid-mock {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 20px 40px;
+    }
+    .chart-card-mock {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 14px;
+      min-height: 220px;
+    }
+    .chart-card-mock .title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-text);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .chart-placeholder {
+      height: 170px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 4px 4px;
+      gap: 2px;
+      overflow: hidden;
+      background: var(--color-bg);
+      border-radius: 6px;
+    }
+    .bar {
+      flex: 1;
+      background: var(--color-primary);
+      opacity: 0.35;
+      border-radius: 2px 2px 0 0;
+      transition: opacity 0.2s;
+    }
+    .bar:hover { opacity: 0.75; }
+    .bar.neg { background: #ef4444; }
+
+    .preview-badge {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      font-size: 0.72rem;
+      color: var(--color-primary);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      z-index: 999;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <nav id="main-nav">
+    <div class="nav-header">
+      <h1>New<span>Co</span> Charts</h1>
+    </div>
+    <div class="nav-section"><a class="nav-link active" href="#">Home</a></div>
+    <div class="nav-section">
+      <span class="nav-parent-label">NIPA Data</span>
+      <div class="nav-children">
+        <a class="nav-link" href="#">1BU - Mfg & Trade Inventories</a>
+        <a class="nav-link" href="#">2.4.4U - PCE Deflator</a>
+        <a class="nav-link" href="#">2.4.5U - Nominal Spending</a>
+      </div>
+    </div>
+    <div class="nav-section"><a class="nav-link" href="#">M3 - Shipments & Orders</a></div>
+    <div class="nav-section">
+      <span class="nav-parent-label">Employment</span>
+      <div class="nav-children">
+        <a class="nav-link" href="#">Employees YoY</a>
+        <a class="nav-link" href="#">Prof. & Business Services</a>
+        <a class="nav-link" href="#">Aggregate Payrolls</a>
+      </div>
+    </div>
+    <div class="nav-section"><a class="nav-link" href="#">Quarterly Services</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Construction Spending</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Industrial Production</a></div>
+    <div class="nav-section"><a class="nav-link" href="#">Release Calendar</a></div>
+  </nav>
+
+  <main>
+    <div class="landing-hero">
+      <div class="hero-pill"><span class="dot"></span> Auto-updated on release days</div>
+      <h1>U.S. Economic Data, Interactive</h1>
+      <p>1,200+ time series from BLS, BEA, Census, and the Federal Reserve. Toggle views, zoom in, compare trends.</p>
+      <div class="hero-actions">
+        <a class="hero-btn primary" href="#">Browse Charts</a>
+        <a class="hero-btn secondary" href="#">Release Calendar</a>
+      </div>
+    </div>
+
+    <div class="section-grid">
+      <a class="section-card" href="#">
+        <div class="icon-row">
+          <div class="icon">&#x1F4CA;</div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>NIPA Data</h3>
+        <p>National Income and Product Accounts from the Bureau of Economic Analysis.</p>
+      </a>
+      <a class="section-card" href="#">
+        <div class="icon-row">
+          <div class="icon">&#x1F465;</div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Current Employment Statistics</h3>
+        <p>Nonfarm payrolls and weekly payrolls across all industries.</p>
+      </a>
+      <a class="section-card" href="#">
+        <div class="icon-row">
+          <div class="icon">&#x1F3ED;</div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>M3 Survey</h3>
+        <p>Manufacturers' shipments, inventories, and new orders.</p>
+      </a>
+      <a class="section-card" href="#">
+        <div class="icon-row">
+          <div class="icon">&#x1F4B1;</div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Quarterly Services Survey</h3>
+        <p>Revenue estimates for selected service industries.</p>
+      </a>
+      <a class="section-card" href="#">
+        <div class="icon-row">
+          <div class="icon">&#x1F3D7;</div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Construction Spending</h3>
+        <p>Value of construction put in place, private and public.</p>
+      </a>
+      <a class="section-card" href="#">
+        <div class="icon-row">
+          <div class="icon">&#x2699;</div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <h3>Industrial Production</h3>
+        <p>Production indexes for manufacturing, mining, and utilities.</p>
+      </a>
+    </div>
+
+    <div class="page-header-mock">
+      <h2>Sample: CES Employees YoY %</h2>
+      <div class="mock-controls">
+        <button class="mock-btn">Raw</button>
+        <button class="mock-btn active">YoY %</button>
+      </div>
+      <div class="mock-controls">
+        <button class="mock-btn">1Y</button>
+        <button class="mock-btn active">5Y</button>
+        <button class="mock-btn">Max</button>
+      </div>
+    </div>
+    <div class="chart-grid-mock" id="chart-grid"></div>
+  </main>
+
+  <div class="preview-badge">THEME C: MODERN MINIMAL</div>
+
+  <script>
+    const grid = document.getElementById('chart-grid');
+    const titles = ['Mining & Logging','Construction','Durable Goods','Nondurable Goods',
+                    'Wholesale Trade','Retail Trade','Transportation','Information'];
+    titles.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'chart-card-mock';
+      let bars = '';
+      for (let i = 0; i < 24; i++) {
+        const h = Math.random() * 140 + 10;
+        const neg = Math.random() > 0.75;
+        bars += `<div class="bar${neg ? ' neg' : ''}" style="height:${h}px"></div>`;
+      }
+      card.innerHTML = `<div class="title">${t}</div><div class="chart-placeholder">${bars}</div>`;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
