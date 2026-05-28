@@ -113,6 +113,14 @@ NIPA_TABLES = [
         "title": "State and local government current receipts and expenditures",
         "unit": "Millions of dollars"
     },
+    {
+        "key": "2_6",
+        "dataset": "NIPA",
+        "table": "T20600",
+        "frequency": "M",
+        "title": "Personal Income and Its Disposition",
+        "unit": "Millions of dollars"
+    },
 ]
 
 
