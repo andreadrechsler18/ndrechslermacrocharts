@@ -164,7 +164,7 @@ DATA_FILE_PAGES = {
 }
 
 # M3 series suffixes excluded from display
-M3_EXCLUDE = re.compile(r'_(MPC|IS)')
+M3_EXCLUDE = re.compile(r'_(MPC|IS|US)')
 
 
 def load_json(subpath):
