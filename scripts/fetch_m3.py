@@ -34,7 +34,7 @@ DATA_TYPE_NAMES = {
     "MPCMI": "Monthly % Change Materials Inventories",
     "MPCWI": "Monthly % Change Work-in-Process Inventories",
     "MPCUO": "Monthly % Change Unfilled Orders",
-    "US": "Value of Shipments",
+    "US": "Unfilled Orders to Shipments Ratio",
 }
 
 # Mapping of Census M3 category codes to readable industry names
