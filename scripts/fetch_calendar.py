@@ -9,7 +9,20 @@ import os
 import sys
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+
+# Fixed-date federal holidays that could land on the first Friday of a month
+# (or its adjacent Saturday, causing an observance-on-Friday).
+_FIXED_FEDERAL_HOLIDAYS = {(1, 1), (6, 19), (7, 4), (11, 11), (12, 25)}
+
+
+def _is_holiday_friday(date):
+    """True if this Friday date is a US federal holiday, either as the actual
+    date or as the observance for a Saturday-holiday the next day."""
+    if (date.month, date.day) in _FIXED_FEDERAL_HOLIDAYS:
+        return True
+    tomorrow = date + timedelta(days=1)
+    return (tomorrow.month, tomorrow.day) in _FIXED_FEDERAL_HOLIDAYS
 
 sys.path.insert(0, os.path.dirname(__file__))
 from utils import load_api_keys, retry_request, CONFIG_DIR
@@ -80,9 +93,11 @@ def scrape_bls():
             print(f"    ERROR scraping {url}: {e}")
 
     # Fallback: compute first Friday of each month for current + next year.
-    # BLS rule: when the 1st of the month is itself a Friday, the Employment
+    # BLS rule 1: when the 1st of the month is itself a Friday, the Employment
     # Situation slips to the second Friday (the 8th) — the reference week
     # hasn't closed yet on day 1.
+    # BLS rule 2: when the computed Friday is a federal holiday (actual or
+    # observed), BLS releases on the previous business day (Thursday).
     print("    Scraping failed, computing first-Friday-of-month fallback dates...")
     now = datetime.now()
     dates = []
@@ -93,7 +108,10 @@ def scrape_bls():
             day = 1 + friday_offset
             if day == 1:
                 day = 8
-            dates.append(f"{year}-{month:02d}-{day:02d}")
+            candidate = datetime(year, month, day)
+            if _is_holiday_friday(candidate):
+                candidate -= timedelta(days=1)
+            dates.append(candidate.strftime('%Y-%m-%d'))
     print(f"    Generated {len(dates)} first-Friday fallback dates")
     return dates
 
