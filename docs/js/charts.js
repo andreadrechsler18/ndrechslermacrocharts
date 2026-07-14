@@ -23,6 +23,12 @@ window.NewCoCharts = {
     this.categoryTotalIndex = null;
     this.cityFilters = options.cityFilters || null;
     this.activeCity = null;
+    // Per-suffix total map for 'pct' mode when different series have different
+    // denominators (e.g. JOLTS: _JOL series divided by Total Nonfarm _JOL,
+    // _HIL series divided by Total Nonfarm _HIL, etc.). Resolved to indices
+    // after data load.
+    this.totalSeriesBySuffix = options.totalSeriesBySuffix || null;
+    this.totalIndexBySuffix = null;
 
     // Show loading state
     const grid = document.getElementById('chart-grid');
@@ -106,6 +112,16 @@ window.NewCoCharts = {
     // Build series ID to array index map (for category total lookups)
     this.seriesIdMap = {};
     this.data.series.forEach((s, i) => { this.seriesIdMap[s.id] = i; });
+
+    // Resolve totalSeriesBySuffix into a suffix -> index lookup for pct mode
+    if (this.totalSeriesBySuffix) {
+      this.totalIndexBySuffix = {};
+      for (const [suffix, sid] of Object.entries(this.totalSeriesBySuffix)) {
+        if (this.seriesIdMap[sid] != null) {
+          this.totalIndexBySuffix[suffix] = this.seriesIdMap[sid];
+        }
+      }
+    }
 
     // Update page title from data
     const pageTitle = document.querySelector('.page-header h1');
@@ -269,24 +285,37 @@ window.NewCoCharts = {
         }
       }
       yLabel = '% Share';
-    } else if (this.mode === 'pct' && this.totalSeriesIndex != null) {
-      // Compute % of total
-      const totalSeries = this.data.series[this.totalSeriesIndex];
-      const totalMap = {};
-      totalSeries.data.forEach(d => { totalMap[d.date] = d.value; });
-
-      dates = [];
-      values = [];
-      for (let i = 0; i < rawDates.length; i++) {
-        const totalVal = totalMap[rawDates[i]];
-        dates.push(rawDates[i]);
-        if (rawValues[i] == null || totalVal == null || totalVal === 0) {
-          values.push(null);
-        } else {
-          values.push((rawValues[i] / totalVal) * 100);
+    } else if (this.mode === 'pct') {
+      // Resolve which total series to use: per-suffix map wins, then single index.
+      let totalIdx = this.totalSeriesIndex;
+      if (this.totalIndexBySuffix) {
+        for (const [suffix, idx] of Object.entries(this.totalIndexBySuffix)) {
+          if (series.id.endsWith(suffix)) { totalIdx = idx; break; }
         }
       }
-      yLabel = '% of Total';
+      if (totalIdx == null) {
+        // No total available for this series in pct mode
+        dates = rawDates;
+        values = rawValues.map(() => null);
+        yLabel = '% of Total';
+      } else {
+        const totalSeries = this.data.series[totalIdx];
+        const totalMap = {};
+        totalSeries.data.forEach(d => { totalMap[d.date] = d.value; });
+
+        dates = [];
+        values = [];
+        for (let i = 0; i < rawDates.length; i++) {
+          const totalVal = totalMap[rawDates[i]];
+          dates.push(rawDates[i]);
+          if (rawValues[i] == null || totalVal == null || totalVal === 0) {
+            values.push(null);
+          } else {
+            values.push((rawValues[i] / totalVal) * 100);
+          }
+        }
+        yLabel = '% of Total';
+      }
     } else if (this.mode === 'pct_ex' && this.totalSeriesIndex != null && this.excludeFromTotalIndex != null) {
       // Compute % of (total minus excluded series)
       const totalSeries = this.data.series[this.totalSeriesIndex];
@@ -488,6 +517,14 @@ window.NewCoCharts = {
     if (this.excludeFromTotalIndex != null) {
       const exCard = this.chartElements[this.excludeFromTotalIndex];
       if (exCard) exCard.style.display = (this.mode === 'pct_ex') ? 'none' : '';
+    }
+    // Hide per-suffix totals in pct mode (each would render as 100% flat line)
+    if (this.totalIndexBySuffix) {
+      const totals = new Set(Object.values(this.totalIndexBySuffix));
+      totals.forEach(idx => {
+        const card = this.chartElements[idx];
+        if (card) card.style.display = (this.mode === 'pct') ? 'none' : '';
+      });
     }
   },
 

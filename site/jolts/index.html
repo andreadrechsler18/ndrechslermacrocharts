@@ -19,7 +19,7 @@
   <script src="../js/nav.js?v=6"></script>
   <script src="../js/controls.js?v=3"></script>
   <script src="../js/lazyload.js?v=3"></script>
-  <script src="../js/charts.js?v=7"></script>
+  <script src="../js/charts.js?v=8"></script>
   <script>
     NewCoCharts.init({
       dataUrl: '../../data/json/jolts/jolts.json',
@@ -43,8 +43,21 @@
       ],
       modes: [
         { key: 'raw', label: 'Raw Data' },
-        { key: 'yoy', label: 'YoY % Change' }
-      ]
+        { key: 'yoy', label: 'YoY % Change' },
+        { key: 'pct', label: '% of Total' }
+      ],
+      totalSeriesBySuffix: {
+        '_JOL': 'JOLTS_TOTAL_JOL',
+        '_HIL': 'JOLTS_TOTAL_HIL',
+        '_TSL': 'JOLTS_TOTAL_TSL',
+        '_QUL': 'JOLTS_TOTAL_QUL',
+        '_LDL': 'JOLTS_TOTAL_LDL',
+        '_JOR': 'JOLTS_TOTAL_JOR',
+        '_HIR': 'JOLTS_TOTAL_HIR',
+        '_TSR': 'JOLTS_TOTAL_TSR',
+        '_QUR': 'JOLTS_TOTAL_QUR',
+        '_LDR': 'JOLTS_TOTAL_LDR'
+      }
     });
   </script>
 </body>
