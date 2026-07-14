@@ -310,6 +310,7 @@ def scrape_fed_surveys():
         "fed_chicago": 372,      # Chicago Fed Survey of Economic Conditions (CFSEC)
         "fed_dallas": 374,       # Texas Manufacturing Outlook Survey
         "fed_dallas_svc": 376,   # Texas Service Sector Outlook Survey
+        "jolts": 192,            # Job Openings and Labor Turnover Survey
     }
 
     results = {}

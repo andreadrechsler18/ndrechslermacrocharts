@@ -41,6 +41,7 @@ const SITE_MAP = [
     ]
   },
   { label: "Unemployment by Industry", href: "unemployment/index.html" },
+  { label: "JOLTS - Job Openings & Labor Turnover", href: "jolts/index.html" },
   { label: "Industrial Production", href: "industrial_production/index.html" },
   {
     label: "Fed Regional Surveys", children: [

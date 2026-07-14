@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wholesale Trade - Inventory/Sales Ratio - NDMacroCharts</title>
+  <title>JOLTS - Job Openings and Labor Turnover - NDMacroCharts</title>
   <link rel="stylesheet" href="../css/style.css">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
 </head>
@@ -11,7 +11,7 @@
   <nav id="main-nav"></nav>
   <main>
     <header class="page-header">
-      <h1>Wholesale Trade - Inventory/Sales Ratio</h1>
+      <h1>Job Openings and Labor Turnover (JOLTS)</h1>
       <div class="controls" id="chart-controls"></div>
     </header>
     <div class="chart-grid" id="chart-grid"></div>
@@ -22,13 +22,29 @@
   <script src="../js/charts.js?v=7"></script>
   <script>
     NewCoCharts.init({
-      dataUrl: '../data/wholesale/wholesale_ratio.json',
+      dataUrl: '../data/jolts/jolts.json',
       defaultMode: 'raw',
-      defaultHorizon: 0,
+      defaultHorizon: 60,
+      chartType: 'line',
+      filterType: 'suffix',
+      filters: [
+        { separator: 'Levels' },
+        { key: '_JOL', label: 'Job Openings' },
+        { key: '_HIL', label: 'Hires' },
+        { key: '_TSL', label: 'Total Separations' },
+        { key: '_QUL', label: 'Quits' },
+        { key: '_LDL', label: 'Layoffs & Discharges' },
+        { separator: 'Rates' },
+        { key: '_JOR', label: 'Job Openings' },
+        { key: '_HIR', label: 'Hires' },
+        { key: '_TSR', label: 'Total Separations' },
+        { key: '_QUR', label: 'Quits' },
+        { key: '_LDR', label: 'Layoffs & Discharges' }
+      ],
       modes: [
         { key: 'raw', label: 'Raw Data' },
         { key: 'yoy', label: 'YoY % Change' }
-      ],
+      ]
     });
   </script>
 </body>
