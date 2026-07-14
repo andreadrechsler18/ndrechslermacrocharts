@@ -149,6 +149,8 @@
     .source-badge.fed_richmond_svc { background: #e0f7fa; color: #006064; }
     .source-badge.fed_kc,
     .source-badge.fed_kc_svc     { background: #f1f8e9; color: #33691e; }
+    .source-badge.fed_chicago    { background: #ede7f6; color: #4527a0; }
+    .source-badge.jolts          { background: #fbe9e7; color: #bf360c; }
     .source-badge .ref-period {
       opacity: 0.7;
       font-weight: 400;
@@ -254,6 +256,8 @@
       fed_richmond_svc: 'Richmond Fed Svc',
       fed_kc: 'KC Fed Mfg',
       fed_kc_svc: 'KC Fed Svc',
+      fed_chicago: 'Chicago Fed',
+      jolts: 'JOLTS',
     };
 
     // Reference period rules: how far behind the release date is the data
@@ -276,6 +280,8 @@
       fed_richmond_svc:     { type: 'monthly', lag: 0 },   // Current month survey
       fed_kc:               { type: 'monthly', lag: 0 },   // Current month survey
       fed_kc_svc:           { type: 'monthly', lag: 0 },   // Current month survey
+      fed_chicago:          { type: 'monthly', lag: 0 },   // Current month survey
+      jolts:                { type: 'monthly', lag: 2 },   // 2 months prior (e.g. Jul release -> May data)
     };
 
     const SHORT_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
