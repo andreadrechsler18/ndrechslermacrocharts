@@ -307,6 +307,7 @@ def scrape_fed_surveys():
         "fed_ny_svc": 322,       # Business Leaders Survey (Services)
         "fed_philly": 351,       # Manufacturing Business Outlook Survey
         "fed_philly_svc": 352,   # Nonmanufacturing Business Outlook Survey
+        "fed_chicago": 372,      # Chicago Fed Survey of Economic Conditions (CFSEC)
         "fed_dallas": 374,       # Texas Manufacturing Outlook Survey
         "fed_dallas_svc": 376,   # Texas Service Sector Outlook Survey
     }

@@ -19,6 +19,7 @@ import fetch_unemployment
 import fetch_ppi
 import fetch_ppi_commodity
 import fetch_fed_surveys
+import fetch_chicago_fed
 import post_process
 
 
@@ -35,6 +36,7 @@ def run():
         ("PPI by Industry (BLS API)", fetch_ppi.run),
         ("PPI by Commodity (BLS API)", fetch_ppi_commodity.run),
         ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ("Chicago Fed Survey (CFSEC)", fetch_chicago_fed.run),
         ("Post-processing (derived data)", post_process.run),
     ]
 

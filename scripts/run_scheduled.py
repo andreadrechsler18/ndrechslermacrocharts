@@ -37,6 +37,7 @@ import fetch_unemployment
 import fetch_ppi
 import fetch_ppi_commodity
 import fetch_fed_surveys
+import fetch_chicago_fed
 import post_process
 
 ET = ZoneInfo("America/New_York")
@@ -152,6 +153,12 @@ FETCHER_MAP = {
         "release_time": (12, 0),
         "fetchers": [
             ("Fed Regional Surveys", fetch_fed_surveys.run),
+        ],
+    },
+    "fed_chicago": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("Chicago Fed Survey (CFSEC)", fetch_chicago_fed.run),
         ],
     },
 }

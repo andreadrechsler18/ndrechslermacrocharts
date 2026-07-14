@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PPI - By Commodity - NDMacroCharts</title>
+  <title>Fed Surveys - Chicago - NDMacroCharts</title>
   <link rel="stylesheet" href="../css/style.css">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
 </head>
@@ -11,7 +11,7 @@
   <nav id="main-nav"></nav>
   <main>
     <header class="page-header">
-      <h1>PPI &mdash; By Commodity (Professional Services)</h1>
+      <h1>Chicago Fed Survey of Economic Conditions</h1>
       <div class="controls" id="chart-controls"></div>
     </header>
     <div class="chart-grid" id="chart-grid"></div>
@@ -22,16 +22,12 @@
   <script src="../js/charts.js?v=7"></script>
   <script>
     NewCoCharts.init({
-      dataUrl: '../../data/json/ppi/ppi_commodity.json',
+      dataUrl: '../../data/json/fed_surveys/fed_chicago.json',
       defaultMode: 'raw',
-      defaultHorizon: 24,
-      filters: [
-        { key: 'WPU451', label: 'Legal' },
-        { key: 'WPU452', label: 'Accounting' },
-        { key: 'WPU453', label: 'Arch. & Eng.' },
-        { key: 'WPU454', label: 'Consulting' },
-        { key: 'WPU455', label: 'Advertising' },
-        { key: 'WPU456', label: 'IT Services' },
+      defaultHorizon: 0,
+      chartType: 'line',
+      modes: [
+        { key: 'raw', label: 'Index Value' }
       ]
     });
   </script>

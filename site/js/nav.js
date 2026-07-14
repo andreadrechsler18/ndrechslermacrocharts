@@ -46,6 +46,7 @@ const SITE_MAP = [
     label: "Fed Regional Surveys", children: [
       { label: "Manufacturing", href: "fed_surveys/manufacturing.html" },
       { label: "Services", href: "fed_surveys/services.html" },
+      { label: "Chicago (CFSEC)", href: "fed_surveys/chicago.html" },
     ]
   },
   {
