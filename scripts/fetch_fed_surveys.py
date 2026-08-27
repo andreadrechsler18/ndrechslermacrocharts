@@ -706,6 +706,40 @@ def fetch_and_parse(key):
     return series
 
 
+def _warn_if_stale(series_list, city_prefix, label):
+    """Emit a highly visible warning if a city's data is meaningfully stale.
+
+    Called after each city's fetch. If the newest data point is more than 60
+    days old, discovery has silently fallen through to a stale cached URL and
+    the CI is producing a no-op auto-update. This banner makes that visible in
+    the workflow logs so we intervene instead of drifting for months.
+    """
+    from datetime import date
+    max_d = None
+    for s in series_list:
+        if not s.get("name", "").startswith(city_prefix):
+            continue
+        for p in s.get("data", []):
+            if p.get("value") is not None:
+                if max_d is None or p["date"] > max_d:
+                    max_d = p["date"]
+
+    if max_d is None:
+        print(f"\n  {'=' * 62}")
+        print(f"  !!! {label} DATA MISSING — fetch produced no valid data points")
+        print(f"  {'=' * 62}\n")
+        return
+
+    y, m, d = int(max_d[:4]), int(max_d[5:7]), int(max_d[8:10])
+    age_days = (date.today() - date(y, m, d)).days
+    if age_days > 60:
+        print(f"\n  {'=' * 62}")
+        print(f"  !!! {label} DATA IS STALE — latest={max_d} (age {age_days} days)")
+        print(f"  !!! URL discovery likely failed; cached URL served old data.")
+        print(f"  !!! Manual refresh needed to unstick.")
+        print(f"  {'=' * 62}\n")
+
+
 def run():
     print("Fetching Federal Reserve regional survey data...")
 
@@ -722,6 +756,13 @@ def run():
             print(f"    {len(series)} series parsed")
         except Exception as e:
             print(f"    ERROR: {e}")
+
+    # Freshness check: catch the case where discovery silently fell back to
+    # a stale cached URL. Kansas City is the perennial offender because GH
+    # Actions runners can't reach its landing pages, but the pattern is
+    # generic — flag any city that goes >60 days stale.
+    _warn_if_stale(mfg_series, "Kansas City", "KC MFG")
+    _warn_if_stale(svc_series, "Kansas City", "KC SVC")
 
     # Reassign display_order across all cities
     for i, s in enumerate(mfg_series):
