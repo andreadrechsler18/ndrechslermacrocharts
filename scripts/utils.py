@@ -26,10 +26,49 @@ def load_api_keys():
     }
 
 
+def _strip_last_updated(payload):
+    """Return a copy of a fetcher payload with metadata.last_updated removed.
+
+    Used by write_json to compare the new payload against the on-disk file
+    without letting a fresh timestamp mask an otherwise-unchanged fetch.
+    """
+    if not isinstance(payload, dict):
+        return payload
+    out = dict(payload)
+    md = out.get('metadata')
+    if isinstance(md, dict):
+        out['metadata'] = {k: v for k, v in md.items() if k != 'last_updated'}
+    return out
+
+
 def write_json(data, output_path):
-    """Write data to a JSON file, creating directories as needed."""
+    """Write data to a JSON file, creating directories as needed.
+
+    If the new payload is identical to the on-disk file (ignoring the
+    metadata.last_updated timestamp), skip the write entirely so a stale
+    upstream fetch doesn't produce a phantom no-op commit. Fetchers that
+    hit an upstream source before it actually publishes (FRED release-date
+    entries fire before data lands; Census xlsx cache serves last month)
+    return unchanged series but with a fresh timestamp — without this
+    guard those get committed as "Auto-update economic data ..." even
+    though nothing new arrived, hiding the fact that we never picked up
+    the new release.
+    """
     full_path = os.path.join(JSON_DIR, output_path)
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+    if os.path.exists(full_path):
+        try:
+            with open(full_path) as f:
+                existing = json.load(f)
+        except (OSError, ValueError) as e:
+            print(f"  WARNING: could not read existing {full_path} ({e}); writing anyway")
+        else:
+            if _strip_last_updated(existing) == _strip_last_updated(data):
+                size_mb = os.path.getsize(full_path) / (1024 * 1024)
+                print(f"  No data change vs on-disk {full_path} ({size_mb:.1f} MB) — skipping write to avoid phantom commit")
+                return
+
     with open(full_path, 'w') as f:
         json.dump(data, f, separators=(',', ':'))
     size_mb = os.path.getsize(full_path) / (1024 * 1024)
