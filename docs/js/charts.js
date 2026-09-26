@@ -454,6 +454,65 @@ window.NewCoCharts = {
         }
       }
       yLabel = 'Trailing 12-Mo YoY %';
+    } else if (this.mode === 'ttm_raw' || this.mode === 'ttm_pct') {
+      // Trailing 12-month rolling sum — either as raw sum, or divided by the
+      // matching total's trailing 12-month sum (composes TTM with % of Total).
+      const freq = this.data.metadata.frequency;
+      const win = (freq === 'quarterly') ? 4 : (freq === 'weekly') ? 52 : 12;
+
+      // Helper: build a {date -> trailing-window sum} map for a series
+      const rollingSum = (srs) => {
+        const dts = srs.data.map(d => d.date);
+        const vals = srs.data.map(d => d.value);
+        const out = {};
+        for (let i = win - 1; i < dts.length; i++) {
+          let sum = 0, ok = true;
+          for (let j = 0; j < win; j++) {
+            const v = vals[i - j];
+            if (v == null) { ok = false; break; }
+            sum += v;
+          }
+          out[dts[i]] = ok ? sum : null;
+        }
+        return out;
+      };
+
+      const seriesTTM = rollingSum(series);
+
+      if (this.mode === 'ttm_raw') {
+        dates = [];
+        values = [];
+        for (const d of Object.keys(seriesTTM)) {
+          if (seriesTTM[d] == null) continue;
+          dates.push(d);
+          values.push(seriesTTM[d]);
+        }
+        yLabel = 'Trailing 12-Mo Sum';
+      } else {
+        // Resolve which total series to use (same logic as pct mode)
+        let totalIdx = this.totalSeriesIndex;
+        if (this.totalIndexBySuffix) {
+          for (const [suffix, idx] of Object.entries(this.totalIndexBySuffix)) {
+            if (series.id.endsWith(suffix)) { totalIdx = idx; break; }
+          }
+        }
+        if (totalIdx == null) {
+          dates = Object.keys(seriesTTM);
+          values = dates.map(() => null);
+        } else {
+          const totalTTM = rollingSum(this.data.series[totalIdx]);
+          dates = [];
+          values = [];
+          for (const d of Object.keys(seriesTTM)) {
+            const s = seriesTTM[d];
+            const t = totalTTM[d];
+            if (s == null || t == null || t === 0) continue;
+            dates.push(d);
+            values.push((s / t) * 100);
+          }
+        }
+        yLabel = 'TTM % of Total';
+      }
     } else if (this.mode === 'raw') {
       dates = rawDates;
       values = rawValues;
@@ -500,7 +559,7 @@ window.NewCoCharts = {
 
     const isLine = this.chartType === 'bar' ? false :
       this.chartType === 'line' ? true :
-      (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'pct_ex' || this.mode === 'spread' || this.mode === 'share');
+      (this.mode === 'raw' || this.mode === 'pct' || this.mode === 'pct_ex' || this.mode === 'spread' || this.mode === 'share' || this.mode === 'ttm_raw' || this.mode === 'ttm_pct');
 
     return {
       trace: isLine ? {
@@ -552,12 +611,13 @@ window.NewCoCharts = {
       const exCard = this.chartElements[this.excludeFromTotalIndex];
       if (exCard) exCard.style.display = (this.mode === 'pct_ex') ? 'none' : '';
     }
-    // Hide per-suffix totals in pct mode (each would render as 100% flat line)
+    // Hide per-suffix totals in any % of Total mode (each would render as 100% flat line)
     if (this.totalIndexBySuffix) {
       const totals = new Set(Object.values(this.totalIndexBySuffix));
+      const isPctMode = (this.mode === 'pct' || this.mode === 'ttm_pct');
       totals.forEach(idx => {
         const card = this.chartElements[idx];
-        if (card) card.style.display = (this.mode === 'pct') ? 'none' : '';
+        if (card) card.style.display = isPctMode ? 'none' : '';
       });
     }
   },

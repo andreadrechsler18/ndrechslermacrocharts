@@ -19,7 +19,7 @@
   <script src="../js/nav.js?v=7"></script>
   <script src="../js/controls.js?v=3"></script>
   <script src="../js/lazyload.js?v=3"></script>
-  <script src="../js/charts.js?v=9"></script>
+  <script src="../js/charts.js?v=10"></script>
   <script>
     NewCoCharts.init({
       dataUrl: '../data/qss/qss_health.json',
@@ -35,8 +35,10 @@
       modes: [
         { key: 'raw', label: 'Raw Data' },
         { key: 'yoy', label: 'YoY % Change' },
+        { key: 'pct', label: '% of Total' },
+        { key: 'ttm_raw', label: 'Trailing 12-Mo Sum' },
         { key: 'ttm', label: 'Trailing 12-Mo YoY' },
-        { key: 'pct', label: '% of Total' }
+        { key: 'ttm_pct', label: 'TTM % of Total' }
       ],
       totalSeriesBySuffix: {
         '_REV': '62A_REV',
