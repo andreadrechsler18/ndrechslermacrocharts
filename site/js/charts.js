@@ -420,6 +420,40 @@ window.NewCoCharts = {
         }
       }
       yLabel = '3-Mo Rolling Sum YoY %';
+    } else if (this.mode === 'ttm') {
+      // Trailing-window rolling sum, then YoY %. Window = one full year:
+      // 4 quarters for quarterly data, 52 weeks for weekly, 12 months otherwise.
+      const freq = this.data.metadata.frequency;
+      const win = (freq === 'quarterly') ? 4 : (freq === 'weekly') ? 52 : 12;
+
+      // Step 1: trailing sum of the last `win` values
+      const rollDates = [];
+      const rollValues = [];
+      for (let i = win - 1; i < rawDates.length; i++) {
+        rollDates.push(rawDates[i]);
+        let sum = 0, ok = true;
+        for (let j = 0; j < win; j++) {
+          const v = rawValues[i - j];
+          if (v == null) { ok = false; break; }
+          sum += v;
+        }
+        rollValues.push(ok ? sum : null);
+      }
+
+      // Step 2: YoY (lag = same win)
+      dates = [];
+      values = [];
+      for (let i = win; i < rollDates.length; i++) {
+        const current = rollValues[i];
+        const previous = rollValues[i - win];
+        dates.push(rollDates[i]);
+        if (current == null || previous == null || previous === 0) {
+          values.push(null);
+        } else {
+          values.push(((current - previous) / Math.abs(previous)) * 100);
+        }
+      }
+      yLabel = 'Trailing 12-Mo YoY %';
     } else if (this.mode === 'raw') {
       dates = rawDates;
       values = rawValues;

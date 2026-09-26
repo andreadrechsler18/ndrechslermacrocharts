@@ -38,31 +38,103 @@ def save_json(data, subpath):
 
 
 def process_qss():
-    """Apply NAICS labels to QSS and filter to QREV only."""
-    print("Processing QSS labels and filtering to QREV...")
+    """Split raw QSS into two files:
+       - qss/qss.json          revenue-only across all categories (existing)
+       - qss/qss_health.json   NAICS 62 revenue + expenses + computed profit
+    """
+    print("Processing QSS labels: revenue-all + health care rev/exp/profit...")
     data = load_json("qss/qss.json")
     if not data:
         return
 
-    filtered = []
+    # Index raw series by (category, dtype)
+    by_cat_dt = {}
     for s in data["series"]:
         parts = s["id"].rsplit("_", 1)
         if len(parts) != 2:
             continue
         cat, dtype = parts
+        by_cat_dt[(cat, dtype)] = s
 
-        # Keep only QREV (quarterly revenue)
+    # --- Revenue-only file (unchanged behavior) ---
+    rev_series = []
+    for (cat, dtype), s in sorted(by_cat_dt.items()):
         if dtype != "QREV":
             continue
+        rev_series.append({
+            "id": s["id"],
+            "name": QSS_CATEGORIES.get(cat, cat),
+            "display_order": len(rev_series),
+            "data": s["data"],
+        })
+    save_json({
+        "metadata": data["metadata"],
+        "series": rev_series,
+    }, "qss/qss.json")
+    print(f"  qss.json: {len(rev_series)} QREV series")
 
+    # --- NAICS 62 health file with rev / exp / profit ---
+    # Include categories starting with "62". Rename dtype suffixes for clarity:
+    # QREV -> _REV, QEXP -> _EXP; profit is computed where both exist.
+    def is_health(cat):
+        return cat.startswith("62")
+
+    def points_to_map(pts):
+        return {p["date"]: p["value"] for p in pts if p.get("value") is not None}
+
+    health_series = []
+    display_order = 0
+
+    # Sort categories once; render each category's rev, exp, profit contiguously
+    all_cats = sorted({cat for (cat, _dtype) in by_cat_dt if is_health(cat)})
+    for cat in all_cats:
         cat_name = QSS_CATEGORIES.get(cat, cat)
-        s["name"] = cat_name
-        s["display_order"] = len(filtered)
-        filtered.append(s)
+        rev = by_cat_dt.get((cat, "QREV"))
+        exp = by_cat_dt.get((cat, "QEXP"))
 
-    data["series"] = filtered
-    save_json(data, "qss/qss.json")
-    print(f"  {len(filtered)} QREV series")
+        if rev:
+            health_series.append({
+                "id": f"{cat}_REV",
+                "name": f"{cat_name} - Revenue",
+                "display_order": display_order,
+                "data": rev["data"],
+            })
+            display_order += 1
+
+        if exp:
+            health_series.append({
+                "id": f"{cat}_EXP",
+                "name": f"{cat_name} - Expenses",
+                "display_order": display_order,
+                "data": exp["data"],
+            })
+            display_order += 1
+
+        if rev and exp:
+            rev_map = points_to_map(rev["data"])
+            exp_map = points_to_map(exp["data"])
+            common_dates = sorted(set(rev_map) & set(exp_map))
+            profit_data = [
+                {"date": d, "value": rev_map[d] - exp_map[d]}
+                for d in common_dates
+            ]
+            if profit_data:
+                health_series.append({
+                    "id": f"{cat}_PROFIT",
+                    "name": f"{cat_name} - Profit",
+                    "display_order": display_order,
+                    "data": profit_data,
+                })
+                display_order += 1
+
+    save_json({
+        "metadata": {
+            **data["metadata"],
+            "title": "QSS Health Care (NAICS 62) - Revenue, Expenses, Profit",
+        },
+        "series": health_series,
+    }, "qss/qss_health.json")
+    print(f"  qss_health.json: {len(health_series)} series (rev + exp + profit for NAICS 62)")
 
 
 def process_wholesale():
