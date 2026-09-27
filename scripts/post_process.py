@@ -332,6 +332,19 @@ def process_ces_split():
         else:
             detailed.append(s)
 
+    # The detailed page uses totalSeriesIndex: 0 for "% of Total" charts, but
+    # "Total nonfarm" is a current-month (preliminary-timing) series and would
+    # otherwise be missing from the detailed file — leaving whatever detailed
+    # industry sorts first at index 0 (e.g. Surface coal mining). Prepend it
+    # so the % of Total math is meaningful.
+    total_nonfarm = next(
+        (s for s in data["series"] if s.get("id") == "CES0000000001"),
+        None
+    )
+    if total_nonfarm and not any(s.get("id") == "CES0000000001" for s in detailed):
+        # Copy the series (don't mutate the preliminary copy)
+        detailed.insert(0, {**total_nonfarm})
+
     for i, s in enumerate(preliminary):
         s["display_order"] = i
     for i, s in enumerate(detailed):
