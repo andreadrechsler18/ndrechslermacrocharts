@@ -127,6 +127,57 @@ def process_qss():
                 })
                 display_order += 1
 
+            # Quarterly margin = (rev - exp) / rev, expressed as %
+            margin_data = [
+                {"date": d, "value": (rev_map[d] - exp_map[d]) / rev_map[d] * 100}
+                for d in common_dates
+                if rev_map[d] and rev_map[d] > 0
+            ]
+            if margin_data:
+                health_series.append({
+                    "id": f"{cat}_MARGIN",
+                    "name": f"{cat_name} - Margin",
+                    "display_order": display_order,
+                    "data": margin_data,
+                })
+                display_order += 1
+
+            # TTM margin = (sum of 4 quarters of profit) / (sum of 4 quarters of rev)
+            # Requires 4 consecutive quarters with both rev and exp non-null.
+            def _next_q(y, m):
+                nm = m + 3
+                return (y + (nm - 1) // 12, ((nm - 1) % 12) + 1)
+            margin_ttm_data = []
+            for i in range(3, len(common_dates)):
+                window = common_dates[i - 3:i + 1]
+                # Verify the window is 4 consecutive quarters
+                ok = True
+                y, m, _ = window[0].split("-")
+                cy, cm = int(y), int(m)
+                for j in range(1, 4):
+                    cy, cm = _next_q(cy, cm)
+                    wy, wm, _ = window[j].split("-")
+                    if (cy, cm) != (int(wy), int(wm)):
+                        ok = False
+                        break
+                if not ok:
+                    continue
+                rev_sum = sum(rev_map[d] for d in window)
+                exp_sum = sum(exp_map[d] for d in window)
+                if rev_sum > 0:
+                    margin_ttm_data.append({
+                        "date": window[-1],
+                        "value": (rev_sum - exp_sum) / rev_sum * 100,
+                    })
+            if margin_ttm_data:
+                health_series.append({
+                    "id": f"{cat}_MARGIN_TTM",
+                    "name": f"{cat_name} - TTM Margin",
+                    "display_order": display_order,
+                    "data": margin_ttm_data,
+                })
+                display_order += 1
+
     save_json({
         "metadata": {
             **data["metadata"],
