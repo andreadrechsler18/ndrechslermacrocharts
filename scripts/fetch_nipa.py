@@ -121,6 +121,14 @@ NIPA_TABLES = [
         "title": "Personal Income and Its Disposition",
         "unit": "Millions of dollars"
     },
+    {
+        "key": "5_8_5b",
+        "dataset": "NIPA",
+        "table": "T50805B",
+        "frequency": "Q",
+        "title": "Private Inventories and Domestic Final Sales by Industry",
+        "unit": "Millions of dollars"
+    },
 ]
 
 

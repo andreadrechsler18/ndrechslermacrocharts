@@ -18,6 +18,7 @@ const SITE_MAP = [
       { label: "5.3.5 - Nonresidential Investment", href: "nipa/5_3_5.html" },
       { label: "5.5.5U - Equipment Spending", href: "nipa/5_5_5u.html" },
       { label: "5.7.5BU1 - Private Inventories", href: "nipa/5_7_5bu1.html" },
+      { label: "5.8.5B - Inventories by Industry", href: "nipa/5_8_5b.html" },
     ]
   },
   { label: "M3 - Shipments, Inventories & Orders", href: "m3/index.html" },
