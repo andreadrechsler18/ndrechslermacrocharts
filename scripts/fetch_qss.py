@@ -121,8 +121,11 @@ def run():
         "series": series_list
     }
 
-    write_json(result, "qss/qss.json")
-    print(f"  {len(series_list)} series written")
+    # Write raw fetch to a separate file so post_process has a stable input
+    # it doesn't destroy. post_process consumes qss_raw.json and emits
+    # qss.json (revenue-only) + qss_health.json (NAICS 62 rev/exp/profit/margin).
+    write_json(result, "qss/qss_raw.json")
+    print(f"  {len(series_list)} series written to qss_raw.json")
 
 
 if __name__ == "__main__":

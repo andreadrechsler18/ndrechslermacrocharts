@@ -38,13 +38,19 @@ def save_json(data, subpath):
 
 
 def process_qss():
-    """Split raw QSS into two files:
-       - qss/qss.json          revenue-only across all categories (existing)
-       - qss/qss_health.json   NAICS 62 revenue + expenses + computed profit
+    """Split raw QSS (from fetch_qss) into two web files:
+       - qss/qss.json          revenue-only across all categories
+       - qss/qss_health.json   NAICS 62 revenue + expenses + computed profit/margin
+    Input is qss/qss_raw.json so this function is non-destructive and safe to
+    rerun on days when fetch_qss hasn't fired (which would otherwise strip
+    QEXP out of our only copy of the raw data).
     """
     print("Processing QSS labels: revenue-all + health care rev/exp/profit...")
-    data = load_json("qss/qss.json")
+    data = load_json("qss/qss_raw.json")
     if not data:
+        # No raw fetch available (e.g. first-run or non-QSS day on CI before
+        # we migrated); skip quietly rather than wrecking existing outputs.
+        print("  qss/qss_raw.json not found — skipping (keeping existing outputs)")
         return
 
     # Index raw series by (category, dtype)
