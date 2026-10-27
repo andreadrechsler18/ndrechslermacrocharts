@@ -127,41 +127,42 @@ PHILLY_SVC_COLS = {
 }
 
 DALLAS_MFG_COLS = {
-    # Current
-    "Prod": ("PROD_C", "Production"),
-    "Capu": ("CU_C", "Capacity Utilization"),
-    "Vnwo": ("NO_C", "New Orders"),
-    "Gro": ("GA_C", "General Business Activity"),
-    "Ufil": ("UO_C", "Unfilled Orders"),
-    "Vshp": ("SH_C", "Shipments"),
-    "Dtm": ("DT_C", "Delivery Times"),
-    "Fgi": ("IV_C", "Finished Goods Inventories"),
-    "Prm": ("PP_C", "Prices Paid (Raw Materials)"),
-    "Pfg": ("PR_C", "Prices Received (Finished Goods)"),
-    "Wgs": ("WB_C", "Wages & Benefits"),
-    "Nemp": ("EMP_C", "Employment"),
-    "Avgwk": ("AW_C", "Hours Worked"),
-    "Cexp": ("CE_C", "Capital Expenditures"),
-    "Colk": ("OL_C", "Company Outlook"),
-    "Bact": ("BA_C", "Business Activity"),
-    "Uncr": ("UN_C", "Outlook Uncertainty"),
+    # Current — keys are lowercase to match the Dallas Fed xlsx; parse_xlsx_source
+    # also matches case-insensitively, so this still works if they revert.
+    "prod": ("PROD_C", "Production"),
+    "capu": ("CU_C", "Capacity Utilization"),
+    "vnwo": ("NO_C", "New Orders"),
+    "gro": ("GA_C", "General Business Activity"),
+    "ufil": ("UO_C", "Unfilled Orders"),
+    "vshp": ("SH_C", "Shipments"),
+    "dtm": ("DT_C", "Delivery Times"),
+    "fgi": ("IV_C", "Finished Goods Inventories"),
+    "prm": ("PP_C", "Prices Paid (Raw Materials)"),
+    "pfg": ("PR_C", "Prices Received (Finished Goods)"),
+    "wgs": ("WB_C", "Wages & Benefits"),
+    "nemp": ("EMP_C", "Employment"),
+    "avgwk": ("AW_C", "Hours Worked"),
+    "cexp": ("CE_C", "Capital Expenditures"),
+    "colk": ("OL_C", "Company Outlook"),
+    "bact": ("BA_C", "Business Activity"),
+    "uncr": ("UN_C", "Outlook Uncertainty"),
     # Future
-    "Fprod": ("PROD_F", "Future Production"),
-    "Fcapu": ("CU_F", "Future Capacity Utilization"),
-    "Fvnwo": ("NO_F", "Future New Orders"),
-    "Fgro": ("GA_F", "Future General Business Activity"),
-    "Fufil": ("UO_F", "Future Unfilled Orders"),
-    "Fvshp": ("SH_F", "Future Shipments"),
-    "Fdtm": ("DT_F", "Future Delivery Times"),
-    "Ffgi": ("IV_F", "Future Finished Goods Inventories"),
-    "Fprm": ("PP_F", "Future Prices Paid"),
-    "Fpfg": ("PR_F", "Future Prices Received"),
-    "Fwgs": ("WB_F", "Future Wages & Benefits"),
-    "Fnemp": ("EMP_F", "Future Employment"),
-    "Favgwk": ("AW_F", "Future Hours Worked"),
-    "Fcexp": ("CE_F", "Future Capital Expenditures"),
-    "Fcolk": ("OL_F", "Future Company Outlook"),
-    "Fbact": ("BA_F", "Future Business Activity"),
+    "fprod": ("PROD_F", "Future Production"),
+    "fcapu": ("CU_F", "Future Capacity Utilization"),
+    "fvnwo": ("NO_F", "Future New Orders"),
+    "fgro": ("GA_F", "Future General Business Activity"),
+    "fufil": ("UO_F", "Future Unfilled Orders"),
+    "fvshp": ("SH_F", "Future Shipments"),
+    "fdtm": ("DT_F", "Future Delivery Times"),
+    "ffgi": ("IV_F", "Future Finished Goods Inventories"),
+    "fprm": ("PP_F", "Future Prices Paid"),
+    "fpfg": ("PR_F", "Future Prices Received"),
+    "fwgs": ("WB_F", "Future Wages & Benefits"),
+    "fnemp": ("EMP_F", "Future Employment"),
+    "favgwk": ("AW_F", "Future Hours Worked"),
+    "fcexp": ("CE_F", "Future Capital Expenditures"),
+    "fcolk": ("OL_F", "Future Company Outlook"),
+    "fbact": ("BA_F", "Future Business Activity"),
 }
 
 DALLAS_SVC_COLS = {
@@ -547,11 +548,15 @@ def parse_xlsx_source(content, col_map, sheet_name=None):
 
     headers = [str(h).strip() if h else "" for h in rows[0]]
 
-    # Build col index
+    # Build col index. Match exact first, then case-insensitive — Dallas Fed
+    # has flipped between Title-Case and lowercase headers without warning.
+    col_map_ci = {k.lower(): v for k, v in col_map.items()}
     active_cols = {}
     for i, h in enumerate(headers):
         if h in col_map:
             active_cols[i] = col_map[h]
+        elif h.lower() in col_map_ci:
+            active_cols[i] = col_map_ci[h.lower()]
 
     series = {code: [] for code, _ in active_cols.values()}
 
