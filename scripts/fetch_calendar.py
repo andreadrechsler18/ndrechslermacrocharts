@@ -383,37 +383,68 @@ def scrape_fed_surveys():
     return results
 
 
+def _load_existing():
+    """Load the current on-disk calendar so we can merge with the scrape."""
+    if not os.path.exists(OUTPUT_PATH):
+        return {}
+    try:
+        with open(OUTPUT_PATH) as f:
+            return json.load(f).get("schedules", {})
+    except (OSError, ValueError):
+        return {}
+
+
+def _merge_dates(key, scraped, existing):
+    """Merge scraped dates with existing ones.
+
+    Keep any existing future-dated entry that the scrape dropped (e.g. when
+    Census's calendar-listview rotates to next year before current-year
+    releases have fired). Never fabricate dates — only keep what was
+    scraped at least once in the past.
+    """
+    scraped_set = set(scraped or [])
+    today = datetime.now(timezone.utc).date().strftime('%Y-%m-%d')
+    for d in existing or []:
+        if d > today and d not in scraped_set:
+            scraped_set.add(d)
+            print(f"    MERGE: kept prior-scrape future date {key}={d} (not in current scrape)")
+    return sorted(scraped_set)
+
+
 def run():
     print("Fetching release calendars...")
+
+    existing_schedules = _load_existing()
 
     calendar = {
         "last_updated": datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         "schedules": {}
     }
 
+    def _set(key, scraped):
+        calendar["schedules"][key] = _merge_dates(key, scraped, existing_schedules.get(key, []))
+
     # BLS (Employment Situation = CES + CPS)
-    bls_dates = scrape_bls()
-    calendar["schedules"]["bls"] = bls_dates
+    _set("bls", scrape_bls())
 
     # BEA (NIPA tables)
-    bea_dates = scrape_bea()
-    calendar["schedules"]["bea"] = bea_dates
+    _set("bea", scrape_bea())
 
     # Census (M3, Construction, Wholesale, QSS)
     census = scrape_census()
-    calendar["schedules"].update(census)
+    for k, v in census.items():
+        _set(k, v)
 
     # FRED (Industrial Production)
-    fred_dates = scrape_fred_ip()
-    calendar["schedules"]["fred_ip"] = fred_dates
+    _set("fred_ip", scrape_fred_ip())
 
     # FRED (PPI)
-    ppi_dates = scrape_fred_ppi()
-    calendar["schedules"]["bls_ppi"] = ppi_dates
+    _set("bls_ppi", scrape_fred_ppi())
 
     # Fed Regional Surveys
     fed_surveys = scrape_fed_surveys()
-    calendar["schedules"].update(fed_surveys)
+    for k, v in fed_surveys.items():
+        _set(k, v)
 
     # Write calendar
     os.makedirs(CONFIG_DIR, exist_ok=True)

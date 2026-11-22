@@ -62,6 +62,28 @@ def process_qss():
         cat, dtype = parts
         by_cat_dt[(cat, dtype)] = s
 
+    # Optional merge: Advance Report (NSA QREV) adds the latest quarter for
+    # industry categories ~3 weeks before the Full Report's SA release.
+    advance = load_json("qss/qss_advance.json")
+    adv_latest = advance and advance.get("metadata", {}).get("latest_quarter")
+    adv_by_cat = {}
+    if advance and adv_latest:
+        for s in advance.get("series", []):
+            adv_by_cat[s["category_code"]] = s
+        print(f"  Found advance file with latest quarter {adv_latest} ({len(adv_by_cat)} series)")
+
+    def _merge_advance(cat, sa_series):
+        """If the advance file has a quarter newer than the SA series,
+        append it with is_advance=true. Returns new data list."""
+        if not adv_latest or cat not in adv_by_cat:
+            return sa_series["data"]
+        sa_data = list(sa_series["data"])
+        sa_dates = {p["date"] for p in sa_data}
+        for p in adv_by_cat[cat]["data"]:
+            if p["date"] > (sa_data[-1]["date"] if sa_data else "") and p["date"] not in sa_dates:
+                sa_data.append({"date": p["date"], "value": p["value"], "is_advance": True})
+        return sa_data
+
     # --- Revenue-only file (unchanged behavior) ---
     rev_series = []
     for (cat, dtype), s in sorted(by_cat_dt.items()):
@@ -71,7 +93,7 @@ def process_qss():
             "id": s["id"],
             "name": QSS_CATEGORIES.get(cat, cat),
             "display_order": len(rev_series),
-            "data": s["data"],
+            "data": _merge_advance(cat, s),
         })
     save_json({
         "metadata": data["metadata"],
@@ -103,7 +125,7 @@ def process_qss():
                 "id": f"{cat}_REV",
                 "name": f"{cat_name} - Revenue",
                 "display_order": display_order,
-                "data": rev["data"],
+                "data": _merge_advance(cat, rev),
             })
             display_order += 1
 

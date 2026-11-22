@@ -30,6 +30,7 @@ import fetch_ces
 import fetch_nipa
 import fetch_m3
 import fetch_qss
+import fetch_qss_advance
 import fetch_construction
 import fetch_wholesale
 import fetch_fred
@@ -88,6 +89,16 @@ FETCHER_MAP = {
         "release_time": (10, 0),
         "fetchers": [
             ("Quarterly Services Survey", fetch_qss.run),
+            # Pull the Advance (NSA) side too — on Advance-release days the
+            # main QSS API has only NSA for industry breakdowns; on Full
+            # days both are present and the merge is a no-op.
+            ("QSS Advance (NSA)", fetch_qss_advance.fetch_qss_advance),
+        ],
+    },
+    "census_qss_advance": {
+        "release_time": (10, 0),
+        "fetchers": [
+            ("QSS Advance (NSA)", fetch_qss_advance.fetch_qss_advance),
         ],
     },
     "fred_ip": {
